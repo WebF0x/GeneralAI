@@ -5,7 +5,7 @@ Long-term goal:     Create a Strong Artificial Intelligence, a system that match
 
 
 Short-term goal:    Create a general AI template
-
+                    
                     Create environments for AI's
                         -Games
                         -Robotic bodies

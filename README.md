@@ -8,7 +8,9 @@ Create a Strong Artificial Intelligence, a system that matches or exceeds human 
 
 Short-term goals:
 ----------------
-Create a general AI template
+Create a general AI interface
+
+Create a general Environment interface
                     
 Create environments for AI's
 - Games
@@ -27,6 +29,3 @@ Create various AI systems
 License:
 --------
 MIT License (http://opensource.org/licenses/MIT)
-                
-
-                    

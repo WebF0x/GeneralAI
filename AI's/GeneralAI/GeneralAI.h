@@ -15,7 +15,7 @@ class GeneralAI : public SaveSystem
     public:
         virtual std::vector<int> getOutput(const std::vector<int>& input) = 0;
 
-        /// Teach a relation between an input, a output and its outcome
+        /// Teach, for a given input, an output and its outcome
         /// Worst outcome: -1
         /// Best outcome:   1
         virtual void learn(const std::vector<int>& input, const std::vector<int>& output, float outcome) = 0;

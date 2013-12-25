@@ -5,7 +5,7 @@ using namespace std;
 bool SaveSystem::save(const string& fileName) const
 {
     //Get memory to save
-    vector<int> memory = toMemory();
+    vector<int> memory = getMemory();
 
     //Open saveFile
     ofstream saveFile;
@@ -46,7 +46,7 @@ bool SaveSystem::load(const string& fileName)
 
         saveFile.close();
 
-        loadFromMemory(memory);
+        setMemory(memory);
 
         return true;
     }

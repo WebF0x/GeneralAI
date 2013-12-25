@@ -19,11 +19,11 @@ class SaveSystem
 
     protected:
         /// Returns a vector<int> that represents the system state
-        virtual std::vector<int> toMemory() const = 0;
+        virtual std::vector<int> getMemory() const = 0;
 
         /// Load a system state from a vector<ìnt>.
         /// Returns true if successful
-        virtual bool loadFromMemory(std::vector<int>& memory) = 0;
+        virtual bool setMemory(std::vector<int> memory) = 0;
 };
 
 #endif // SAVESYSTEM_H

@@ -2,7 +2,6 @@
 #define GENERALAI_H
 
 #include "SaveSystem.h"
-#include <vector>
 
 /**
 *   Abstract class for general artificial intelligence systems
@@ -13,7 +12,7 @@
 class GeneralAI : public SaveSystem
 {
     public:
-        virtual std::vector<int> getOutput(const std::vector<int>& input) = 0;
+        virtual std::vector<int> getOutput(const std::vector<int>& input) const = 0;
 
         /// Teach, for a given input, an output and its outcome
         /// Worst outcome: -1

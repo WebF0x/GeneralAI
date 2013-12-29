@@ -16,14 +16,12 @@ Create environments for AI's
 - Games
 - Robotic bodies
 - Computer operating systems
-- Other ideas?
-    
+
 Create various AI systems
 - Human controlled
 - Neural network
 - Case-Based
 - Combination of various AI's
-- Other ideas?
 
 
 License:

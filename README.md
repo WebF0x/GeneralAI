@@ -10,8 +10,6 @@ Short-term goals:
 ----------------
 Create a general AI interface
 
-Create a general World interface
-
 Create various AI systems
 - Human controlled
 - Neural network

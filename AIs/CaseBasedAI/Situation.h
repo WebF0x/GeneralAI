@@ -1,3 +1,7 @@
+/**
+*   Warning: This file doesn't comply with the generalAI model!
+**/
+
 #ifndef SITUATION_H
 #define SITUATION_H
 

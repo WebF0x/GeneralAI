@@ -1,3 +1,7 @@
+/**
+*   Warning: This file doesn't comply with the generalAI model!
+**/
+
 #include "Decision.h"
 
 using namespace std;

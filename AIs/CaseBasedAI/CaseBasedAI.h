@@ -1,5 +1,9 @@
-#ifndef AI_H
-#define AI_H
+/**
+*   Warning: This file doesn't comply with the generalAI model!
+**/
+
+#ifndef CASEBASEDAI_H
+#define CASEBASEDAI_H
 
 #include <vector>
 #include "Decision.h"
@@ -9,11 +13,11 @@
 
 #define INVALID_REACTION (-1)
 
-class AI
+class CaseBasedAI
 {
     public:
-        AI(const std::vector<int>& possibleReactions);
-        virtual ~AI();
+        CaseBasedAI(const std::vector<int>& possibleReactions);
+        virtual ~CaseBasedAI();
 
         int getReaction(const Situation&);
         void forceDecision(const Decision&);
@@ -32,7 +36,7 @@ class AI
             On veut utiliser des pointeurs de décisions au lieu de copier les décisions au complet.
             Gain d'efficacité et meilleure gestion de la mémoire
         */
-        std::vector<Decision*> m_memory2;
+        std::vector<Decision*> m_memory;
 
         std::vector<int> m_possibleReactions;
         Decision *m_lastDecision;
@@ -45,4 +49,4 @@ class AI
         int newReaction(const std::vector<Decision*>& possibleDecisions);
 };
 
-#endif // AI_H
+#endif // CASEBASEDAI_H

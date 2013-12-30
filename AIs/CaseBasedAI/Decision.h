@@ -1,3 +1,7 @@
+/**
+*   Warning: This file doesn't comply with the generalAI model!
+**/
+
 #ifndef DECISION_H
 #define DECISION_H
 

@@ -1,24 +1,27 @@
-#include "AI.h"
+/**
+*   Warning: This file doesn't comply with the generalAI model!
+**/
+
+#include "CaseBasedAI.h"
 
 using namespace std;
 
-/**/#include <cstdlib>
-
-AI::AI(const std::vector<int>& possibleReactions) :
+CaseBasedAI::CaseBasedAI(const std::vector<int>& possibleReactions) :
     m_possibleReactions(possibleReactions), m_lastDecision(NULL)
 {
+
 }
 
-AI::~AI()
+CaseBasedAI::~CaseBasedAI()
 {
-    for(unsigned int i(0); i<m_memory2.size(); i++)
+    for(unsigned int i(0); i<m_memory.size(); i++)
     {
-        delete m_memory2[i];
+        delete m_memory[i];
     }
     delete m_lastDecision;
 }
 
-void AI::makeDecision(const Decision& decision)
+void CaseBasedAI::makeDecision(const Decision& decision)
 {
     delete m_lastDecision;
     m_lastDecision = new Decision(decision);
@@ -26,51 +29,51 @@ void AI::makeDecision(const Decision& decision)
 }
 
 
-void AI::makeDecision(const Situation& sit, int reaction, const Result& res)
+void CaseBasedAI::makeDecision(const Situation& sit, int reaction, const Result& res)
 {
     makeDecision(Decision(sit,reaction,res));
 }
 
-void AI::memorizeDecision(const Decision& decision)
+void CaseBasedAI::memorizeDecision(const Decision& decision)
 {
     ///Vérifier si on se souvient d'une décision identique
     bool similarSituationExists = false;
-    for(unsigned int i(0);i<m_memory2.size(); i++)
+    for(unsigned int i(0);i<m_memory.size(); i++)
     {
         ///Memoire de décision non-Bad: on la remplace
-        if( (m_memory2[i]->getSituation() == decision.getSituation()) &&
-            (m_memory2[i]->getReaction()  == decision.getReaction())  &&
-            (m_memory2[i]->getResult()    != Bad))
+        if( (m_memory[i]->getSituation() == decision.getSituation()) &&
+            (m_memory[i]->getReaction()  == decision.getReaction())  &&
+            (m_memory[i]->getResult()    != Bad))
         {
-            m_memory2.erase(m_memory2.begin() + i);
-            m_memory2.push_back(new Decision(decision));
+            m_memory.erase(m_memory.begin() + i);
+            m_memory.push_back(new Decision(decision));
         }
 
-            similarSituationExists = similarSituationExists || ((m_memory2[i]->getSituation() == decision.getSituation()) &&
-                                                                (m_memory2[i]->getReaction()  == decision.getReaction()));
+            similarSituationExists = similarSituationExists || ((m_memory[i]->getSituation() == decision.getSituation()) &&
+                                                                (m_memory[i]->getReaction()  == decision.getReaction()));
     }
 
     if(!similarSituationExists)
     {
-        m_memory2.push_back(new Decision(decision));
+        m_memory.push_back(new Decision(decision));
     }
 
     clearDoubles();
 }
 
-void AI::clearDoubles()
+void CaseBasedAI::clearDoubles()
 {
     bool repeat;
     do
     {
         repeat = false;
-        for(unsigned int i(0); i<m_memory2.size(); i++)
+        for(unsigned int i(0); i<m_memory.size(); i++)
         {
-            for(unsigned int j(i+1); j<m_memory2.size(); j++)
+            for(unsigned int j(i+1); j<m_memory.size(); j++)
             {
-                if( *m_memory2[i] == *m_memory2[j] )
+                if( *m_memory[i] == *m_memory[j] )
                 {
-                    m_memory2.erase(m_memory2.begin() + j);
+                    m_memory.erase(m_memory.begin() + j);
                     repeat = true;
                 }
 
@@ -79,12 +82,12 @@ void AI::clearDoubles()
     }while (repeat);
 }
 
-void AI::forceDecision(const Decision& decision)
+void CaseBasedAI::forceDecision(const Decision& decision)
 {
     makeDecision(decision);
 }
 
-int AI::getReaction(const Situation& currentSituation)
+int CaseBasedAI::getReaction(const Situation& currentSituation)
 {
     ///Mimic good past Decisions
     std::vector<Decision*> goodPastDecisions     = getPastDecisions(currentSituation , Good);
@@ -125,25 +128,25 @@ int AI::getReaction(const Situation& currentSituation)
     }
 }
 
-void AI::learn(const Decision& decision)
+void CaseBasedAI::learn(const Decision& decision)
 {
     memorizeDecision(decision);
 }
 
-void AI::forget(const Decision& decision)
+void CaseBasedAI::forget(const Decision& decision)
 {
-    for (unsigned int i(0); i<m_memory2.size(); i++)
+    for (unsigned int i(0); i<m_memory.size(); i++)
     {
-        if(*m_memory2[i] == decision)
+        if(*m_memory[i] == decision)
         {
-            m_memory2.erase(m_memory2.begin() + i);
+            m_memory.erase(m_memory.begin() + i);
             cout<<"Memoire effacee"<<endl;
             break;
         }
     }
 }
 
-void AI::reward()
+void CaseBasedAI::reward()
 {
     if (m_lastDecision != NULL)
     {
@@ -152,7 +155,7 @@ void AI::reward()
     }
 }
 
-void AI::punish()
+void CaseBasedAI::punish()
 {
     if (m_lastDecision != NULL)
     {
@@ -161,21 +164,21 @@ void AI::punish()
     }
 }
 
-std::vector<Decision*> AI::getPastDecisions(const Situation& situation, Result resultWanted)
+std::vector<Decision*> CaseBasedAI::getPastDecisions(const Situation& situation, Result resultWanted)
 {
     std::vector<Decision*> decisionVector;
-    for(unsigned int i(0); i<m_memory2.size(); i++)
+    for(unsigned int i(0); i<m_memory.size(); i++)
     {
-        if( (m_memory2[i]->getSituation() == situation) &&
-            (m_memory2[i]->getResult() == resultWanted))
+        if( (m_memory[i]->getSituation() == situation) &&
+            (m_memory[i]->getResult() == resultWanted))
         {
-            decisionVector.push_back(m_memory2[i]);
+            decisionVector.push_back(m_memory[i]);
         }
     }
     return decisionVector;
 }
 
-int AI::newReaction(const std::vector<Decision*>& possibleDecisions)
+int CaseBasedAI::newReaction(const std::vector<Decision*>& possibleDecisions)
 {
     ///Try to find a new reaction
     for (unsigned int i(0); i<m_possibleReactions.size(); i++)
@@ -197,7 +200,7 @@ int AI::newReaction(const std::vector<Decision*>& possibleDecisions)
     return INVALID_REACTION;
 }
 
-bool AI::saveMemory(const string& fileName) const
+bool CaseBasedAI::saveMemory(const string& fileName) const
 {
     ///Open saveFile
     ofstream saveFile;
@@ -206,16 +209,16 @@ bool AI::saveMemory(const string& fileName) const
         return false;
 
     ///Write memory in file
-    for(unsigned int i(0); i<m_memory2.size(); i++)
+    for(unsigned int i(0); i<m_memory.size(); i++)
     {
-        saveFile<<m_memory2[i]->toString()<<endl;
+        saveFile<<m_memory[i]->toString()<<endl;
     }
 
     saveFile.close();
     return true;
 }
 
-bool AI::loadMemory(const string& fileName)
+bool CaseBasedAI::loadMemory(const string& fileName)
 {
     ///Open saveFile
     ifstream saveFile;
@@ -231,7 +234,7 @@ bool AI::loadMemory(const string& fileName)
         string saveData;
         while (getline(saveFile, saveData))
         {
-            m_memory2.push_back(new Decision(Decision::decisionFromString(saveData)));
+            m_memory.push_back(new Decision(Decision::decisionFromString(saveData)));
         }
 
         saveFile.close();

@@ -1,5 +1,9 @@
+/**
+*   Warning: This file doesn't comply with the generalAI model!
+**/
+
 #include <iostream>
-#include "AI.h"
+#include "CaseBasedAI.h"
 #include <string>
 
 using namespace std;
@@ -26,8 +30,8 @@ bool tableauFull();
 bool isWinning(CaseEtat);
 void viderTableau();
 void printTableau();
-int askAIInput(AI&);
-void saveAIMemory(const AI&);
+int askAIInput(CaseBasedAI&);
+void saveAIMemory(const CaseBasedAI&);
 
 
 int main()
@@ -43,7 +47,7 @@ int main()
     {
         reponsesPossibles.push_back(i+1);
     }
-    AI ai(reponsesPossibles);
+    CaseBasedAI ai(reponsesPossibles);
 
     /// Load Memory
     if(!ai.loadMemory(SAVE_FILE_NAME))
@@ -146,7 +150,7 @@ int main()
     return 0;
 }
 
-void saveAIMemory(const AI& ai)
+void saveAIMemory(const CaseBasedAI& ai)
 {
     if(ai.saveMemory(SAVE_FILE_NAME))
     {
@@ -231,7 +235,7 @@ void printTableau()
     cout<<caseEtatToString(tableau[0])<<" | "<<caseEtatToString(tableau[1])<<" | "<<caseEtatToString(tableau[2])<<endl;
 }
 
-int askAIInput(AI& ai)
+int askAIInput(CaseBasedAI& ai)
 {
     std::vector<int> jeu;
     for(int i(0); i<9; i++)

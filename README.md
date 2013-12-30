@@ -10,21 +10,16 @@ Short-term goals:
 ----------------
 Create a general AI interface
 
-Create a general Environment interface
-                    
-Create environments for AI's
-- Games
-- Robotic bodies
-- Computer operating systems
-- Other ideas?
-    
 Create various AI systems
 - Human controlled
 - Neural network
 - Case-Based
 - Combination of various AI's
-- Other ideas?
 
+Create worlds for AI's
+- Games
+- Robotic bodies
+- Computer operating systems
 
 License:
 --------

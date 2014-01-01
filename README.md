@@ -3,7 +3,7 @@ StrongAI
 
 Long-term goal:
 ---------------
-Create a Strong Artificial Intelligence, a system that matches or exceeds human intelligence.
+Create a Strong Artificial Intelligence (also called Artificial General Intelligence), a system that matches or exceeds human intelligence.
 
 
 Short-term goals:

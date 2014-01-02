@@ -21,7 +21,7 @@ class SaveSystem
         /// Returns a vector<int> that represents the system state
         virtual std::vector<int> getMemory() const = 0;
 
-        /// Load a system state from a vector<ìnt>.
+        /// Load a system state from a vector<int>.
         /// Returns true if successful
         virtual bool setMemory(std::vector<int> memory) = 0;
 };

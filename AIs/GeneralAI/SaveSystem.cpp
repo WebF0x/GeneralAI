@@ -9,7 +9,7 @@ void SaveSystem::save(const string& fileName) const
     saveFile.open(fileName.data());
     if (!saveFile.is_open())
     {
-        throw fstream::failure("Unable to open file");
+        throw fstream::failure(string("Unable to open file"));
     }
 
     //Get memory to be saved
@@ -32,7 +32,7 @@ void SaveSystem::load(const string& fileName)
     saveFile.open(fileName.data());
     if(!saveFile.is_open())
     {
-        throw fstream::failure("Unable to open file");
+        throw fstream::failure(string("Unable to open file"));
     }
 
     // Recreate memory from file

@@ -16,19 +16,17 @@ class GeneralAI : public SaveSystem
 {
     public:
         GeneralAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput);
-        virtual ~GeneralAI(){}
-
-        /**
-        *   Teach, for a given input, an output and its outcome
-        *   Worst outcome: -1
-        *   Best outcome:   1
-        **/
-        void learn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
+        virtual ~GeneralAI();
 
         /// Returns AI's output
         std::vector<int> output(const std::vector<int>& input) const;
 
-    protected:
+        /**
+        *   Learns that with "input", "output" yields "outcome"
+        *   Outcome: [ worst(-1) .. best(1) ]
+        **/
+        void learn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
+
         const unsigned int INPUT_SIZE, OUTPUT_SIZE;
         const int INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
 

@@ -15,6 +15,11 @@ GeneralAI::GeneralAI(unsigned int inputSize, unsigned int outputSize, int maxInp
     }
 }
 
+GeneralAI::~GeneralAI()
+{
+
+}
+
 void GeneralAI::learn(const vector<int>& input, const vector<int>& output, float outcome)
 {
     if(input.size() != INPUT_SIZE)

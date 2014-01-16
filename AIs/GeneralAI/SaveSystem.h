@@ -12,18 +12,17 @@ class SaveSystem
 {
     public:
         /// Save system state in a file
-        bool save(const std::string& fileName) const;
+        void save(const std::string& fileName) const;
 
         /// Load system state from a file
-        bool load(const std::string& fileName);
+        void load(const std::string& fileName);
 
     protected:
         /// Returns a vector<int> that represents the system state
         virtual std::vector<int> getMemory() const = 0;
 
         /// Load a system state from a vector<int>.
-        /// Returns true if successful
-        virtual bool setMemory(std::vector<int> memory) = 0;
+        virtual void setMemory(std::vector<int> memory) = 0;
 };
 
 #endif // SAVESYSTEM_H

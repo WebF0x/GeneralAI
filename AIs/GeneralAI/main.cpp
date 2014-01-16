@@ -3,45 +3,76 @@
 
 using namespace std;
 
-class Test : public GeneralAI
+class DummyAI : public GeneralAI
 {
     public:
-        Test(int a, int b, int c, int d) : GeneralAI(a,b,c,d) {}
+        DummyAI(int a, int b, int c, int d) : GeneralAI(a,b,c,d) {}
+
+        virtual vector<int> coreOutput(const vector<int>& input) const {return vector<int>(1);}
+
 
     protected:
         virtual void coreLearn(const vector<int>& input, const vector<int>& output, float outcome) {}
-        virtual vector<int> coreOutput(const vector<int>& input) const {return vector<int>();};
+        //virtual vector<int> coreOutput(const vector<int>& input) const {return vector<int>();}
 
-        virtual vector<int> getMemory() const{return vector<int>();};
-        virtual bool setMemory(vector<int> memory) {return true;};
+        virtual vector<int> getMemory() const{return vector<int>();}
+        virtual void setMemory(vector<int> memory) {}
 };
 
 int main()
 {
-    Test *t;
+    const unsigned int inputSize(1), outputSize(1);
+    const int maxInput(1), maxOutput(1);
+    const string fileName = "myDummySave";
 
+    //Create DummyAI
+    GeneralAI *ai = new DummyAI(inputSize,outputSize,maxInput,maxOutput);
+
+    //load
     try
     {
-        t = new Test(1,1,1,-1);
+        ai->load(fileName);
     }
-    catch (const std::exception& e)
+    catch(exception& e)
     {
-        cout << "Constructor exception: " << e.what() << endl;
-        return 1;
+        cout<<e.what()<<endl;
     }
 
+    //output
     try
     {
-        t->learn(std::vector<int>(1), std::vector<int>(1), 1.f);
+        vector<int> v(1);
+        ai->output(v);
     }
-    catch (const std::exception& e)
+    catch(exception& e)
     {
-        cout << "Learn exception: " << e.what() << endl;
-        delete t;
-        return 1;
+        cout<<e.what()<<endl;
     }
 
-    delete t;
+    //learn
+    try
+    {
+        vector<int> input(1), output(1);
+        float outcome = -1;
+        ai->learn(input, output, outcome);
+    }
+    catch(exception& e)
+    {
+        cout<<e.what()<<endl;
+    }
+
+    //save
+    try
+    {
+        ai->save(fileName);
+    }
+    catch(exception& e)
+    {
+        cout<<e.what()<<endl;
+    }
+
+    //Delete DummyAI
+    delete ai;
 
     return 0;
 }

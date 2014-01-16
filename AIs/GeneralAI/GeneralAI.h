@@ -27,14 +27,13 @@ class GeneralAI : public SaveSystem
         /// Returns AI's output
         std::vector<int> output(const std::vector<int>& input) const;
 
-    protected:
-        ///Subclasses must implement these methods
-        virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome) = 0;
-        virtual std::vector<int> coreOutput(const std::vector<int>& input) const = 0;
-
     private:
         const unsigned int m_inputSize, m_outputSize;
         const int m_maxInput, m_maxOutput;
+
+        ///Subclasses must implement these methods
+        virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome) = 0;
+        virtual std::vector<int> coreOutput(const std::vector<int>& input) const = 0;
 };
 
 #endif // GENERALAI_H

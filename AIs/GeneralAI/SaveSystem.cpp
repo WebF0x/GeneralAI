@@ -2,16 +2,18 @@
 
 using namespace std;
 
-bool SaveSystem::save(const string& fileName) const
+void SaveSystem::save(const string& fileName) const
 {
-    //Get memory to save
-    vector<int> memory = getMemory();
-
     //Open saveFile
     ofstream saveFile;
     saveFile.open(fileName.data());
     if (!saveFile.is_open())
-        return false;
+    {
+        throw fstream::failure("Unable to open file");
+    }
+
+    //Get memory to be saved
+    vector<int> memory = getMemory();
 
     //Write memory in file
     for(unsigned int i=0; i<memory.size(); i++)
@@ -19,35 +21,32 @@ bool SaveSystem::save(const string& fileName) const
         saveFile<<memory[i]<<' ';
     }
 
+    //Close file
     saveFile.close();
-    return true;
 }
 
-bool SaveSystem::load(const string& fileName)
+void SaveSystem::load(const string& fileName)
 {
-    vector<int> memory;
-
     //Open saveFile
     ifstream saveFile;
     saveFile.open(fileName.data());
     if(!saveFile.is_open())
     {
-        return false;
+        throw fstream::failure("Unable to open file");
     }
-    else
+
+    // Recreate memory from file
+    vector<int> memory;
+    int data;
+
+    while(saveFile>>data)
     {
-        // Recreate memory from file
-        int data;
-
-        while(saveFile>>data)
-        {
-            memory.push_back(data);
-        }
-
-        saveFile.close();
-
-        setMemory(memory);
-
-        return true;
+        memory.push_back(data);
     }
+
+    //Close file
+    saveFile.close();
+
+    //Our job is done, the AI subclasses will deal with the memory however they see fit
+    setMemory(memory);
 }

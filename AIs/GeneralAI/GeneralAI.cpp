@@ -24,9 +24,9 @@ void GeneralAI::learn(const vector<int>& input, const vector<int>& output, float
     {
         throw length_error( "invalid output length" );
     }
-    else if(0.f > outcome || outcome > 1.f)
+    else if(-1.f > outcome || outcome > 1.f)
     {
-        throw out_of_range( "outcome not between 0 and 1" );
+        throw out_of_range( "outcome not between -1 and 1" );
     }
     else
     {
@@ -40,8 +40,13 @@ vector<int> GeneralAI::output(const vector<int>& input) const
     {
         throw invalid_argument( "Invalid input size" );
     }
-    else
+
+    vector<int> output = coreOutput(input);
+
+    if(output.size() != m_outputSize)
     {
-        return coreOutput(input);
+        throw invalid_argument( "Invalid output size" );
     }
+
+    return output;
 }

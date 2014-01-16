@@ -3,13 +3,8 @@
 
 #include "../GeneralAI/GeneralAI.h"
 
-#include <iostream>
-#include <random>
-#include <chrono>
-#include <algorithm>
-#include <functional>
-#include <type_traits>
-#include <utility>
+#include <chrono>   //To generate seed for randomGenerator
+#include <random>   //To generate random values
 
 class RandomAI : public GeneralAI
 {

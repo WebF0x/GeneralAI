@@ -28,7 +28,7 @@ int main()
         vector<int> v(inputSize);
         vector<int> v2 = ai->output(v);
 
-        for(int i=0; i<outputSize; ++i)
+        for(unsigned int i=0; i<outputSize; ++i)
         {
             cout<<v2[i]<<endl;
         }

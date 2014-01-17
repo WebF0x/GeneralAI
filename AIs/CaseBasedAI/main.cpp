@@ -13,7 +13,8 @@ int main()
         output[0] = 2;
     float outcome = .90f;
 
-
+    cout<<numeric_limits<int>::max();
+    cout<<endl<<.9*numeric_limits<int>::max()<<endl;
 
 
 
@@ -25,7 +26,11 @@ int main()
 
     cout<<answer[0];
 
+    ai->save("lol.txt");
+
     delete ai;
+
+
 
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <map>
 #include <chrono>
 #include <random>
+#include <limits>   //numeric_limits<int>::max()
 
 /*
     To do: Base this class on CaseBasedAI, but it must comply with the generalAI model!

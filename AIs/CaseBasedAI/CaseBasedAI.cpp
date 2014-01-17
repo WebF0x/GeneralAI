@@ -33,7 +33,7 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input) const
     pair< vector<int>, float> bestPastReaction;
     bestPastReaction = make_pair(output, outcome);
 
-    for (map<vector<int>, float>::const_iterator it=situation->second.begin() /* +1 */; it!=situation->second.end(); ++it)
+    for (map<vector<int>, float>::const_iterator it=situation->second.begin(); it!=situation->second.end(); ++it)
     {
         if(it->second > bestPastReaction.second)   //Better outcome
         {
@@ -111,7 +111,47 @@ void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int
 
 vector<int> CaseBasedAI::getMemory() const
 {
-    return vector<int> ();
+    vector<int> memory;
+
+    ///Real memories
+    for ( map< vector<int>, map<vector<int>, float> >::const_iterator itMem=m_memory.begin(); itMem!=m_memory.end(); ++itMem)
+    {
+        const vector<int> input = itMem->first;
+        const map<vector<int>, float> reactions = itMem->second;
+
+        //Push input
+        for(unsigned int i=0; i<INPUT_SIZE; ++i)
+        {
+            memory.push_back(input[i]);
+        }
+
+        //Push size of reactions map
+        memory.push_back(reactions.size());
+
+        //Push reactions
+        for (  map<vector<int>, float>::const_iterator itReaction=reactions.begin(); itReaction!=reactions.end(); ++itReaction)
+        {
+            vector<int> output = itReaction->first;
+            float outcome = itReaction->second;
+
+            //Push output
+            for(unsigned int i=0; i<OUTPUT_SIZE; ++i)
+            {
+                memory.push_back(output[i]);
+            }
+
+            //Push outcome
+            memory.push_back(outcome * numeric_limits<int>::max()); //Fraction of the maximum int value
+        }
+    }
+
+    ///Save format
+    memory.push_back(INPUT_SIZE);
+    memory.push_back(OUTPUT_SIZE);
+    memory.push_back(INPUT_AMPLITUDE);
+    memory.push_back(OUTPUT_AMPLITUDE);
+
+    return memory;
 }
 
 void CaseBasedAI::setMemory(std::vector<int> memory)

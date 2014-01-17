@@ -7,17 +7,6 @@ CaseBasedAI::CaseBasedAI(unsigned int inputSize, unsigned int outputSize, int ma
 {
     unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
     randomGenerator = new default_random_engine(seed);
-
-    /*
-    //Was used for testing coreOutput()
-    vector<int> v(inputSize);
-    vector<int> v2(outputSize);
-    v2[0] = 2;
-    float outcome = 0.f;
-    map<vector<int>, float> minimap;
-    minimap[v2] = outcome;
-    m_memory[v] = minimap;
-    */
 }
 
 CaseBasedAI::~CaseBasedAI()
@@ -28,24 +17,23 @@ CaseBasedAI::~CaseBasedAI()
 
 vector<int> CaseBasedAI::coreOutput(const vector<int>& input) const
 {
-    map< vector<int>, map<vector<int>, float> > ::const_iterator  reactions = m_memory.find(input);
+    map< vector<int>, map<vector<int>, float> > ::const_iterator  situation = m_memory.find(input);
 
     ///Input NOT seen before
-    if(reactions == m_memory.end())
+    if(situation == m_memory.end())
     {
-        //Try some new reaction
-        return  randomOutput();   //[0,0,..,0]
+        return  randomOutput();
     }
 
     ///Input seen before!
     //Find our best past reaction
-    vector<int> output = reactions->second.begin()->first;
-    float outcome =  reactions->second.begin()->second;
+    vector<int> output = situation->second.begin()->first;
+    float outcome =  situation->second.begin()->second;
     //      Output    Outcome
     pair< vector<int>, float> bestPastReaction;
     bestPastReaction = make_pair(output, outcome);
 
-    for (map<vector<int>, float>::const_iterator it=reactions->second.begin() /* +1 */; it!=reactions->second.end(); ++it)
+    for (map<vector<int>, float>::const_iterator it=situation->second.begin() /* +1 */; it!=situation->second.end(); ++it)
     {
         if(it->second > bestPastReaction.second)   //Better outcome
         {
@@ -53,29 +41,72 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input) const
         }
     }
 
+    /*
+        To prevent getting stuck in a local maximum:
+
+    */
     float randomNumber = randomProbability();
+
+
+    ///Repeat previous successful reaction
     if(bestPastReaction.second > randomNumber) //Best outcome greater than random number between 0 and 1
     {
         return bestPastReaction.first;  //Repeat this reaction
     }
-    else
+
+    ///Try something new
+    vector<int> reaction;
+    do
     {
-        //Find a new reaction never tried before
-        vector<int> reaction;
+        reaction = randomOutput();
+    }while(situation->second.count(reaction));
 
-        do
-        {
-            reaction = randomOutput();
-        }while(reactions->second.count(reaction));
-
-        return reaction;
-
-    }
+    return reaction;
 }
 
 void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome)
 {
+    //Try to find input in memory
+    map< vector<int>, map<vector<int>, float> > ::iterator  situation = m_memory.find(input);
 
+    ///Input NOT seen before
+    if(situation == m_memory.end())
+    {
+        map<vector<int>, float> newEntry;
+        newEntry[output] = outcome;
+        m_memory[input] = newEntry;
+        return;
+    }
+    ///Input seen before
+    else
+    {
+        map<vector<int>, float>::iterator reaction = situation->second.find(output);
+
+        ///Output NOT seen before
+        if(reaction == situation->second.end())
+        {
+            situation->second[output] = outcome;
+            return;
+        }
+        ///Output seen before
+        else
+        {
+            float newOutcome = situation->second[output];
+            newOutcome += outcome;
+
+            if(newOutcome < -1.f)
+            {
+                newOutcome = -1.f;
+            }
+            else if(newOutcome > 1.f)
+            {
+                newOutcome = 1.f;
+            }
+
+            situation->second[output] = newOutcome;
+            return;
+        }
+    }
 }
 
 vector<int> CaseBasedAI::getMemory() const

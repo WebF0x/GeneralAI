@@ -43,10 +43,8 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input) const
 
     /*
         To prevent getting stuck in a local maximum:
-
     */
     float randomNumber = randomProbability();
-
 
     ///Repeat previous successful reaction
     if(bestPastReaction.second > randomNumber) //Best outcome greater than random number between 0 and 1
@@ -59,7 +57,7 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input) const
     do
     {
         reaction = randomOutput();
-    }while(situation->second.count(reaction));
+    }while(situation->second.count(reaction));  /// DOESNT WORK WHEN NO ANSWER IS POSSIBLE
 
     return reaction;
 }
@@ -91,8 +89,7 @@ void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int
         ///Output seen before
         else
         {
-            float newOutcome = situation->second[output];
-            newOutcome += outcome;
+            float newOutcome = (situation->second[output] + outcome)/2.f;
 
             if(newOutcome < -1.f)
             {
@@ -120,7 +117,7 @@ vector<int> CaseBasedAI::getMemory() const
         const map<vector<int>, float> reactions = itMem->second;
 
         //Push input
-        for(unsigned int i=0; i<INPUT_SIZE; ++i)
+        for(int i=0; i<INPUT_SIZE; ++i)
         {
             memory.push_back(input[i]);
         }
@@ -135,13 +132,13 @@ vector<int> CaseBasedAI::getMemory() const
             float outcome = itReaction->second;
 
             //Push output
-            for(unsigned int i=0; i<OUTPUT_SIZE; ++i)
+            for(int i=0; i<OUTPUT_SIZE; ++i)
             {
                 memory.push_back(output[i]);
             }
 
             //Push outcome
-            memory.push_back(outcome * numeric_limits<int>::max()); //Fraction of the maximum int value
+            memory.push_back(outcome * (float)numeric_limits<int>::max()); //Fraction of the maximum int value
         }
     }
 
@@ -156,7 +153,58 @@ vector<int> CaseBasedAI::getMemory() const
 
 void CaseBasedAI::setMemory(std::vector<int> memory)
 {
+    if(memory.size() < 4)
+    {
+        throw length_error(string("memory vector too small"));
+    }
 
+    int expectedValues[4] = {INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE};
+    for(int i=0;i<4;++i)
+    {
+        if(memory.back() != expectedValues[3-i])
+        {
+            throw invalid_argument(string("bad memory format"));
+        }
+        memory.pop_back();
+    }
+
+    unsigned int memoryIndex = 0;
+
+    while(memoryIndex < memory.size())
+    {
+        vector<int> input(INPUT_SIZE);
+
+        //Pull input
+        for(int i=0; i<INPUT_SIZE; ++i)
+        {
+            input[i] = memory[memoryIndex++];
+        }
+
+        //Pull reactions size
+        const int REACTION_SIZE = memory[memoryIndex++];
+        map<vector<int>, float> reactions;
+
+        //Pull each reaction
+        for(int i=0; i<REACTION_SIZE; ++i)
+        {
+            vector<int> output(OUTPUT_SIZE);
+
+            for(int j=0; j<OUTPUT_SIZE; ++j)
+            {
+                output[j] = memory[memoryIndex++];
+            }
+
+            float outcome = (float)memory[memoryIndex++] / (float)numeric_limits<int>::max();
+
+            cout<<"LOLOL: "<<outcome<<endl;
+
+            //Recreate the reaction
+            reactions[output] = outcome;
+        }
+
+        //Recreate memory
+        m_memory[input] = reactions;
+    }
 }
 
 vector<int> CaseBasedAI::randomOutput() const
@@ -164,7 +212,7 @@ vector<int> CaseBasedAI::randomOutput() const
     vector<int> output(OUTPUT_SIZE);
     uniform_int_distribution<int> distribution(-OUTPUT_AMPLITUDE,OUTPUT_AMPLITUDE);
 
-    for(unsigned int i=0; i<OUTPUT_SIZE; ++i)
+    for(int i=0; i<OUTPUT_SIZE; ++i)
     {
         output[i] = distribution(*randomGenerator);  //Had to use pointers because this method is const. Can't modify the object RandomAI
     }

@@ -22,11 +22,11 @@ GeneralAI::~GeneralAI()
 
 void GeneralAI::learn(const vector<int>& input, const vector<int>& output, float outcome)
 {
-    if(input.size() != INPUT_SIZE)
+    if((int)input.size() != INPUT_SIZE)
     {
         throw length_error(string( "invalid input length" ));
     }
-    else if(output.size() != OUTPUT_SIZE)
+    else if((int)output.size() != OUTPUT_SIZE)
     {
         throw length_error( string("invalid output length" ));
     }
@@ -42,14 +42,14 @@ void GeneralAI::learn(const vector<int>& input, const vector<int>& output, float
 
 vector<int> GeneralAI::output(const vector<int>& input) const
 {
-    if(input.size() != INPUT_SIZE)
+    if((int)input.size() != INPUT_SIZE)
     {
         throw invalid_argument(string( "Invalid input size" ));
     }
 
     vector<int> output = coreOutput(input);
 
-    if(output.size() != OUTPUT_SIZE)
+    if((int)output.size() != OUTPUT_SIZE)
     {
         throw invalid_argument( string("Invalid output size") );
     }

@@ -27,8 +27,7 @@ class GeneralAI : public SaveSystem
         **/
         void learn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
 
-        const unsigned int INPUT_SIZE, OUTPUT_SIZE;
-        const int INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
+        const int INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
 
     private:
         ///Subclasses must implement these methods

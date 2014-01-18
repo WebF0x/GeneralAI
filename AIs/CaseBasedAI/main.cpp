@@ -5,32 +5,66 @@ using namespace std;
 
 int main()
 {
-    const unsigned int INPUT_SIZE = 2;
-    const unsigned int OUTPUT_SIZE = 2;
+    const unsigned int inputSize(1), outputSize(1);
+    const int maxInput(1), maxOutput(5);
+    const string fileName = "Fox.txt";
 
-    vector<int> input(INPUT_SIZE);
-    vector<int> output(OUTPUT_SIZE);
-        output[0] = 2;
-    float outcome = .90f;
+    //Create GeneralAI
+    GeneralAI *ai = new CaseBasedAI(inputSize,outputSize,maxInput,maxOutput);
 
-    cout<<numeric_limits<int>::max();
-    cout<<endl<<.9*numeric_limits<int>::max()<<endl;
+    //load
+    try
+    {
+        ai->load(fileName);
+    }
+    catch(exception& e)
+    {
+        cout<<e.what()<<endl;
+    }
 
+    vector<int> aiOutput;
 
+    //output
+    try
+    {
+        vector<int> v(inputSize);
+        aiOutput = ai->output(v);
 
-    GeneralAI *ai = new CaseBasedAI(INPUT_SIZE,OUTPUT_SIZE,2,2);
+        cout<<"Output:\n";
+        for(unsigned int i=0; i<outputSize; ++i)
+        {
+            cout<<aiOutput[i]<<endl;
+        }
+    }
+    catch(exception& e)
+    {
+        cout<<e.what()<<endl;
+    }
 
-    ai->learn(input,output,outcome);
+    //learn
+    try
+    {
+        vector<int> input(inputSize);
+        float outcome = .5f;
+        ai->learn(input, aiOutput, outcome);
+    }
+    catch(exception& e)
+    {
+        cout<<e.what()<<endl;
+    }
 
-    vector<int> answer = ai->output(input);
+    //save
+    try
+    {
+        ai->save(fileName);
+    }
+    catch(exception& e)
+    {
+        cout<<e.what()<<endl;
+    }
 
-    cout<<answer[0];
-
-    ai->save("lol.txt");
-
+    //Delete GeneralAI
     delete ai;
-
-
 
     return 0;
 }

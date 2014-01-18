@@ -2,16 +2,27 @@
 
 using namespace std;
 
-GeneralAI::GeneralAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput) :
-    INPUT_SIZE(inputSize), OUTPUT_SIZE(outputSize), INPUT_AMPLITUDE(maxInput), OUTPUT_AMPLITUDE(maxOutput)
+GeneralAI::GeneralAI(int inputSize, int outputSize, int inputAmplitude, int outputAmplitude) :
+    INPUT_SIZE(inputSize), OUTPUT_SIZE(outputSize), INPUT_AMPLITUDE(inputAmplitude), OUTPUT_AMPLITUDE(outputAmplitude)
 {
-    if(maxInput < 0)
+    if(inputSize < 0)
     {
-        throw out_of_range(string( "negative maxInput" ));
+        throw out_of_range(string( "negative INPUT_SIZE" ));
     }
-    else if(maxOutput < 0)
+
+    if(outputSize < 0)
     {
-        throw out_of_range(string( "negative maxOutput" ));
+        throw out_of_range(string( "negative OUTPUT_SIZE" ));
+    }
+
+    if(inputAmplitude < 0)
+    {
+        throw out_of_range(string( "negative INPUT_AMPLITUDE" ));
+    }
+
+    if(outputAmplitude < 0)
+    {
+        throw out_of_range(string( "negative OUTPUT_AMPLITUDE" ));
     }
 }
 

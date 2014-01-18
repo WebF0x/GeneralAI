@@ -15,7 +15,7 @@
 class GeneralAI : public SaveSystem
 {
     public:
-        GeneralAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput);
+        GeneralAI(int inputSize, int outputSize, int inputAmplitude, int outputAmplitude);
         virtual ~GeneralAI();
 
         /// Returns AI's output

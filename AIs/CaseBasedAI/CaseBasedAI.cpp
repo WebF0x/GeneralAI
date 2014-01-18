@@ -26,40 +26,26 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input) const
     }
 
     ///Input seen before!
-    //Find our best past reaction
-    vector<int> output = situation->second.begin()->first;
-    float outcome =  situation->second.begin()->second;
-    //      Output    Outcome
-    pair< vector<int>, float> bestPastReaction;
-    bestPastReaction = make_pair(output, outcome);
+    vector<int> bestKnownOutput = bestOutput(situation->second);
+    float bestKnownOutcome = (situation->second).at(bestKnownOutput);
 
-    for (map<vector<int>, float>::const_iterator it=situation->second.begin(); it!=situation->second.end(); ++it)
-    {
-        if(it->second > bestPastReaction.second)   //Better outcome
-        {
-            bestPastReaction = make_pair (it->first, it->second);
-        }
-    }
-
-    /*
+    /**
         To prevent getting stuck in a local maximum:
-    */
+        bestKnownOutput with the greatest outcome has the best chance to get picked.
+        When not picked, returns a randomNewOutput
+    **/
     float randomNumber = randomProbability();
 
-    ///Repeat previous successful reaction
-    if(bestPastReaction.second > randomNumber) //Best outcome greater than random number between 0 and 1
+    ///Maybe Repeat previous successful reaction
+    if(bestKnownOutcome > randomNumber)
     {
-        return bestPastReaction.first;  //Repeat this reaction
+        return bestKnownOutput;
     }
-
-    ///Try something new
-    vector<int> reaction;
-    do
+    ///Or Try something new
+    else
     {
-        reaction = randomOutput();
-    }while(situation->second.count(reaction));  /// DOESNT WORK WHEN NO ANSWER IS POSSIBLE
-
-    return reaction;
+        return randomNewOutput(situation->second);
+    }
 }
 
 void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome)
@@ -89,7 +75,7 @@ void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int
         ///Output seen before
         else
         {
-            float newOutcome = (situation->second[output] + outcome)/2.f;
+            float newOutcome = outcome;
 
             if(newOutcome < -1.f)
             {
@@ -196,8 +182,6 @@ void CaseBasedAI::setMemory(std::vector<int> memory)
 
             float outcome = (float)memory[memoryIndex++] / (float)numeric_limits<int>::max();
 
-            cout<<"LOLOL: "<<outcome<<endl;
-
             //Recreate the reaction
             reactions[output] = outcome;
         }
@@ -225,3 +209,109 @@ float CaseBasedAI::randomProbability() const
     uniform_real_distribution<float> distribution(0, 1);
     return distribution(*randomGenerator);
 }
+
+vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reactions) const
+{
+    vector<int> output = randomOutput();
+    if(!reactions.count(output))    ///It is a new reaction
+    {
+        return output;
+    }
+
+    ///It is NOT a new reaction
+    vector<int> increasing = output;
+    vector<int> decreasing = output;
+
+    vector<int> minOutput(OUTPUT_SIZE, -OUTPUT_AMPLITUDE);
+    vector<int> maxOutput(OUTPUT_SIZE, OUTPUT_AMPLITUDE);
+
+    while(decreasing!=minOutput || increasing!=maxOutput)  //As long as not everything was tried
+    {
+        ///Increasing
+        if(increasing!=maxOutput)
+        {
+             for(int i=0;i<OUTPUT_SIZE;++i)
+            {
+                if( increasing[i]++ != OUTPUT_AMPLITUDE)
+                {
+                    break;
+                }
+                else
+                {
+                    increasing[i] = 0;
+                }
+
+            }
+
+            if(!reactions.count(increasing))    //It is a new reaction
+            {
+                return increasing;
+            }
+        }
+
+
+        ///Decreasing
+        if(decreasing!=minOutput)
+        {
+            for(int i=0;i<OUTPUT_SIZE;++i)
+            {
+                if( decreasing[i]-- != -OUTPUT_AMPLITUDE)
+                {
+                    break;
+                }
+                else
+                {
+                    decreasing[i] = 0;
+                }
+            }
+
+            if(!reactions.count(decreasing))    //It is a new reaction
+            {
+                return decreasing;
+            }
+
+        }
+    }
+
+    return bestOutput(reactions);   //By default
+}
+
+vector<int> CaseBasedAI::bestOutput(const map<vector<int>, float>& reactions) const
+{
+    if(reactions.empty())
+    {
+        throw length_error(string( "parameter vector cannot be empty" ));
+    }
+
+    vector< vector<int> > bestKnownOutputs;
+    bestKnownOutputs.push_back(reactions.begin()->first);
+    float bestKnownOutcome =  reactions.begin()->second;
+
+    for (map<vector<int>, float>::const_iterator it=reactions.begin(); it!=reactions.end(); ++it)
+    {
+        const vector<int>& potentialOutput = it->first;
+        float potentialOutcome = it->second;
+
+        if(fabs(potentialOutcome - bestKnownOutcome) < .00000000001f)
+        {
+            bestKnownOutputs.push_back(potentialOutput);
+        }
+        else if(potentialOutcome > bestKnownOutcome)
+        {
+            bestKnownOutputs.clear();
+            bestKnownOutputs.push_back(potentialOutput);
+            bestKnownOutcome = potentialOutcome;
+        }
+    }
+
+    int bestKnownOutputIndex = 0;
+
+    if(bestKnownOutputs.size() > 1)
+    {
+        uniform_int_distribution<int> distribution(0, bestKnownOutputs.size()-1);
+        bestKnownOutputIndex = distribution(*randomGenerator);
+    }
+
+    return bestKnownOutputs[bestKnownOutputIndex];
+}
+

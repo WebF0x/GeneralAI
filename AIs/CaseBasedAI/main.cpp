@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
     const unsigned int inputSize(1), outputSize(1);
-    const int maxInput(1), maxOutput(5);
+    const int maxInput(1), maxOutput(2);
     const string fileName = "Fox.txt";
 
     //Create GeneralAI

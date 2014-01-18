@@ -31,6 +31,9 @@ class CaseBasedAI : public GeneralAI
         std::default_random_engine* randomGenerator;
         float randomProbability() const;
         std::vector<int> randomOutput() const;
+        std::vector<int> randomNewOutput(const std::map<std::vector<int>, float>& reactions) const;
+
+        std::vector<int> bestOutput(const std::map<std::vector<int>, float>& reactions) const;
 
 
 };

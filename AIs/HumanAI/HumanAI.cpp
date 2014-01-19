@@ -1,4 +1,4 @@
-#include "ConsoleHumanAI.h"
+#include "HumanAI.h"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ vector<int> ConsoleHumanAI::coreOutput(const vector<int>& input) const
         <<"\t\t( Between "<<-OUTPUT_AMPLITUDE<<" and "<<OUTPUT_AMPLITUDE<<" )"<<endl;
 
     vector<int> output;
-    for(unsigned int i=0; i<OUTPUT_SIZE; ++i)
+    for(int i=0; i<OUTPUT_SIZE; ++i)
     {
         cout<<"\t\tOutput "<<i<<"/"<<OUTPUT_SIZE-1<<": "<<endl;
 

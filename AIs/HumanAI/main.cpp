@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ConsoleHumanAI.h"
+#include "HumanAI.h"
 
 using namespace std;
 

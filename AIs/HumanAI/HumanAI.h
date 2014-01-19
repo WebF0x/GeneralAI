@@ -1,5 +1,5 @@
-#ifndef CONSOLEHUMANAI_H
-#define CONSOLEHUMANAI_H
+#ifndef HUMANAI_H
+#define HUMANAI_H
 
 #include "../GeneralAI/GeneralAI.h"
 #include <iostream>
@@ -21,4 +21,4 @@ class ConsoleHumanAI : public GeneralAI
         void printVector(const std::vector<int>& vect) const;
 };
 
-#endif // CONSOLEHUMANAI_H
+#endif // HUMANAI_H

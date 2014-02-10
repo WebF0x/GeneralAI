@@ -51,7 +51,12 @@ void GeneralAI::learn(const vector<int>& input, const vector<int>& output, float
     }
 }
 
-vector<int> GeneralAI::output(const vector<int>& input) const
+void GeneralAI::learn(float outcome)
+{
+    learn(m_lastInput, m_lastOutput, outcome);
+}
+
+vector<int> GeneralAI::output(const vector<int>& input)
 {
     if((int)input.size() != INPUT_SIZE)
     {
@@ -64,6 +69,10 @@ vector<int> GeneralAI::output(const vector<int>& input) const
     {
         throw invalid_argument( string("Invalid output size") );
     }
+
+    // Remember the last decision made
+    m_lastInput = input;
+    m_lastOutput = output;
 
     return output;
 }

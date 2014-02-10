@@ -6,12 +6,11 @@ RandomAI::RandomAI(unsigned int inputSize, unsigned int outputSize, int maxInput
     : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
 {
     unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
-    randomGenerator = new default_random_engine(seed);
+    randomGenerator = default_random_engine(seed);
 }
 
 RandomAI::~RandomAI()
 {
-    delete randomGenerator;
 }
 
 void RandomAI::coreLearn(const vector<int>& input, const vector<int>& output, float outcome)
@@ -19,7 +18,7 @@ void RandomAI::coreLearn(const vector<int>& input, const vector<int>& output, fl
     //This AI is too stupid to learn anything!
 }
 
-vector<int> RandomAI::coreOutput(const vector<int>& input) const
+vector<int> RandomAI::coreOutput(const vector<int>& input)
 {
     return randomOutput();
 }
@@ -36,14 +35,14 @@ void RandomAI::setMemory(vector<int> memory)
     //Too stupid to remember anything
 }
 
-vector<int> RandomAI::randomOutput() const
+vector<int> RandomAI::randomOutput()
 {
     vector<int> output(OUTPUT_SIZE);
     uniform_int_distribution<int> distribution(-OUTPUT_AMPLITUDE,OUTPUT_AMPLITUDE);
 
-    for(unsigned int i=0; i<OUTPUT_SIZE; ++i)
+    for(int i=0; i<OUTPUT_SIZE; ++i)
     {
-        output[i] = distribution(*randomGenerator);  //Had to use pointers because this method is const. Can't modify the object RandomAI
+        output[i] = distribution(randomGenerator);
     }
 
     return output;

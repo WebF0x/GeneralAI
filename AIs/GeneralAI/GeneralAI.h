@@ -40,7 +40,7 @@ class GeneralAI : public SaveSystem
     private:
         /// Subclasses must implement these methods
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome) = 0;
-        virtual std::vector<int> coreOutput(const std::vector<int>& input) const = 0;
+        virtual std::vector<int> coreOutput(const std::vector<int>& input) = 0;
 
         /// Short-term memory
         std::vector<int> m_lastInput, m_lastOutput;

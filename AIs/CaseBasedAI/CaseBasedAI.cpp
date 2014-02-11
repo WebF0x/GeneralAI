@@ -35,7 +35,7 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input)
     **/
     float randomNumber = randomProbability();
 
-    ///Maybe Repeat previous successful reaction
+    ///Either Repeat previous successful reaction
     if(bestKnownOutcome > randomNumber)
     {
         return bestKnownOutput;
@@ -43,13 +43,22 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input)
     ///Or Try something new
     else
     {
-        return randomNewOutput(situation->second);
+        try
+        {
+            return randomNewOutput(situation->second);
+        }
+        catch(runtime_error e)  //Not a single new output exists
+        {
+            //The last decision I made must be worth as much as this bestKnownOutput
+            learn(bestKnownOutcome);
+            return bestKnownOutput;
+        }
     }
 }
 
 void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome)
 {
-    //Try to find input in memory
+    ///Try to find input in memory
     map< vector<int>, map<vector<int>, float> > ::iterator  situation = m_memory.find(input);
 
     ///Input NOT seen before
@@ -212,34 +221,46 @@ float CaseBasedAI::randomProbability()
 vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reactions)
 {
     vector<int> output = randomOutput();
-    if(!reactions.count(output))    ///It is a new reaction
+    if(!reactions.count(output))    ///output is a new reaction
     {
         return output;
     }
 
-    ///It is NOT a new reaction
+    ///output is NOT a new reaction
     vector<int> increasing = output;
     vector<int> decreasing = output;
 
-    vector<int> minOutput(OUTPUT_SIZE, -OUTPUT_AMPLITUDE);
-    vector<int> maxOutput(OUTPUT_SIZE, OUTPUT_AMPLITUDE);
+    vector<int> minOutput(OUTPUT_SIZE, -OUTPUT_AMPLITUDE);  //e.g. [-5,-5,-5]
+    vector<int> maxOutput(OUTPUT_SIZE, OUTPUT_AMPLITUDE);   //e.g. [ 5, 5, 5]
 
-    while(decreasing!=minOutput || increasing!=maxOutput)  //As long as not everything was tried
+    /*
+        Start at a random output and try everything by spreading towards the extrema
+        Like this:
+        ===*==
+        ==*=*=
+        =*===*
+        *=====
+        /////////////////////////////////////////////////////////////////////////////
+        This algorithm works kind of like primary school paper arithmetic.
+        It looks rather ugly, I'll refactor it later.
+        Just trust me that it works, I tried it on paper!
+    */
+    while(decreasing!=minOutput || increasing!=maxOutput)  //As long as not everything has been tried
     {
         ///Increasing
         if(increasing!=maxOutput)
         {
-             for(int i=0;i<OUTPUT_SIZE;++i)
+            for(int i=0;i<OUTPUT_SIZE;++i)
             {
-                if( increasing[i]++ != OUTPUT_AMPLITUDE)
+                if( increasing[i] < OUTPUT_AMPLITUDE)
                 {
+                    ++increasing[i];
                     break;
                 }
                 else
                 {
-                    increasing[i] = 0;
+                    increasing[i] = -OUTPUT_AMPLITUDE;
                 }
-
             }
 
             if(!reactions.count(increasing))    //It is a new reaction
@@ -248,19 +269,19 @@ vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reaction
             }
         }
 
-
         ///Decreasing
         if(decreasing!=minOutput)
         {
             for(int i=0;i<OUTPUT_SIZE;++i)
             {
-                if( decreasing[i]-- != -OUTPUT_AMPLITUDE)
+                if( decreasing[i] > -OUTPUT_AMPLITUDE)
                 {
+                    --decreasing[i];
                     break;
                 }
                 else
                 {
-                    decreasing[i] = 0;
+                    decreasing[i] = OUTPUT_AMPLITUDE;
                 }
             }
 
@@ -268,11 +289,10 @@ vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reaction
             {
                 return decreasing;
             }
-
         }
     }
 
-    return bestOutput(reactions);   //By default
+    throw runtime_error(string("CaseBasedAI::randomNewOutput() no new output exist"));
 }
 
 vector<int> CaseBasedAI::bestOutput(const map<vector<int>, float>& reactions)
@@ -303,14 +323,8 @@ vector<int> CaseBasedAI::bestOutput(const map<vector<int>, float>& reactions)
         }
     }
 
-    int bestKnownOutputIndex = 0;
-
-    if(bestKnownOutputs.size() > 1)
-    {
-        uniform_int_distribution<int> distribution(0, bestKnownOutputs.size()-1);
-        bestKnownOutputIndex = distribution(randomGenerator);
-    }
-
-    return bestKnownOutputs[bestKnownOutputIndex];
+    ///Return one of the bestKnownOutputs at random
+    uniform_int_distribution<int> distribution(0, bestKnownOutputs.size()-1);
+    return bestKnownOutputs[distribution(randomGenerator)];
 }
 

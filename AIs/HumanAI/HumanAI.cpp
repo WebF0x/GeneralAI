@@ -14,27 +14,27 @@ vector<int> HumanAI::coreOutput(const vector<int>& input)
         <<"===================="<<endl;
 
     //Display inputs
-    cout<<"\tInput"<<endl
-        <<"\t-----"<<endl
-        <<"\t";
-    printVector(input);
+    cout<<"Input"<<endl
+        <<"-----"<<endl;
+
+    visualizeInput(input);
     cout<<endl;
 
     //Ask outputs
-    cout<<"\tOutput"<<endl
-        <<"\t------"<<endl
-        <<"\t\t( Between "<<-OUTPUT_AMPLITUDE<<" and "<<OUTPUT_AMPLITUDE<<" )"<<endl;
+    cout<<"Output"<<endl
+        <<"------"<<endl
+        <<"( Between "<<-OUTPUT_AMPLITUDE<<" and "<<OUTPUT_AMPLITUDE<<" )"<<endl;
 
     vector<int> output;
     for(int i=0; i<OUTPUT_SIZE; ++i)
     {
-        cout<<"\t\tOutput "<<i<<"/"<<OUTPUT_SIZE-1<<": "<<endl;
+        cout<<"Output "<<i<<"/"<<OUTPUT_SIZE-1<<": "<<endl;
 
         int userInput;
 
         do
         {
-            cout<<"\t\t";
+            cout<<"";
             cin>>userInput;
         }while(userInput < -OUTPUT_AMPLITUDE || userInput > OUTPUT_AMPLITUDE);
         cout<<endl;
@@ -50,17 +50,17 @@ void HumanAI::coreLearn(const std::vector<int>& input, const std::vector<int>& o
     cout<<"Learn this"<<endl
         <<"=========="<<endl;
 
-    cout<<"\tInput: ";
-    printVector(input);
+    cout<<"Input: ";
+    visualizeInput(input);
     cout<<endl
         <<endl;
 
-    cout<<"\tOutput: ";
+    cout<<"Output: ";
     printVector(output);
     cout<<endl
         <<endl;
 
-    cout<<"\tOutcome: "<<outcome<<endl
+    cout<<"Outcome: "<<outcome<<endl
         <<endl;
 }
 
@@ -71,13 +71,13 @@ vector<int> HumanAI::getMemory() const
         <<"================="<<endl;
 
     unsigned int memorySize;
-    cout<<"\tMemory size: ";
+    cout<<"Memory size: ";
     cin>>memorySize;
 
     vector<int> memory(memorySize);
     for(unsigned int i=0; i<memorySize; ++i)
     {
-        cout<<"\tMemory "<<i<<": ";
+        cout<<"Memory "<<i<<": ";
 
         int userInput;
         cin>>userInput;
@@ -92,7 +92,7 @@ void HumanAI::setMemory(std::vector<int> memory)
     cout<<"From now on, this is your memory!"<<endl
         <<"================================="<<endl
         <<endl
-        <<"\tMemory: ";
+        <<"Memory: ";
 
     printVector(memory);
 

@@ -47,7 +47,3 @@ vector<int> RandomAI::randomOutput()
 
     return output;
 }
-
-
-
-

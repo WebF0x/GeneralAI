@@ -5,65 +5,29 @@ using namespace std;
 
 int main()
 {
-    const unsigned int inputSize(1), outputSize(1);
-    const int maxInput(1), maxOutput(2);
+    /// Initialization
+    const unsigned int INPUT_SIZE(1), OUTPUT_SIZE(2);
+    const int MAX_INPUT(1), MAX_OUTPUT(1);
     const string fileName = "Fox.txt";
+    GeneralAI *ai = new CaseBasedAI(INPUT_SIZE,OUTPUT_SIZE,MAX_INPUT,MAX_OUTPUT);
 
-    //Create GeneralAI
-    GeneralAI *ai = new CaseBasedAI(inputSize,outputSize,maxInput,maxOutput);
 
-    //load
-    try
+    //Testing if randomNewOutput works normally
+    for(int i=0;i<10;++i)
     {
-        ai->load(fileName);
-    }
-    catch(exception& e)
-    {
-        cout<<e.what()<<endl;
-    }
-
-    vector<int> aiOutput;
-
-    //output
-    try
-    {
-        vector<int> v(inputSize);
-        aiOutput = ai->output(v);
+        vector<int> input(INPUT_SIZE);
+        vector<int> aiOutput = ai->output(input);
+        ai->learn(-1.f);
 
         cout<<"Output:\n";
-        for(unsigned int i=0; i<outputSize; ++i)
+        for(unsigned int i=0; i<OUTPUT_SIZE; ++i)
         {
             cout<<aiOutput[i]<<endl;
         }
     }
-    catch(exception& e)
-    {
-        cout<<e.what()<<endl;
-    }
 
-    //learn
-    try
-    {
-        vector<int> input(inputSize);
-        float outcome = .5f;
-        ai->learn(input, aiOutput, outcome);
-    }
-    catch(exception& e)
-    {
-        cout<<e.what()<<endl;
-    }
 
-    //save
-    try
-    {
-        ai->save(fileName);
-    }
-    catch(exception& e)
-    {
-        cout<<e.what()<<endl;
-    }
 
-    //Delete GeneralAI
     delete ai;
 
     return 0;

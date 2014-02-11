@@ -53,7 +53,14 @@ void GeneralAI::learn(const vector<int>& input, const vector<int>& output, float
 
 void GeneralAI::learn(float outcome)
 {
-    learn(m_lastInput, m_lastOutput, outcome);
+    if(implicitLearnEnabled)
+    {
+        learn(m_lastInput, m_lastOutput, outcome);
+    }
+    else
+    {
+        throw logic_error(string("GeneralAI::learn(float) only works after a successful GeneralAI::output(const vector<int>&) call."));
+    }
 }
 
 vector<int> GeneralAI::output(const vector<int>& input)
@@ -73,6 +80,7 @@ vector<int> GeneralAI::output(const vector<int>& input)
     // Remember the last decision made
     m_lastInput = input;
     m_lastOutput = output;
+    implicitLearnEnabled = true;
 
     return output;
 }

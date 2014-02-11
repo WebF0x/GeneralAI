@@ -44,6 +44,7 @@ class GeneralAI : public SaveSystem
 
         /// Short-term memory
         std::vector<int> m_lastInput, m_lastOutput;
+        bool implicitLearnEnabled = false;
 };
 
 #endif // GENERALAI_H

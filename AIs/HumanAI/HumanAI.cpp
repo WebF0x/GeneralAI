@@ -8,7 +8,7 @@ ConsoleHumanAI::ConsoleHumanAI(unsigned int inputSize, unsigned int outputSize, 
 
 }
 
-vector<int> ConsoleHumanAI::coreOutput(const vector<int>& input) const
+vector<int> ConsoleHumanAI::coreOutput(const vector<int>& input)
 {
     cout<<"What is your Output?"<<endl
         <<"===================="<<endl;

@@ -10,7 +10,7 @@ class ConsoleHumanAI : public GeneralAI
     public:
         ConsoleHumanAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput);
 
-        virtual std::vector<int> coreOutput(const std::vector<int>& input) const;
+        virtual std::vector<int> coreOutput(const std::vector<int>& input) ;
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
 
     protected:

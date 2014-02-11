@@ -2,13 +2,13 @@
 
 using namespace std;
 
-ConsoleHumanAI::ConsoleHumanAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput)
+HumanAI::HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput)
     : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
 {
 
 }
 
-vector<int> ConsoleHumanAI::coreOutput(const vector<int>& input)
+vector<int> HumanAI::coreOutput(const vector<int>& input)
 {
     cout<<"What is your Output?"<<endl
         <<"===================="<<endl;
@@ -45,7 +45,7 @@ vector<int> ConsoleHumanAI::coreOutput(const vector<int>& input)
     return output;
 }
 
-void ConsoleHumanAI::coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome)
+void HumanAI::coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome)
 {
     cout<<"Learn this"<<endl
         <<"=========="<<endl;
@@ -64,7 +64,7 @@ void ConsoleHumanAI::coreLearn(const std::vector<int>& input, const std::vector<
         <<endl;
 }
 
-vector<int> ConsoleHumanAI::getMemory() const
+vector<int> HumanAI::getMemory() const
 {
     //Ask outputs
     cout<<"Write your memory"<<endl
@@ -87,7 +87,7 @@ vector<int> ConsoleHumanAI::getMemory() const
     return memory;
 }
 
-void ConsoleHumanAI::setMemory(std::vector<int> memory)
+void HumanAI::setMemory(std::vector<int> memory)
 {
     cout<<"From now on, this is your memory!"<<endl
         <<"================================="<<endl
@@ -102,7 +102,7 @@ void ConsoleHumanAI::setMemory(std::vector<int> memory)
 
 }
 
-void ConsoleHumanAI::printVector(const std::vector<int>& vect) const
+void HumanAI::printVector(const std::vector<int>& vect) const
 {
     cout<<'[';
 
@@ -116,4 +116,9 @@ void ConsoleHumanAI::printVector(const std::vector<int>& vect) const
     }
 
     cout<<']'<<endl;
+}
+
+void HumanAI::visualizeInput(const vector<int>& input)
+{
+    printVector(input);
 }

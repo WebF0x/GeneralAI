@@ -2,136 +2,177 @@
 
 using namespace std;
 
-TicTacToe::TicTacToe() : turn(X), gameOver(false)
+TicTacToe::TicTacToe()
 {
-    clearBoard();
-
+    /// Random
     unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
-    randomGenerator = new default_random_engine(seed);
+    randomGenerator = default_random_engine(seed);
 }
 
 TicTacToe::~TicTacToe()
 {
 }
 
-void TicTacToe::match(  player1, GeneralAI* player2)
+TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
 {
-    clearBoard();
+    ///Precondition:
+    ///-Players are the kind GeneralAI(9,1,1,4)
+    if(
+        playerX.INPUT_SIZE != 9 ||
+        playerX.INPUT_AMPLITUDE != 1 ||
+        playerX.OUTPUT_SIZE != 1 ||
+        playerX.OUTPUT_AMPLITUDE != 4 ||
+
+        playerO.INPUT_SIZE != 9 ||
+        playerO.INPUT_AMPLITUDE != 1 ||
+        playerO.OUTPUT_SIZE != 1 ||
+        playerO.OUTPUT_AMPLITUDE != 4
+      )
+    {
+        throw invalid_argument(string("Invalid GeneralAI properties"));
+    }
+
+
+    /// Empty board of 9 empty squares
+    vector<Token> board = vector<Token>(9, Token::None);
 
     ///Pick first player
+    GeneralAI* currentPlayer;
     uniform_int_distribution<int> distribution(0,1);
-    if(distribution(*randomGenerator) == 0)
+    if(distribution(randomGenerator) == 0)
     {
-        turn = X;
+        currentPlayer = &playerX;
     }
     else
     {
-        turn = O;
+        currentPlayer = &playerO;
     }
 
-    vector<int> currentGameState(9);   /// Input of AI
-
-    gameOver = false;
-    while (!gameOver)
+    while(true)
     {
-        currentGameState.clear();
-
-        for(unsigned int i=0;i<9;++i)
+        //Create data to be sent to player
+        vector<int> input(9);
+        for(int i=0; i<9; ++i)
         {
-            currentGameState.push_back(turn*board[i]);  //For the AI, the token's value doesn't matter. What matters is if it is his token or the enemy's
+            switch(board[i])
+            {
+                case Token::None:
+                    input[i] = 0;
+                    break;
+
+                case Token::X:
+                    input[i] = 1;
+                    break;
+
+                case Token::O:
+                    input[i] = -1;
+                    break;
+            }
+
+            if(currentPlayer == &playerO)
+            {
+                input[i] *= -1; //That way, for every player, 1 means your token and -1 the enemy's token
+            }
         }
 
-        GeneralAI* player;
-        if(turn == X)
+        //Ask player for his move
+        int playerMove = TicTacToe::playerMove(*currentPlayer, input);
+
+        //Make sure playerMove is valid
+        while(board[playerMove] != Token::None) //Square not empty
         {
-            player = player1;
+            currentPlayer->learn(-1.f);                      //Punish
+            playerMove = TicTacToe::playerMove(*currentPlayer, input);  //Ask again
+        }
+
+        //Player plays his move
+        Token turn;
+
+        if(currentPlayer == &playerX)
+        {
+            turn = Token::X;
         }
         else
         {
-            player = player2;
+            turn = Token::O;
         }
 
-        //Guaranteed to be a vector of 1 element in [-4, 4]
-        //Grab that element and add 4. It gives the board vector index
-        int playerMove = player->output(currentGameState)[0] + 4;
+        board[playerMove] = turn;
 
-        playerAction(player, playerMove);
-    }
-}
 
-void TicTacToe::playerAction(player, playerMove)
-{
-
-}
-
-void TicTacToe::clearBoard()
-{
-    board = vector<int>(9, EMPTY);
-}
-
-void TicTacToe::receiveMsg(Message msg)
-{
-    if(!gameOver)
-    {
-        int entree = msg.data[0];
-
-        ///Changer le symbole de la case choisie
-        board[entree-1] = turn;
-
-        ///Vérifier victoire
-        if(isWinning(turn))
+        /// Check endgame conditions
+        if(isWinning(board, turn))
         {
-            msg.feedback = 1;
-            gameOver = true;
+            //Reward and Punish appropriate player
+            if(currentPlayer == &playerX)
+            {
+                playerX.learn(1.f);
+                playerO.learn(-1.f);
+
+                return Token::X;
+            }
+            else
+            {
+                playerX.learn(-1.f);
+                playerO.learn(1.f);
+
+                return Token::O;
+            }
         }
+        else if(boardIsFull(board))
+        {
+            playerX.learn(0.f);
+            playerO.learn(0.f);
 
-        ///Vérifier égalité
-        else if (boardFull())
-        {
-            msg.feedback = 0;
-            gameOver = true;
+            return Token::None;
         }
-
-        ///Changer de turn de joueur
-        if (turn == X)
+        else ///Game is not over: Give turn to other player
         {
-            turn = O;
-        }
-        else
-        {
-            turn = X;
+            if(currentPlayer == &playerX)
+            {
+                currentPlayer = &playerO;
+            }
+            else
+            {
+                currentPlayer = &playerX;
+            }
         }
     }
 }
 
-bool TicTacToe::isWinning(int turn)
+int TicTacToe::playerMove(GeneralAI& player, const vector<int>& input)
 {
-    ///Mettre sous forme d'un board 3X3
-    int jeu[3][3];
-    for(int i(0); i<3; i++)
+    return player.output(input)[0] + 4; //We want the value to be in range [0,8]
+}
+
+bool TicTacToe::isWinning(const vector<Token>& board, Token turn)
+{
+    ///Format in a 3X3 board
+    Token formattedBoard[3][3];
+    for(int i=0; i<3; ++i)
     {
-        for(int j(0); j<3; j++)
+        for(int j=0; j<3; ++j)
         {
-            jeu[i][j] = board[i*3+j];
+            formattedBoard[i][j] = board[i*3+j];
         }
     }
 
-    ///Vérifie horizontalement
-    for (int i(0);i<3;i++)
+    ///Check rows
+    for (int i=0;i<3;++i)
     {
-        if ((jeu[i][0]==turn)&&(jeu[i][1]==turn)&&(jeu[i][2]==turn))
+        if ((formattedBoard[i][0]==turn)&&(formattedBoard[i][1]==turn)&&(formattedBoard[i][2]==turn))
             return true;
     }
 
-    ///Vérifie verticalement
-    for (int j(0);j<3;j++)
+    ///Check columns
+    for (int j=0;j<3;++j)
     {
-        if ((jeu[0][j]==turn)&&(jeu[1][j]==turn)&&(jeu[2][j]==turn))
+        if ((formattedBoard[0][j]==turn)&&(formattedBoard[1][j]==turn)&&(formattedBoard[2][j]==turn))
             return true;
     }
 
-    ///Check diagonal
-    if (((jeu[0][0]==turn)&&(jeu[1][1]==turn)&&(jeu[2][2]==turn)) || ((jeu[2][0]==turn)&&(jeu[1][1]==turn)&&(jeu[0][2]==turn)))
+    ///Check diagonals
+    if (((formattedBoard[0][0]==turn)&&(formattedBoard[1][1]==turn)&&(formattedBoard[2][2]==turn)) || ((formattedBoard[2][0]==turn)&&(formattedBoard[1][1]==turn)&&(formattedBoard[0][2]==turn)))
     {
         return true;
     }
@@ -139,14 +180,14 @@ bool TicTacToe::isWinning(int turn)
     return false;
 }
 
-bool TicTacToe::boardFull()
+bool TicTacToe::boardIsFull(const vector<Token>& board)
 {
-    bool isFull = true;
-    for(int i(0); i<9; i++)
+    for(int i=0; i<9; ++i)
     {
-        if (board[i] == EMPTY)
-            isFull = false;
+        if (board[i] == Token::None)
+            return false;
     }
-    return isFull;
+
+    return true;
 }
 

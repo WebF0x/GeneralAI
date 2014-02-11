@@ -9,7 +9,7 @@
 class RandomAI : public GeneralAI
 {
     public:
-        RandomAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput);
+        RandomAI(int inputSize, int outputSize, int maxInput, int maxOutput);
         ~RandomAI();
 
     private:

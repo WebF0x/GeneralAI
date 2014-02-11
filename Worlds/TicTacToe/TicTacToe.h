@@ -1,7 +1,7 @@
 #ifndef TICTACTOE_H
 #define TICTACTOE_H
 
-#include "../../AIs/CaseBasedAI/CaseBasedAI.h"
+#include "../../AIs/GeneralAI/GeneralAI.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -11,25 +11,29 @@
 class TicTacToe
 {
     public:
+        enum class Token {None, X, O};
+
         TicTacToe();
         virtual ~TicTacToe();
-        void match(GeneralAI* player1, GeneralAI* player2);
 
-        static const int EMPTY = 0;
-        static const int X = 1;
-        static const int O = -1;
+        /**
+        *   Return winner(X,O) of the match, or None if tie game.
+        **/
+        Token match(GeneralAI& player1, GeneralAI& player2);
 
 
-    protected:
-        std::vector<int> board;
-        int turn;
-        bool gameOver;
-        std::default_random_engine* randomGenerator;
 
-        std::string squareStateToString(int);
-        bool isWinning(int);
-        void clearBoard();
-        bool boardFull();
+    private:
+        std::default_random_engine randomGenerator;
+
+        /**
+        *   Converts the player output to an integer in range [0,8]
+        **/
+        int playerMove(GeneralAI& player, const std::vector<int>& input);
+
+        ///End game conditions
+        bool isWinning(const std::vector<Token>& board, Token turn);
+        bool boardIsFull(const std::vector<Token>& board);
 };
 
 #endif // TICTACTOE_H

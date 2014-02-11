@@ -10,7 +10,7 @@
 class CaseBasedAI : public GeneralAI
 {
     public:
-        CaseBasedAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput);
+        CaseBasedAI(int inputSize, int outputSize, int maxInput, int maxOutput);
         virtual ~CaseBasedAI();
 
     private:

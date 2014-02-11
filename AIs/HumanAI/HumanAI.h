@@ -5,10 +5,10 @@
 #include <iostream>
 #include <String>
 
-class ConsoleHumanAI : public GeneralAI
+class HumanAI : public GeneralAI
 {
     public:
-        ConsoleHumanAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput);
+        HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput);
 
         virtual std::vector<int> coreOutput(const std::vector<int>& input) ;
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
@@ -19,6 +19,7 @@ class ConsoleHumanAI : public GeneralAI
 
     private:
         void printVector(const std::vector<int>& vect) const;
+        virtual void visualizeInput(const std::vector<int>& input);
 };
 
 #endif // HUMANAI_H

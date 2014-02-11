@@ -2,7 +2,7 @@
 
 using namespace std;
 
-RandomAI::RandomAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput)
+RandomAI::RandomAI(int inputSize, int outputSize, int maxInput, int maxOutput)
     : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
 {
     unsigned int seed = chrono::system_clock::now().time_since_epoch().count();

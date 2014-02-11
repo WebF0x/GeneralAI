@@ -47,6 +47,6 @@ void SaveSystem::load(const string& fileName)
     //Close file
     saveFile.close();
 
-    //Our job is done, the AI subclasses will deal with the memory however they see fit
+    //Job's done!
     setMemory(memory);
 }

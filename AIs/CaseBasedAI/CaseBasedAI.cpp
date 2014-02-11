@@ -2,7 +2,7 @@
 
 using namespace std;
 
-CaseBasedAI::CaseBasedAI(unsigned int inputSize, unsigned int outputSize, int maxInput, int maxOutput)
+CaseBasedAI::CaseBasedAI(int inputSize, int outputSize, int maxInput, int maxOutput)
     : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
 {
     unsigned int seed = chrono::system_clock::now().time_since_epoch().count();

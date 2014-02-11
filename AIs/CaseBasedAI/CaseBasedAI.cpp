@@ -6,16 +6,15 @@ CaseBasedAI::CaseBasedAI(unsigned int inputSize, unsigned int outputSize, int ma
     : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
 {
     unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
-    randomGenerator = new default_random_engine(seed);
+    randomGenerator = default_random_engine(seed);
 }
 
 CaseBasedAI::~CaseBasedAI()
 {
-    delete randomGenerator;
 }
 
 
-vector<int> CaseBasedAI::coreOutput(const vector<int>& input) const
+vector<int> CaseBasedAI::coreOutput(const vector<int>& input)
 {
     map< vector<int>, map<vector<int>, float> > ::const_iterator  situation = m_memory.find(input);
 
@@ -191,26 +190,26 @@ void CaseBasedAI::setMemory(std::vector<int> memory)
     }
 }
 
-vector<int> CaseBasedAI::randomOutput() const
+vector<int> CaseBasedAI::randomOutput()
 {
     vector<int> output(OUTPUT_SIZE);
     uniform_int_distribution<int> distribution(-OUTPUT_AMPLITUDE,OUTPUT_AMPLITUDE);
 
     for(int i=0; i<OUTPUT_SIZE; ++i)
     {
-        output[i] = distribution(*randomGenerator);  //Had to use pointers because this method is const. Can't modify the object RandomAI
+        output[i] = distribution(randomGenerator);
     }
 
     return output;
 }
 
-float CaseBasedAI::randomProbability() const
+float CaseBasedAI::randomProbability()
 {
     uniform_real_distribution<float> distribution(0, 1);
-    return distribution(*randomGenerator);
+    return distribution(randomGenerator);
 }
 
-vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reactions) const
+vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reactions)
 {
     vector<int> output = randomOutput();
     if(!reactions.count(output))    ///It is a new reaction
@@ -276,7 +275,7 @@ vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reaction
     return bestOutput(reactions);   //By default
 }
 
-vector<int> CaseBasedAI::bestOutput(const map<vector<int>, float>& reactions) const
+vector<int> CaseBasedAI::bestOutput(const map<vector<int>, float>& reactions)
 {
     if(reactions.empty())
     {
@@ -309,7 +308,7 @@ vector<int> CaseBasedAI::bestOutput(const map<vector<int>, float>& reactions) co
     if(bestKnownOutputs.size() > 1)
     {
         uniform_int_distribution<int> distribution(0, bestKnownOutputs.size()-1);
-        bestKnownOutputIndex = distribution(*randomGenerator);
+        bestKnownOutputIndex = distribution(randomGenerator);
     }
 
     return bestKnownOutputs[bestKnownOutputIndex];

@@ -48,6 +48,7 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
         currentPlayer = &playerO;
     }
 
+    ///Play match
     while(true)
     {
         //Create data to be sent to player
@@ -76,13 +77,13 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
         }
 
         //Ask player for his move
-        int playerMove = TicTacToe::playerMove(*currentPlayer, input);
+        int playerMove = getPlayerMove(*currentPlayer, input);
 
         //Make sure playerMove is valid
-        while(board[playerMove] != Token::None) //Square not empty
+        while(board[playerMove] != Token::None) //Illegal move: Square not empty
         {
-            currentPlayer->learn(-1.f);                      //Punish
-            playerMove = TicTacToe::playerMove(*currentPlayer, input);  //Ask again
+            currentPlayer->learn(ILLEGAL_MOVE_WORTH);                      //Punish
+            playerMove = getPlayerMove(*currentPlayer, input);  //Ask again
         }
 
         //Player plays his move
@@ -106,23 +107,23 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
             //Reward and Punish appropriate player
             if(currentPlayer == &playerX)
             {
-                playerX.learn(1.f);
-                playerO.learn(-1.f);
+                playerX.learn(WON_GAME_WORTH);
+                playerO.learn(LOST_GAME_WORTH);
 
                 return Token::X;
             }
             else
             {
-                playerX.learn(-1.f);
-                playerO.learn(1.f);
+                playerX.learn(LOST_GAME_WORTH);
+                playerO.learn(WON_GAME_WORTH);
 
                 return Token::O;
             }
         }
         else if(boardIsFull(board))
         {
-            playerX.learn(0.f);
-            playerO.learn(0.f);
+            playerX.learn(TIE_GAME_WORTH);
+            playerO.learn(TIE_GAME_WORTH);
 
             return Token::None;
         }
@@ -140,7 +141,7 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
     }
 }
 
-int TicTacToe::playerMove(GeneralAI& player, const vector<int>& input)
+int TicTacToe::getPlayerMove(GeneralAI& player, const vector<int>& input)
 {
     return player.output(input)[0] + 4; //We want the value to be in range [0,8]
 }

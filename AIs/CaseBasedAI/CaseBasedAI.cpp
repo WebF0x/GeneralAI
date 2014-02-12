@@ -36,7 +36,7 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input)
     float randomNumber = randomProbability();
 
     ///Either Repeat previous successful reaction
-    if(bestKnownOutcome > randomNumber)
+    if(bestKnownOutcome >= randomNumber)
     {
         return bestKnownOutput;
     }
@@ -47,9 +47,10 @@ vector<int> CaseBasedAI::coreOutput(const vector<int>& input)
         {
             return randomNewOutput(situation->second);
         }
-        catch(runtime_error e)  //Not a single new output exists
+        //Not a single new output exists
+        catch(runtime_error e)
         {
-            //The last decision I made must be worth as much as this bestKnownOutput
+            //Last decision made must be worth either less than or equal to this bestKnownOutput
             learn(bestKnownOutcome);
             return bestKnownOutput;
         }
@@ -67,7 +68,6 @@ void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int
         map<vector<int>, float> newEntry;
         newEntry[output] = outcome;
         m_memory[input] = newEntry;
-        return;
     }
     ///Input seen before
     else
@@ -78,24 +78,20 @@ void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int
         if(reaction == situation->second.end())
         {
             situation->second[output] = outcome;
-            return;
         }
         ///Output seen before
         else
         {
-            float newOutcome = outcome;
-
-            if(newOutcome < -1.f)
+            /*
+            *   The outcome can only decrease.
+            *   Why: Let's say we play we play chess. I make a move. My opponent could checkmate me but makes a mistake and doesn't and I win. I recall my move as a good move.
+            *       The next time this situation presents itself, the opponent plays the checkmate and wins.
+            *       The correct reaction is to forget the last time I was lucky and remember that my move can get me checkmated. Doing this move is as bad as losing.
+            */
+            if(outcome < situation->second[output])
             {
-                newOutcome = -1.f;
+                situation->second[output] = outcome;
             }
-            else if(newOutcome > 1.f)
-            {
-                newOutcome = 1.f;
-            }
-
-            situation->second[output] = newOutcome;
-            return;
         }
     }
 }
@@ -149,7 +145,7 @@ void CaseBasedAI::setMemory(std::vector<int> memory)
 {
     if(memory.size() < 4)
     {
-        throw length_error(string("memory vector too small"));
+        return;
     }
 
     int expectedValues[4] = {INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE};
@@ -299,7 +295,7 @@ vector<int> CaseBasedAI::bestOutput(const map<vector<int>, float>& reactions)
 {
     if(reactions.empty())
     {
-        throw length_error(string( "parameter vector cannot be empty" ));
+        throw length_error(string( " CaseBasedAI::bestOutput()'s parameter is empty" ));
     }
 
     vector< vector<int> > bestKnownOutputs;

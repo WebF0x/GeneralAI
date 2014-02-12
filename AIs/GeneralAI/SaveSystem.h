@@ -11,11 +11,17 @@
 class SaveSystem
 {
     public:
-        /// Save system state in a file
-        void save(const std::string& fileName) const;
+        /**
+        * Save system state in a file
+        * Returns true if successful
+        **/
+        bool save(const std::string& fileName) const;
 
-        /// Load system state from a file
-        void load(const std::string& fileName);
+        /**
+        * Load system state from a file
+        * Returns true if successful
+        **/
+        bool load(const std::string& fileName);
 
     protected:
         /// Returns a vector<int> that represents the system state

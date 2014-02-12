@@ -2,14 +2,14 @@
 
 using namespace std;
 
-void SaveSystem::save(const string& fileName) const
+bool SaveSystem::save(const string& fileName) const
 {
     //Open saveFile
     ofstream saveFile;
     saveFile.open(fileName.data());
     if (!saveFile.is_open())
     {
-        throw fstream::failure(string("Unable to open file"));
+        return false;   //Failure
     }
 
     //Get memory to be saved
@@ -23,16 +23,18 @@ void SaveSystem::save(const string& fileName) const
 
     //Close file
     saveFile.close();
+
+    return true;    //Success
 }
 
-void SaveSystem::load(const string& fileName)
+bool SaveSystem::load(const string& fileName)
 {
     //Open saveFile
     ifstream saveFile;
     saveFile.open(fileName.data());
     if(!saveFile.is_open())
     {
-        throw fstream::failure(string("Unable to open file"));
+        return false;   //Failure
     }
 
     // Recreate memory from file
@@ -49,4 +51,6 @@ void SaveSystem::load(const string& fileName)
 
     //Job's done!
     setMemory(memory);
+
+    return true;    //Success
 }

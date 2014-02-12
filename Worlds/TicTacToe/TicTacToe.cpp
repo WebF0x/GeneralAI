@@ -32,21 +32,22 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
         throw invalid_argument(string("Invalid GeneralAI properties"));
     }
 
+    ///Let AI's know this is the start of a new game
+    playerX.reset();
+    playerO.reset();
 
     /// Empty board of 9 empty squares
     vector<Token> board = vector<Token>(9, Token::None);
 
-    ///Pick first player
-    GeneralAI* currentPlayer;
+    ///Pick random first player
+    GeneralAI *currentPlayer = &playerX;
+    GeneralAI *waitingPlayer = &playerO;
     uniform_int_distribution<int> distribution(0,1);
     if(distribution(randomGenerator) == 0)
     {
-        currentPlayer = &playerX;
+        swap(currentPlayer,waitingPlayer);
     }
-    else
-    {
-        currentPlayer = &playerO;
-    }
+
 
     ///Play match
     while(true)
@@ -82,8 +83,13 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
         //Make sure playerMove is valid
         while(board[playerMove] != Token::None) //Illegal move: Square not empty
         {
-            currentPlayer->learn(ILLEGAL_MOVE_WORTH);                      //Punish
-            playerMove = getPlayerMove(*currentPlayer, input);  //Ask again
+            currentPlayer->learn(ILLEGAL_MOVE_WORTH);
+
+            //Learn from other player's success/failure
+            auto lastLesson = currentPlayer->lastLessonLearned();
+            waitingPlayer->learn(lastLesson);
+
+            playerMove = getPlayerMove(*currentPlayer, input);
         }
 
         //Player plays his move
@@ -119,24 +125,31 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
 
                 return Token::O;
             }
+
+            //Learn from other player's success/failure
+            auto lastLessonX = playerX.lastLessonLearned();
+            auto lastLessonO = playerO.lastLessonLearned();
+
+            playerX.learn(lastLessonO);
+            playerO.learn(lastLessonX);
         }
         else if(boardIsFull(board))
         {
             playerX.learn(TIE_GAME_WORTH);
             playerO.learn(TIE_GAME_WORTH);
 
+            //Learn from other player's success/failure
+            auto lastLessonX = playerX.lastLessonLearned();
+            auto lastLessonO = playerO.lastLessonLearned();
+
+            playerX.learn(lastLessonO);
+            playerO.learn(lastLessonX);
+
             return Token::None;
         }
         else ///Game is not over: Give turn to other player
         {
-            if(currentPlayer == &playerX)
-            {
-                currentPlayer = &playerO;
-            }
-            else
-            {
-                currentPlayer = &playerX;
-            }
+            swap(currentPlayer,waitingPlayer);
         }
     }
 }

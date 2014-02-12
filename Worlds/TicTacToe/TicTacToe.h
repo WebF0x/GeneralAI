@@ -7,6 +7,7 @@
 #include <vector>
 #include <chrono>
 #include <random>
+#include <algorithm>    //swap
 
 class TicTacToe
 {

@@ -48,18 +48,22 @@ void GeneralAI::learn(const vector<int>& input, const vector<int>& output, float
     else
     {
         coreLearn(input, output, outcome);
+
+        m_lastLessonLearned = make_tuple(input,output,outcome);
+        m_lastLessonLearnedEnabled = true;
     }
+}
+
+void GeneralAI::learn(tuple< vector<int>, vector<int>, float> lesson)
+{
+    learn(get<0>(lesson), get<1>(lesson), get<2>(lesson));
 }
 
 void GeneralAI::learn(float outcome)
 {
-    if(implicitLearnEnabled)
+    if(m_implicitLearnEnabled) //output() has been called once
     {
         learn(m_lastInput, m_lastOutput, outcome);
-    }
-    else
-    {
-        throw logic_error(string("GeneralAI::learn(float) only works after a successful GeneralAI::output(const vector<int>&) call."));
     }
 }
 
@@ -80,7 +84,27 @@ vector<int> GeneralAI::output(const vector<int>& input)
     // Remember the last decision made
     m_lastInput = input;
     m_lastOutput = output;
-    implicitLearnEnabled = true;
+    m_implicitLearnEnabled = true;
 
     return output;
 }
+
+void GeneralAI::reset()
+{
+    m_implicitLearnEnabled = false;
+}
+
+tuple< vector<int>, vector<int>, float> GeneralAI::lastLessonLearned()
+{
+    if(m_lastLessonLearnedEnabled)
+    {
+        return m_lastLessonLearned;
+    }
+    else
+    {
+        throw logic_error(string("GeneralAI::m_lastLessonLearnedEnabled == false"));
+    }
+}
+
+
+

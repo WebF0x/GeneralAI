@@ -4,6 +4,7 @@
 #include "SaveSystem.h"
 #include <iostream>
 #include <stdexcept>
+#include <tuple>
 
 /**
 *   Abstract class for general artificial intelligence systems
@@ -32,10 +33,14 @@ class GeneralAI : public SaveSystem
         void learn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
 
         /// Learn the outcome of the last output(input)
+        /// Note: This is what m_implicitLearnEnabled enables
         void learn(float outcome);
 
+        void learn(std::tuple< std::vector<int>, std::vector<int>, float> lesson);
 
+        void reset();
 
+        std::tuple< std::vector<int>, std::vector<int>, float> lastLessonLearned();
 
     private:
         /// Subclasses must implement these methods
@@ -44,7 +49,10 @@ class GeneralAI : public SaveSystem
 
         /// Short-term memory
         std::vector<int> m_lastInput, m_lastOutput;
-        bool implicitLearnEnabled = false;
+        bool m_implicitLearnEnabled = false;
+
+        std::tuple<std::vector<int>, std::vector<int>, float> m_lastLessonLearned;
+        bool m_lastLessonLearnedEnabled = false;
 };
 
 #endif // GENERALAI_H

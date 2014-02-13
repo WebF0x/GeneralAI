@@ -27,20 +27,20 @@ class GeneralAI : public SaveSystem
         /**
         *   Learn the outcome of output(input)
         *
-        *   Worst outcome: -1
-        *   Best outcome :  1
+        *   Worst outcome: -1.f
+        *   Best outcome :  1.f
         **/
         void learn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
+        void learn(const std::tuple<std::vector<int>, std::vector<int>, float>& lesson);
+        void learn(float outcome);  /// Learn the outcome of the lastDecision
 
-        /// Learn the outcome of the last output(input)
-        /// Note: This is what m_implicitLearnEnabled enables
-        void learn(float outcome);
-
-        void learn(std::tuple< std::vector<int>, std::vector<int>, float> lesson);
-
+        std::pair < std::vector<int>, std::vector<int> >       lastDecision() const;
+        std::tuple< std::vector<int>, std::vector<int>, float> lastLesson() const;
         void reset();
 
-        std::tuple< std::vector<int>, std::vector<int>, float> lastLessonLearned();
+        bool validInput(const std::vector<int>& input) const;
+        bool validOutput(const std::vector<int>& output) const;
+        bool validOutcome(float outcome) const;
 
     private:
         /// Subclasses must implement these methods
@@ -48,11 +48,13 @@ class GeneralAI : public SaveSystem
         virtual std::vector<int> coreOutput(const std::vector<int>& input) = 0;
 
         /// Short-term memory
-        std::vector<int> m_lastInput, m_lastOutput;
-        bool m_implicitLearnEnabled = false;
+        std::pair<std::vector<int>,std::vector<int> > m_lastDecision;
+        std::tuple<std::vector<int>, std::vector<int>, float> m_lastLesson;
+        bool m_lastDecisionEnabled = false;
+        bool m_lastLessonEnabled = false;
 
-        std::tuple<std::vector<int>, std::vector<int>, float> m_lastLessonLearned;
-        bool m_lastLessonLearnedEnabled = false;
+
+        bool validVector(const std::vector<int>& v, unsigned int size, int amplitude) const;
 };
 
 #endif // GENERALAI_H

@@ -10,6 +10,6 @@ Interface
 - void learn(lesson)
 - Lesson lastLessonLearned()
 - void reset() //Basically, clear short-term memory but remember long-term memory  e.g.: Starting new game
-- 
+
 - void save(fileName)
 - void load(fileName)

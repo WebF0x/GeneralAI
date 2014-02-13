@@ -1,7 +1,9 @@
 RandomAI
 ========
 
+Useful to test if your AI is better than pure luck and if it can learn and improve itself over time.
+
 - Random outputs
 - No memory whatsoever
 
-Useful to test if your AI is smarter than a dice throw.
+

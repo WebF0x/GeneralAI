@@ -1,10 +1,10 @@
 CaseBasedAI
 ===========
 
+Knowledge Dictionary
+--------------------
 For every given input, this AI remembers multiple output-outcome pairs:
 
-Dictionary
-----------
 - input_1
  - output_a = outcome_a
  - output_b = outcome_b

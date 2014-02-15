@@ -12,7 +12,7 @@ Create a general AI interface
 
 Create a general World interface ??
 
-Create various AI systems
+Create various AI's
 - Human
 - Neural network
 - Case-Based

@@ -53,7 +53,6 @@ class GeneralAI : public SaveSystem
         bool m_lastDecisionEnabled = false;
         bool m_lastLessonEnabled = false;
 
-
         bool validVector(const std::vector<int>& v, unsigned int size, int amplitude) const;
 };
 

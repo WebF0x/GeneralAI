@@ -132,7 +132,7 @@ vector<int> CaseBasedAI::getMemory() const
         }
     }
 
-    ///Save format
+    /// GeneralAI
     memory.push_back(INPUT_SIZE);
     memory.push_back(OUTPUT_SIZE);
     memory.push_back(INPUT_AMPLITUDE);
@@ -143,11 +143,13 @@ vector<int> CaseBasedAI::getMemory() const
 
 void CaseBasedAI::setMemory(std::vector<int> memory)
 {
+    /// Parameter validation
     if(memory.size() < 4)
     {
         return;
     }
 
+    /// GeneralAI
     int expectedValues[4] = {INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE};
     for(int i=0;i<4;++i)
     {
@@ -158,6 +160,7 @@ void CaseBasedAI::setMemory(std::vector<int> memory)
         memory.pop_back();
     }
 
+    /// Real memory
     unsigned int memoryIndex = 0;
 
     while(memoryIndex < memory.size())

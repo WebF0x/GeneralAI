@@ -13,6 +13,14 @@ class NeuralNetAI : public GeneralAI
         virtual ~NeuralNetAI();
 
     private:
+
+        struct Node
+        {
+            bool valueDefined = false;
+            float value = 0.f;
+        };
+
+        ///GeneralAI
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
         virtual std::vector<int> coreOutput(const std::vector<int>& input);
 
@@ -24,8 +32,14 @@ class NeuralNetAI : public GeneralAI
         std::default_random_engine randomGenerator;
         float randomProbability();
 
-        /// Network structure
-        /**/std::vector< std::vector<int> > m_layers;   //Are weights integers, floats, etc.?
+        ///Network
+        std::vector<Node> m_nodes;
+        std::vector<std::vector<float>> m_weights;
+
+        float function(float x);
+        virtual float coreFunction(float x);
+
+
 };
 
 #endif // NEURALNETAI_H

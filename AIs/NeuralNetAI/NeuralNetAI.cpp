@@ -28,14 +28,13 @@ vector<int> NeuralNetAI::getMemory() const
     /// Real memory
     vector<int> memory;
 
-    memory.push_back(m_layers.size());
+    memory.push_back(m_weights.size()); // Both dimensions of m_weights are equal: only need to save it once (Square Matrix)
 
-    for(auto &layer : m_layers)
+    for(auto &row : m_weights)
     {
-        memory.push_back(layer.size());
-
-        for(auto i : layer)
+        for(auto weight : row)
         {
+            weight * (float)numeric_limits<int>::max()
             memory.push_back(i);
         }
     }
@@ -72,12 +71,12 @@ void NeuralNetAI::setMemory(vector<int> memory)
     unsigned int memoryIndex = 0;
 
     const int NB_LAYERS = memory[memoryIndex++];
-    m_layers = vector< vector<int> >(NB_LAYERS);
+    m_weights = vector< vector<float> >(NB_LAYERS);
 
-    for(auto &layer : m_layers)
+    for(auto &layer : m_weights)
     {
         const int LAYER_SIZE = memory[memoryIndex++];
-        layer = vector<int>(LAYER_SIZE);
+        layer = vector<float>(LAYER_SIZE);
 
         for(int i=0; i<LAYER_SIZE; ++i)
         {
@@ -91,3 +90,36 @@ float NeuralNetAI::randomProbability()
     uniform_real_distribution<float> distribution(0, 1);
     return distribution(randomGenerator);
 }
+
+float NeuralNetAI::function(const float x)
+{
+    /// Function
+    float y = coreFunction(x);
+
+    /// Make sure y is valid
+    if(y < -OUTPUT_AMPLITUDE)
+    {
+        return -OUTPUT_AMPLITUDE;
+    }
+
+    if(y > OUTPUT_AMPLITUDE)
+    {
+        return OUTPUT_AMPLITUDE;
+    }
+
+    return y;
+}
+
+float NeuralNetAI::coreFunction(const float x)
+{
+    /// Function
+    return x;
+}
+
+
+
+
+
+
+
+

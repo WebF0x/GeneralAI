@@ -1,25 +1,47 @@
 #ifndef GENERALAI_H
 #define GENERALAI_H
 
-#include "SaveSystem.h"
 #include <iostream>
 #include <stdexcept>
 #include <tuple>
 
+//Serialization
+#include <fstream>
+#include <cereal/archives/JSON.hpp>
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/xml.hpp>
+
 /**
 *   Abstract class for general artificial intelligence systems
 *
-*   Public interface and core methods to be implemented by subclasses
-*
 *   Design pattern: Non-Virtual Interface
 **/
-class GeneralAI : public SaveSystem
+class GeneralAI// : public SaveSystem
 {
+    friend cereal::access;
+
     public:
         const int INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
 
         GeneralAI(int inputSize, int outputSize, int inputAmplitude, int outputAmplitude);
         virtual ~GeneralAI();
+
+        ///Serialization (save/load)
+        template<class AI, class Archive = cereal::BinaryOutputArchive>
+        static void save(const AI& ai, const std::string& fileName)
+        {
+            std::ofstream os(fileName.data());
+            Archive ar( os );
+            ar( ai );
+        }
+
+        template<class AI, class Archive = cereal::BinaryInputArchive>
+        static void load(AI& ai, const std::string& fileName)
+        {
+            std::ifstream is(fileName.data());
+            Archive ar( is );
+            ar( ai );
+        }
 
         /// Returns AI's output
         std::vector<int> output(const std::vector<int>& input);
@@ -43,6 +65,24 @@ class GeneralAI : public SaveSystem
         bool validOutcome(float outcome) const;
 
     private:
+        //Serialization
+        /*
+        *   Copy/paste this method in subclasses
+        *
+        *   Use this format:
+        *       ar(cereal::virtual_base_class<Base>( this ), member1, member2, ...);
+        *
+        *   Currently working to find a neater way to do this.
+        */
+        template <class Archive>
+        void serialize( Archive & ar )
+        {
+            ar(const_cast<int &>(INPUT_SIZE),
+               const_cast<int &>(OUTPUT_SIZE),
+               const_cast<int &>(INPUT_AMPLITUDE),
+               const_cast<int &>(OUTPUT_AMPLITUDE));
+        }
+
         /// Subclasses must implement these methods
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome) = 0;
         virtual std::vector<int> coreOutput(const std::vector<int>& input) = 0;

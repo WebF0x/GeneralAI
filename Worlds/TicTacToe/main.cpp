@@ -10,27 +10,29 @@ bool verboseEndGame(TicTacToe::Token);
 int main()
 {
     /// Initialization
-    const unsigned int NUMBER_OF_GAMES = 100000; //-1 to play an infinite number of games
+    const unsigned int NUMBER_OF_GAMES = 1000; //-1 to play an infinite number of games
     const string SAVE_FILE_X = "TicTacToeX.save";
     const string SAVE_FILE_O = "TicTacToeO.save";
     const bool VERBOSE_ENABLED = false;          //if(VERBOSE_ENABLED): the stats are calculated for playerO. Use with small NUMBER_OF_GAMES or with a human player
 
 
     TicTacToe game;
-    //GeneralAI* playerX = new TicTacToeHuman(9, 1, 1, 4);
-    //GeneralAI* playerX = new RandomAI(9, 1, 1, 4);
-    GeneralAI* playerX = new CaseBasedAI(9, 1, 1, 4);
-    GeneralAI* playerO = new CaseBasedAI(9, 1, 1, 4);
+    CaseBasedAI playerX(9, 1, 1, 4);
+    CaseBasedAI playerO(9, 1, 1, 4);
 
-    ///Load AI save files if they exist
-    playerX->load(SAVE_FILE_X);
-    playerO->load(SAVE_FILE_O);
+    cout<<"start load"<<endl;
+
+    GeneralAI::load<CaseBasedAI>(playerX, SAVE_FILE_X);
+    GeneralAI::load<CaseBasedAI>(playerO, SAVE_FILE_O);
+
+    cout<<"load completed"<<endl;
+    cout<<"start games"<<endl;
 
     /// Play games
     for(unsigned int i=0; i != NUMBER_OF_GAMES; ++i)
     {
         TicTacToe::Token winner;
-        winner = game.match(*playerX, *playerO);
+        winner = game.match(playerX, playerO);
 
         if(VERBOSE_ENABLED)
         {
@@ -41,11 +43,13 @@ int main()
         }
     }
 
-    playerX->save(SAVE_FILE_X);
-    playerO->save(SAVE_FILE_O);
+    cout<<"games completed"<<endl;
+    cout<<"start save"<<endl;
 
-    delete playerX;
-    delete playerO;
+    GeneralAI::save<CaseBasedAI>(playerX, SAVE_FILE_X);
+    GeneralAI::save<CaseBasedAI>(playerO, SAVE_FILE_O);
+
+    cout<<"save completed"<<endl;
 
     return 0;
 }

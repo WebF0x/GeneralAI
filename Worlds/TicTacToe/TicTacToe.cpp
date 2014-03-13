@@ -86,7 +86,7 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
             currentPlayer->learn(ILLEGAL_MOVE_WORTH);
 
             //Learn from other player's success/failure
-            auto lastLesson = currentPlayer->lastLessonLearned();
+            auto lastLesson = currentPlayer->lastLesson();
             waitingPlayer->learn(lastLesson);
 
             playerMove = getPlayerMove(*currentPlayer, input);
@@ -127,8 +127,8 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
             }
 
             //Learn from other player's success/failure
-            auto lastLessonX = playerX.lastLessonLearned();
-            auto lastLessonO = playerO.lastLessonLearned();
+            auto lastLessonX = playerX.lastLesson();
+            auto lastLessonO = playerO.lastLesson();
 
             playerX.learn(lastLessonO);
             playerO.learn(lastLessonX);
@@ -139,8 +139,8 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
             playerO.learn(TIE_GAME_WORTH);
 
             //Learn from other player's success/failure
-            auto lastLessonX = playerX.lastLessonLearned();
-            auto lastLessonO = playerO.lastLessonLearned();
+            auto lastLessonX = playerX.lastLesson();
+            auto lastLessonO = playerO.lastLesson();
 
             playerX.learn(lastLessonO);
             playerO.learn(lastLessonX);

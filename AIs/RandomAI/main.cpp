@@ -9,18 +9,7 @@ int main()
     const int maxInput(3), maxOutput(100);
     const string fileName = "myDummySave";
 
-    //Create GeneralAI
-    GeneralAI *ai = new RandomAI(inputSize,outputSize,maxInput,maxOutput);
-
-    //load
-    try
-    {
-        ai->load(fileName);
-    }
-    catch(exception& e)
-    {
-        cout<<e.what()<<endl;
-    }
+    RandomAI *ai = new RandomAI(inputSize,outputSize,maxInput,maxOutput);
 
     //output
     try
@@ -44,16 +33,6 @@ int main()
         vector<int> input(inputSize), output(outputSize);
         float outcome = -1;
         ai->learn(input, output, outcome);
-    }
-    catch(exception& e)
-    {
-        cout<<e.what()<<endl;
-    }
-
-    //save
-    try
-    {
-        ai->save(fileName);
     }
     catch(exception& e)
     {

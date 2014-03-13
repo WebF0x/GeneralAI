@@ -96,108 +96,6 @@ void CaseBasedAI::coreLearn(const std::vector<int>& input, const std::vector<int
     }
 }
 
-vector<int> CaseBasedAI::getMemory() const
-{
-    vector<int> memory;
-
-    ///Real memories
-    for ( map< vector<int>, map<vector<int>, float> >::const_iterator itMem=m_memory.begin(); itMem!=m_memory.end(); ++itMem)
-    {
-        const vector<int> input = itMem->first;
-        const map<vector<int>, float> reactions = itMem->second;
-
-        //Push input
-        for(int i=0; i<INPUT_SIZE; ++i)
-        {
-            memory.push_back(input[i]);
-        }
-
-        //Push size of reactions map
-        memory.push_back(reactions.size());
-
-        //Push reactions
-        for (  map<vector<int>, float>::const_iterator itReaction=reactions.begin(); itReaction!=reactions.end(); ++itReaction)
-        {
-            vector<int> output = itReaction->first;
-            float outcome = itReaction->second;
-
-            //Push output
-            for(int i=0; i<OUTPUT_SIZE; ++i)
-            {
-                memory.push_back(output[i]);
-            }
-
-            //Push outcome
-            memory.push_back(outcome * (float)numeric_limits<int>::max()); //Fraction of the maximum int value
-        }
-    }
-
-    /// GeneralAI
-    memory.push_back(INPUT_SIZE);
-    memory.push_back(OUTPUT_SIZE);
-    memory.push_back(INPUT_AMPLITUDE);
-    memory.push_back(OUTPUT_AMPLITUDE);
-
-    return memory;
-}
-
-void CaseBasedAI::setMemory(std::vector<int> memory)
-{
-    /// Parameter validation
-    if(memory.size() < 4)
-    {
-        return;
-    }
-
-    /// GeneralAI
-    int expectedValues[4] = {INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE};
-    for(int i=0;i<4;++i)
-    {
-        if(memory.back() != expectedValues[3-i])
-        {
-            throw invalid_argument(string("bad memory format"));
-        }
-        memory.pop_back();
-    }
-
-    /// Real memory
-    unsigned int memoryIndex = 0;
-
-    while(memoryIndex < memory.size())
-    {
-        vector<int> input(INPUT_SIZE);
-
-        //Pull input
-        for(int i=0; i<INPUT_SIZE; ++i)
-        {
-            input[i] = memory[memoryIndex++];
-        }
-
-        //Pull reactions size
-        const int REACTION_SIZE = memory[memoryIndex++];
-        map<vector<int>, float> reactions;
-
-        //Pull each reaction
-        for(int i=0; i<REACTION_SIZE; ++i)
-        {
-            vector<int> output(OUTPUT_SIZE);
-
-            for(int j=0; j<OUTPUT_SIZE; ++j)
-            {
-                output[j] = memory[memoryIndex++];
-            }
-
-            float outcome = (float)memory[memoryIndex++] / (float)numeric_limits<int>::max();
-
-            //Recreate the reaction
-            reactions[output] = outcome;
-        }
-
-        //Recreate memory
-        m_memory[input] = reactions;
-    }
-}
-
 vector<int> CaseBasedAI::randomOutput()
 {
     vector<int> output(OUTPUT_SIZE);
@@ -241,7 +139,7 @@ vector<int> CaseBasedAI::randomNewOutput(const map<vector<int>, float>& reaction
         *=====
         /////////////////////////////////////////////////////////////////////////////
         This algorithm works kind of like primary school paper arithmetic.
-        It looks rather ugly, I'll refactor it later.
+        It looks ugly, I'll refactor it later.
         Just trust me that it works, I tried it on paper!
     */
     while(decreasing!=minOutput || increasing!=maxOutput)  //As long as not everything has been tried

@@ -1,7 +1,6 @@
 #ifndef GENERALAI_H
 #define GENERALAI_H
 
-#include <iostream>
 #include <stdexcept>
 #include <tuple>
 
@@ -64,6 +63,9 @@ class GeneralAI// : public SaveSystem
         bool validOutput(const std::vector<int>& output) const;
         bool validOutcome(float outcome) const;
 
+    protected:
+        static bool validVector(const std::vector<int>& v, unsigned int size, int amplitude);
+
     private:
         //Serialization
         /*
@@ -72,11 +74,15 @@ class GeneralAI// : public SaveSystem
         *   Use this format:
         *       ar(cereal::virtual_base_class<Base>( this ), member1, member2, ...);
         *
-        *   Currently working to find a neater way to do this.
+        *   Is there a neater way to do this?
+        *   Make this method use a virtual method maybe...
+        *   Apparently, templates functions can't be virtual...
         */
         template <class Archive>
         void serialize( Archive & ar )
         {
+            //ar(cereal::virtual_base_class<Base>( this ), member1, member2, ...);
+
             ar(const_cast<int &>(INPUT_SIZE),
                const_cast<int &>(OUTPUT_SIZE),
                const_cast<int &>(INPUT_AMPLITUDE),
@@ -88,12 +94,13 @@ class GeneralAI// : public SaveSystem
         virtual std::vector<int> coreOutput(const std::vector<int>& input) = 0;
 
         /// Short-term memory
+        /*
+        *   Should this be covered in GeneralAI or the worlds should take care of it?
+        */
         std::pair<std::vector<int>,std::vector<int> > m_lastDecision;
         std::tuple<std::vector<int>, std::vector<int>, float> m_lastLesson;
         bool m_lastDecisionEnabled = false;
         bool m_lastLessonEnabled = false;
-
-        bool validVector(const std::vector<int>& v, unsigned int size, int amplitude) const;
 };
 
 #endif // GENERALAI_H

@@ -117,7 +117,7 @@ tuple< vector<int>, vector<int>, float> GeneralAI::lastLesson() const
 }
 
 
-bool GeneralAI::validVector(const vector<int>& v, const unsigned int size, const int amplitude) const
+bool GeneralAI::validVector(const vector<int>& v, const unsigned int size, const int amplitude)
 {
     if(v.size() != size)
     {

@@ -3,16 +3,16 @@
 
 #include "../GeneralAI/GeneralAI.h"
 #include <iostream>
-#include <String>
+#include <string>
+
+#include <cereal/types/string.hpp>
 
 class HumanAI : public GeneralAI
 {
+    friend cereal::access;
+
     public:
         HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput);
-
-    protected:
-        virtual std::vector<int> getMemory() const;
-        virtual void setMemory(std::vector<int> memory);
 
     private:
         virtual std::vector<int> coreOutput(const std::vector<int>& input) ;
@@ -21,6 +21,35 @@ class HumanAI : public GeneralAI
 
         void printVector(const std::vector<int>& vect) const;
 
+        template <class Archive>
+        void save( Archive & ar ) const
+        {
+            std::cout<<"Write notes to save:"<<std::endl;
+
+            std::string memory;
+            std::getline (std::cin,memory);
+
+            std::cout<<std::endl;
+
+            ar(cereal::virtual_base_class<GeneralAI>( this ), memory);
+        }
+
+        template <class Archive>
+        void load( Archive & ar )
+        {
+            std::string memory;
+            ar(cereal::virtual_base_class<GeneralAI>( this ), memory);
+
+            std::cout<<"Here is your memory:"<<std::endl<<memory<<std::endl;
+        }
+
 };
+
+//Separate the serialization in two parts: save and load
+namespace cereal
+{
+  template <class Archive>
+  struct specialize<Archive, HumanAI, cereal::specialization::member_load_save> {};
+}
 
 #endif // HUMANAI_H

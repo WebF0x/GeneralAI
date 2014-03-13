@@ -15,24 +15,12 @@ RandomAI::~RandomAI()
 
 void RandomAI::coreLearn(const vector<int>& input, const vector<int>& output, float outcome)
 {
-    //This AI is too stupid to learn anything!
+    //This AI is too dumb to learn anything!
 }
 
 vector<int> RandomAI::coreOutput(const vector<int>& input)
 {
     return randomOutput();
-}
-
-
-vector<int> RandomAI::getMemory() const
-{
-    //Too stupid to remember anything
-    return vector<int>();
-}
-
-void RandomAI::setMemory(vector<int> memory)
-{
-    //Too stupid to remember anything
 }
 
 vector<int> RandomAI::randomOutput()

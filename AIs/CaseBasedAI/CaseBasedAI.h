@@ -7,8 +7,15 @@
 #include <random>
 #include <limits>   //numeric_limits<int>::max()
 
+#include <cereal/types/map.hpp>
+#include <cereal/types/vector.hpp>
+
+
+
 class CaseBasedAI : public GeneralAI
 {
+    friend cereal::access;
+
     public:
         CaseBasedAI(int inputSize, int outputSize, int maxInput, int maxOutput);
         virtual ~CaseBasedAI();
@@ -16,9 +23,6 @@ class CaseBasedAI : public GeneralAI
     private:
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
         virtual std::vector<int> coreOutput(const std::vector<int>& input);
-
-        virtual std::vector<int> getMemory() const;
-        virtual void setMemory(std::vector<int> memory);
 
         //             Input                     Output       Outcome
         std::map< std::vector<int>, std::map<std::vector<int>, float> > m_memory;
@@ -29,6 +33,12 @@ class CaseBasedAI : public GeneralAI
         std::vector<int> randomNewOutput(const std::map<std::vector<int>, float>& reactions);
 
         std::vector<int> bestOutput(const std::map<std::vector<int>, float>& reactions);
+
+        template <class Archive>
+        void serialize( Archive & ar )
+        {
+            ar(cereal::virtual_base_class<GeneralAI>( this ), m_memory);
+        }
 
 
 };

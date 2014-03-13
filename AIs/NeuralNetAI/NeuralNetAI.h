@@ -6,6 +6,9 @@
 #include <chrono>
 #include <random>
 
+#include <cereal/types/vector.hpp>
+
+
 class NeuralNetAI : public GeneralAI
 {
     public:
@@ -24,10 +27,6 @@ class NeuralNetAI : public GeneralAI
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
         virtual std::vector<int> coreOutput(const std::vector<int>& input);
 
-        /// SaveSystem
-        virtual std::vector<int> getMemory() const;
-        virtual void setMemory(std::vector<int> memory);
-
         ///Random
         std::default_random_engine randomGenerator;
         float randomProbability();
@@ -39,7 +38,11 @@ class NeuralNetAI : public GeneralAI
         float function(float x);
         virtual float coreFunction(float x);
 
-
+        template <class Archive>
+        void serialize( Archive & ar )
+        {
+            ar(cereal::virtual_base_class<GeneralAI>( this ), m_weights);
+        }
 };
 
 #endif // NEURALNETAI_H

@@ -64,44 +64,6 @@ void HumanAI::coreLearn(const std::vector<int>& input, const std::vector<int>& o
         <<endl;
 }
 
-vector<int> HumanAI::getMemory() const
-{
-    //Ask outputs
-    cout<<"Write your memory"<<endl
-        <<"================="<<endl;
-
-    unsigned int memorySize;
-    cout<<"Memory size: ";
-    cin>>memorySize;
-
-    vector<int> memory(memorySize);
-    for(unsigned int i=0; i<memorySize; ++i)
-    {
-        cout<<"Memory "<<i<<": ";
-
-        int userInput;
-        cin>>userInput;
-        memory[i] = userInput;
-    }
-
-    return memory;
-}
-
-void HumanAI::setMemory(std::vector<int> memory)
-{
-    cout<<"From now on, this is your memory!"<<endl
-        <<"================================="<<endl
-        <<endl
-        <<"Memory: ";
-
-    printVector(memory);
-
-    cout<<endl
-        <<endl
-        <<endl;
-
-}
-
 void HumanAI::printVector(const std::vector<int>& vect) const
 {
     cout<<'[';

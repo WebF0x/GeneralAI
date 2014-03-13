@@ -19,10 +19,11 @@ class RandomAI : public GeneralAI
         virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
         virtual std::vector<int> coreOutput(const std::vector<int>& input);
 
-        virtual std::vector<int> getMemory() const;
-        virtual void setMemory(std::vector<int> memory);
-
-
+        template <class Archive>
+        void serialize( Archive & ar )
+        {
+            ar(cereal::virtual_base_class<GeneralAI>( this ));
+        }
 };
 
 #endif // RANDOMAI_H

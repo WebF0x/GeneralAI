@@ -8,15 +8,13 @@ Create a Strong Artificial Intelligence (also called Artificial General Intellig
 
 Short-term goals:
 ----------------
-Create a general AI interface
-
-Create a general World interface ??
+- [x] Create a general AI interface
 
 Create various AI's
-- Human
-- Neural network
-- Case-Based
-- Combination of various AI's
+- [ ] Human
+- [ ] Neural network
+- [ ] Case-Based
+- [ ] Combination of various AI's
 
 Create worlds for AI's
 - Games

@@ -1,25 +1,17 @@
 CaseBasedAI
 ===========
 
-This AI works only in deterministic worlds: The world must react the same way to the AI's actions everytime.
+This AI remembers every decision he makes and their consequences. 
+When faced with a familiar situation, he will either remember his best past decision or try to find a better one.
 
-Behavior
---------
-When faced with a new input, he will prioritize the outputs he thinks will have the greatest outcome.
-He will sometimes try random new outputs. This is to try to find a better reaction (prevents getting stuck in a local maximum).
+Pros
+----
+- Extremely good with recurring situations
+- Immune to local minimum traps (Sticking with a good decision and never finding the best one)
+- Fast
 
-
-Knowledge Dictionary
---------------------
-For every given input, this AI remembers multiple output-outcome pairs:
-
-- input_1
- - output_a = outcome_a
- - output_b = outcome_b
- - output_c = outcome_c
-- input_2
- - output_a = outcome_a
- - output_b = outcome_b
- - output_f = outcome_f
-
-
+Cons
+----
+- Extremely poor with new situations
+- Cannot generalize
+- Space-expensive - Learning Tic-Tac-Toe requires about 700 kilobytes

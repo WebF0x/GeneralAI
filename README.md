@@ -37,9 +37,10 @@ Artificial Intelligences
 
 Worlds
 ------
+- Interface with any game/software - Input(audio/video), Output(keyboard/mouse events)
 - Deterministic games - Chess, Checkers, Reversi, etc
 - Chance games - Poker, Blackjack, Backgammon, Minesweeper, Solitaire
-- Interface with any game/software - Input(audio/video), Output(keyboard/mouse events)
+- Real-time games - Starcraft, Minecraft, Diablo, Racing
 - Robots - Input(sensors), Output(motors)
 
 

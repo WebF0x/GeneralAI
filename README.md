@@ -8,8 +8,8 @@ Strong Artificial intelligence
 - Versatile - Adapts to different tasks
 - Intuitive - Easy to use
 
-Current state
-=============
+What we have
+============
 
 Artificial Intelligences
 ------------------------
@@ -26,8 +26,8 @@ In General
 - General AI - Interface between Worlds and AI's
 - Serialization - Save and load
 
-Ideas for improvements:
-=======================
+What we want
+============
 
 Artificial Intelligences
 ------------------------

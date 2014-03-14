@@ -13,18 +13,18 @@ What we have
 
 Artificial Intelligences
 ------------------------
-- Random AI - Takes random decisions
-- Human AI - You manually control the AI
-- Case-Based AI - Takes decisions based on past experiences
+- [RandomAI](./AIs/ExampleAI "Completely random!") - Takes random decisions
+- [HumanAI](./AIs/HumanAI "Take the commands!") - You manually control the AI
+- [CaseBasedAI](./AIs/CaseBasedAI "Use the (brute) force, Luke!") - Takes decisions based on past experiences
 
 Worlds
 ------
-- Game of TicTacToe
+- Game of [TicTacToe](./Worlds/TicTacToe "A classic!")
 
 In General
 ----------
-- General AI - Interface between Worlds and AI's
-- Serialization - Save and load
+- [GeneralAI](./AIs/GeneralAI "Interface between Worlds and AI's") - Interface between Worlds and AI's
+- [Serialization](https://github.com/USCiLab/cereal "cereal, by University of South California") - Save and load
 
 What we want
 ============

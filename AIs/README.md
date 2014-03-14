@@ -1,7 +1,7 @@
 AIs
 ===
 
-All Artificial Intelligences inherit from [GeneralAI](./GeneralAI "GeneralAI").
+All Artificial Intelligences are derived from [GeneralAI](./GeneralAI "GeneralAI").
 
 How to make my own AI
 ---------------------

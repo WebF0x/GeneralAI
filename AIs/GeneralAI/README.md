@@ -10,7 +10,8 @@ Interface
 
 How to use
 ----------
-Use this as your starting point: [ExampleAI](/ExampleAI "Minimalistic code for subclasses of GeneralAI")!
+Use this as your starting point: [ExampleAI](./ExampleAI "Minimalistic code for subclasses of GeneralAI")!
 
-
-#####Thanks to the makers of [cereal](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California")!
+Thanks
+------
+University of Southern California - The makers of [cereal](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California")!

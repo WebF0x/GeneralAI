@@ -31,8 +31,7 @@ What we want
 
 Artificial Intelligences
 ------------------------
-https://github.com/WebF0x/StrongAI/tree/master/AIs/NeuralNetAI
-- Neural Network AI - Inspired by the brain
+- [Neural Network AI](https://github.com/WebF0x/StrongAI/tree/master/AIs/NeuralNetAI "Inspired by the brain") - Inspired by the brain
 - Natural Selection AI - Breed, cull the weak, repeat
 - Dispatcher - Separate tasks in subtasks
 

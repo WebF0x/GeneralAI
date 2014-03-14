@@ -2,7 +2,8 @@ CaseBasedAI
 ===========
 
 This AI remembers every decision he makes and their consequences. 
-When faced with a familiar situation, he will either remember his best past decision or try to find a better one.
+When faced with a known situation, he will either output its best known reaction or try to find a better one.
+When faced with a new situation, the output is random.
 
 Pros
 ----

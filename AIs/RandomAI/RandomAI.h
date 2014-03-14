@@ -10,7 +10,7 @@ class RandomAI : public GeneralAI
 {
     public:
         RandomAI(int inputSize, int outputSize, int maxInput, int maxOutput);
-        ~RandomAI();
+        virtual ~RandomAI();
 
     private:
         std::default_random_engine randomGenerator;

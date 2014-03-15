@@ -6,6 +6,7 @@ All AI's should inherit from this. It provides an interface to methods common to
 Interface
 ---------
 - Input and output validation
+- Learning
 - Save/load mechanism - Supports binary, JSON and XML formats
 
 How to use

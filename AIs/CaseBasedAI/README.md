@@ -8,7 +8,7 @@ When faced with a new situation, the output is random.
 Pros
 ----
 - Extremely good with known situations
-- Tries to find not only a good output but the best output
+- Will eventually find the BEST output
 - Fast
 
 Cons

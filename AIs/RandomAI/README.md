@@ -1,10 +1,14 @@
 RandomAI
 ========
 
-Useful to test if your AI is better than pure luck and if it can learn and improve itself over time.
+Ignores the input and outputs a random valid output.
 
-- Random outputs
-- No memory whatsoever
-- As dumb as it gets
+Pros
+----
+- Test another AI by playing against it - See if it improves over time
+- Fast
 
 
+Cons
+----
+- Dumb - Doesn't learn or improve

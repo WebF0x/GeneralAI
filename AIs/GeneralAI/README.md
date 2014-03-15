@@ -10,7 +10,7 @@ Interface
 
 How to use
 ----------
-First, download [cereal](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California"). Extract the files. It can be anywhere but my path looks like this: C:\Program Files (x86)\CodeBlocks\cereal-0.9.1
+First, download and extract [cereal](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California"). It can be anywhere but my path looks like this: "C:\Program Files (x86)\CodeBlocks\cereal-0.9.1"
 
 Here's how to setup your project with Code::Blocks:
 - Project - Build options... - Search directories - Add - "PATH_TO_CEREAL_FOLDER\cereal-X.Y.Z\include"
@@ -18,7 +18,7 @@ Here's how to setup your project with Code::Blocks:
 Or for all your projects: 
 - Settings - Compiler... - Search directories - "PATH_TO_CEREAL_FOLDER\cereal-X.Y.Z\include"
 
-Now you can use this as your starting point: [ExampleAI](./ExampleAI "Minimalistic code for subclasses of GeneralAI")!
+Now, you can use this as your starting point: [ExampleAI](./ExampleAI "Minimalistic code for subclasses of GeneralAI")!
 
 
 Thanks

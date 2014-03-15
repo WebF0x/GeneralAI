@@ -12,11 +12,13 @@ How to use
 ----------
 Use this as your starting point: [ExampleAI](./ExampleAI "Minimalistic code for subclasses of GeneralAI")!
 
-Make sure your compiler can find the [cereal library](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California").
+First, download [cereal](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California"). Extract the files. It can be anywhere but my path looks like this: C:\Program Files (x86)\CodeBlocks\cereal-0.9.1
 
-Here's how to setup Code::Blocks :
+Here's how to setup your project with Code::Blocks:
 - Project - Build options... - Search directories - Add - "PATH_TO_CEREAL_FOLDER\cereal-X.Y.Z\include"
-- Or for all your projects: Settings - Compiler... - Search directories - "PATH_TO_CEREAL_FOLDER\cereal-X.Y.Z\include"
+
+Or for all your projects: 
+- Settings - Compiler... - Search directories - "PATH_TO_CEREAL_FOLDER\cereal-X.Y.Z\include"
 
 
 Thanks

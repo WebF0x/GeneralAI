@@ -1,7 +1,15 @@
 HumanAI
 =======
 
-Allows user to manually control a "AI"
+Control the AI manually.
 
-To be more human friendly, subclasses should implement
-- void visualizeInput(Input)
+Pros
+----
+- Testing a world
+- Testing another AI by playing against it
+- Can change how you see the input by overriding visualizeInput(Input)
+
+Cons
+----
+- Slow
+- Learn, save and load unreliable - Humans do as they please

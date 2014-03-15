@@ -7,8 +7,8 @@ When faced with a new situation, the output is random.
 
 Pros
 ----
-- Extremely good with recurring situations
-- Immune to local minimum traps (Sticking with a good decision and never finding the best one)
+- Extremely good with known situations
+- Tries to find not only a good output but the best output
 - Fast
 
 Cons

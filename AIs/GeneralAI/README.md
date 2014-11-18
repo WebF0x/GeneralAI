@@ -11,7 +11,7 @@ Interface
 
 How to use
 ----------
-First, download and extract [cereal](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California"). It can be anywhere, for example: "C:\Program Files (x86)\CodeBlocks\cereal-0.9.1"
+First, download and extract [cereal](https://github.com/USCiLab/cereal "C++11 Serialization library by University of Southern California"). It can be anywhere, for example: "C:\Program Files (x86)\CodeBlocks\cereal-X.Y.Z"
 
 Here's how to setup your project with Code::Blocks:
 - Project - Build options... - Search directories - Add - "PATH_TO_CEREAL_FOLDER\cereal-X.Y.Z\include"

@@ -56,7 +56,7 @@ Worlds
 - Interface with any game/software - Audio/video input and keyboard/mouse output
 - Deterministic games - Chess, Checkers, Reversi, etc
 - Chance games - Poker, Blackjack, Backgammon, Minesweeper, Solitaire
-- Real-time games - Starcraft, Minecraft, Diablo, Racing
+- Real-time games - Starcraft, Minecraft, Diablo, [NERO](http://nerogame.org/ "Neuro-Evolving Robotic Operatives")
 - Robot - Sensors and motors
 
 License:

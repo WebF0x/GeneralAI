@@ -40,4 +40,4 @@ Cons:
 
 Thanks Wikipedia!
 -----------------
-Learn more about [Neuroevolution](http://en.wikipedia.org/wiki/Neuroevolution "Thanks Wikipedia!")
+Learn more about [Neuroevolution](http://en.wikipedia.org/wiki/Neuroevolution "Neuroevolution on Wikipedia!")

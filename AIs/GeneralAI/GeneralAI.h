@@ -3,6 +3,8 @@
 
 #include <stdexcept>
 #include <tuple>
+#include <random> //mt19937_64
+#include <ctime>
 
 //Serialization
 #include <fstream>
@@ -43,7 +45,7 @@ class GeneralAI// : public SaveSystem
         }
 
         /// Returns AI's output
-        std::vector<int> output(const std::vector<int>& input);
+        std::vector<float> output(const std::vector<float>& input);
 
         /**
         *   Learn the outcome of output(input)
@@ -51,20 +53,23 @@ class GeneralAI// : public SaveSystem
         *   Worst outcome: -1.f
         *   Best outcome :  1.f
         **/
-        void learn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
-        void learn(const std::tuple<std::vector<int>, std::vector<int>, float>& lesson);
+        void learn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
+        void learn(const std::tuple<std::vector<float>, std::vector<float>, float>& lesson);
         void learn(float outcome);  /// Learn the outcome of the lastDecision
 
-        std::pair < std::vector<int>, std::vector<int> >       lastDecision() const;
-        std::tuple< std::vector<int>, std::vector<int>, float> lastLesson() const;
+        std::pair < std::vector<float>, std::vector<float> >       lastDecision() const;
+        std::tuple< std::vector<float>, std::vector<float>, float> lastLesson() const;
         void reset();
 
-        bool validInput(const std::vector<int>& input) const;
-        bool validOutput(const std::vector<int>& output) const;
+        bool validInput(const std::vector<float>& input) const;
+        bool validOutput(const std::vector<float>& output) const;
         bool validOutcome(float outcome) const;
 
     protected:
-        static bool validVector(const std::vector<int>& v, unsigned int size, int amplitude);
+        static bool validVector(const std::vector<float>& v, unsigned int size, int amplitude);
+
+        static std::mt19937_64 m_randomNumberGenerator; //Shared random number generator
+        static float randomProbability();
 
     private:
         //Serialization
@@ -90,15 +95,16 @@ class GeneralAI// : public SaveSystem
         }
 
         /// Subclasses must implement these methods
-        virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome) = 0;
-        virtual std::vector<int> coreOutput(const std::vector<int>& input) = 0;
+        virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome) = 0;
+        virtual std::vector<float> coreOutput(const std::vector<float>& input) = 0;
 
         /// Short-term memory
         /*
         *   Should this be covered in GeneralAI or the worlds should take care of it?
+        *   This is useless overhead for some AI's
         */
-        std::pair<std::vector<int>,std::vector<int> > m_lastDecision;
-        std::tuple<std::vector<int>, std::vector<int>, float> m_lastLesson;
+        std::pair<std::vector<float>,std::vector<float> > m_lastDecision;
+        std::tuple<std::vector<float>, std::vector<float>, float> m_lastLesson;
         bool m_lastDecisionEnabled = false;
         bool m_lastLessonEnabled = false;
 };

@@ -8,7 +8,7 @@ HumanAI::HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput)
 
 }
 
-vector<int> HumanAI::coreOutput(const vector<int>& input)
+vector<float> HumanAI::coreOutput(const vector<float>& input)
 {
     cout<<"What is your Output?"<<endl
         <<"===================="<<endl;
@@ -25,12 +25,12 @@ vector<int> HumanAI::coreOutput(const vector<int>& input)
         <<"------"<<endl
         <<"( Between "<<-OUTPUT_AMPLITUDE<<" and "<<OUTPUT_AMPLITUDE<<" )"<<endl;
 
-    vector<int> output;
+    vector<float> output;
     for(int i=0; i<OUTPUT_SIZE; ++i)
     {
         cout<<"Output "<<i<<"/"<<OUTPUT_SIZE-1<<": "<<endl;
 
-        int userInput;
+        float userInput;
 
         do
         {
@@ -45,7 +45,7 @@ vector<int> HumanAI::coreOutput(const vector<int>& input)
     return output;
 }
 
-void HumanAI::coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome)
+void HumanAI::coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome)
 {
     cout<<"Learn this"<<endl
         <<"=========="<<endl;
@@ -64,7 +64,7 @@ void HumanAI::coreLearn(const std::vector<int>& input, const std::vector<int>& o
         <<endl;
 }
 
-void HumanAI::printVector(const std::vector<int>& vect) const
+void HumanAI::printVector(const std::vector<float>& vect) const
 {
     cout<<'[';
 
@@ -80,7 +80,7 @@ void HumanAI::printVector(const std::vector<int>& vect) const
     cout<<']'<<endl;
 }
 
-void HumanAI::visualizeInput(const vector<int>& input)
+void HumanAI::visualizeInput(const vector<float>& input)
 {
     printVector(input);
 }

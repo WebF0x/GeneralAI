@@ -15,11 +15,11 @@ class HumanAI : public GeneralAI
         HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput);
 
     private:
-        virtual std::vector<int> coreOutput(const std::vector<int>& input) ;
-        virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
-        virtual void visualizeInput(const std::vector<int>& input);
+        virtual std::vector<float> coreOutput(const std::vector<float>& input) ;
+        virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
+        virtual void visualizeInput(const std::vector<float>& input);
 
-        void printVector(const std::vector<int>& vect) const;
+        void printVector(const std::vector<float>& vect) const;
 
         template <class Archive>
         void save( Archive & ar ) const

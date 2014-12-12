@@ -2,35 +2,23 @@
 
 using namespace std;
 
+//Seed the random number generator with a random_device when it's implemented (*wink wink GCC*)
+mt19937_64 GeneralAI::m_randomNumberGenerator(time(NULL));  //Shared random number generator
+
 GeneralAI::GeneralAI(const int inputSize, const int outputSize, const int inputAmplitude, const int outputAmplitude) :
     INPUT_SIZE(inputSize), OUTPUT_SIZE(outputSize), INPUT_AMPLITUDE(inputAmplitude), OUTPUT_AMPLITUDE(outputAmplitude)
 {
-    if(INPUT_SIZE < 0)
-    {
-        throw out_of_range(string( "negative INPUT_SIZE" ));
-    }
-
-    if(OUTPUT_SIZE < 0)
-    {
-        throw out_of_range(string( "negative OUTPUT_SIZE" ));
-    }
-
-    if(INPUT_AMPLITUDE < 0)
-    {
-        throw out_of_range(string( "negative INPUT_AMPLITUDE" ));
-    }
-
-    if(OUTPUT_AMPLITUDE < 0)
-    {
-        throw out_of_range(string( "negative OUTPUT_AMPLITUDE" ));
-    }
+    if(INPUT_SIZE < 0)  throw out_of_range(string( "negative INPUT_SIZE" ));
+    if(OUTPUT_SIZE < 0) throw out_of_range(string( "negative OUTPUT_SIZE" ));
+    if(INPUT_AMPLITUDE < 0) throw out_of_range(string( "negative INPUT_AMPLITUDE" ));
+    if(OUTPUT_AMPLITUDE < 0)throw out_of_range(string( "negative OUTPUT_AMPLITUDE" ));
 }
 
 GeneralAI::~GeneralAI()
 {
 }
 
-void GeneralAI::learn(const vector<int>& input, const vector<int>& output, const float outcome)
+void GeneralAI::learn(const vector<float>& input, const vector<float>& output, const float outcome)
 {
     ///Check parameters validity
     if(!validInput(input))
@@ -56,7 +44,7 @@ void GeneralAI::learn(const vector<int>& input, const vector<int>& output, const
     m_lastLessonEnabled = true;
 }
 
-void GeneralAI::learn(const tuple< vector<int>, vector<int>, float>& lesson)
+void GeneralAI::learn(const tuple< vector<float>, vector<float>, float>& lesson)
 {
     learn(get<0>(lesson), get<1>(lesson), get<2>(lesson));
 }
@@ -69,7 +57,7 @@ void GeneralAI::learn(const float outcome)
     }
 }
 
-vector<int> GeneralAI::output(const vector<int>& input)
+vector<float> GeneralAI::output(const vector<float>& input)
 {
     ///Check parameters validity
     if(!validInput(input))
@@ -77,7 +65,7 @@ vector<int> GeneralAI::output(const vector<int>& input)
         throw length_error(string( "invalid input" ));
     }
 
-    vector<int> output = coreOutput(input);
+    vector<float> output = coreOutput(input);
 
     if(!validOutput(output))
     {
@@ -96,7 +84,7 @@ void GeneralAI::reset()
     m_lastDecisionEnabled = false;
 }
 
-pair< vector<int>, vector<int> > GeneralAI::lastDecision() const
+pair< vector<float>, vector<float> > GeneralAI::lastDecision() const
 {
     if(!m_lastDecisionEnabled)
     {
@@ -106,7 +94,7 @@ pair< vector<int>, vector<int> > GeneralAI::lastDecision() const
     return m_lastDecision;
 }
 
-tuple< vector<int>, vector<int>, float> GeneralAI::lastLesson() const
+tuple< vector<float>, vector<float>, float> GeneralAI::lastLesson() const
 {
     if(!m_lastLessonEnabled)
     {
@@ -116,8 +104,7 @@ tuple< vector<int>, vector<int>, float> GeneralAI::lastLesson() const
     return m_lastLesson;
 }
 
-
-bool GeneralAI::validVector(const vector<int>& v, const unsigned int size, const int amplitude)
+bool GeneralAI::validVector(const vector<float>& v, const unsigned int size, const int amplitude)
 {
     if(v.size() != size)
     {
@@ -135,12 +122,12 @@ bool GeneralAI::validVector(const vector<int>& v, const unsigned int size, const
     return true;
 }
 
-bool GeneralAI::validInput(const vector<int>& input) const
+bool GeneralAI::validInput(const vector<float>& input) const
 {
     return validVector(input, (unsigned int)INPUT_SIZE, INPUT_AMPLITUDE);
 }
 
-bool GeneralAI::validOutput(const vector<int>& output) const
+bool GeneralAI::validOutput(const vector<float>& output) const
 {
     return validVector(output, (unsigned int)OUTPUT_SIZE, OUTPUT_AMPLITUDE);
 }
@@ -150,5 +137,13 @@ bool GeneralAI::validOutcome(const float outcome) const
     return (-1.f <= outcome && outcome <= 1.f);
 }
 
+/**
+*   Returns a random float in [0,1]
+**/
+float GeneralAI::randomProbability()
+{
+    uniform_real_distribution<float> distribution(0, 1);
+    return distribution(m_randomNumberGenerator);
+}
 
 

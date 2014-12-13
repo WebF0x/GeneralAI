@@ -2,7 +2,7 @@
 
 using namespace std;
 
-//Seed the random number generator with a random_device when it's implemented (*wink wink GCC*)
+//To do: Seed the random number generator with a random_device when it's implemented (*wink wink GCC*)
 mt19937_64 GeneralAI::m_randomNumberGenerator(time(NULL));  //Shared random number generator
 
 GeneralAI::GeneralAI(const int inputSize, const int outputSize, const int inputAmplitude, const int outputAmplitude) :
@@ -12,10 +12,6 @@ GeneralAI::GeneralAI(const int inputSize, const int outputSize, const int inputA
     if(OUTPUT_SIZE < 0) throw out_of_range(string( "negative OUTPUT_SIZE" ));
     if(INPUT_AMPLITUDE < 0) throw out_of_range(string( "negative INPUT_AMPLITUDE" ));
     if(OUTPUT_AMPLITUDE < 0)throw out_of_range(string( "negative OUTPUT_AMPLITUDE" ));
-}
-
-GeneralAI::~GeneralAI()
-{
 }
 
 void GeneralAI::learn(const vector<float>& input, const vector<float>& output, const float outcome)

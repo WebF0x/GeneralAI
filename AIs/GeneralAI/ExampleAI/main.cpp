@@ -11,7 +11,7 @@ int main()
 
     ExampleAI ai = ExampleAI(INPUT_SIZE,OUTPUT_SIZE,INPUT_AMPLITUDE,OUTPUT_AMPLITUDE);
 
-    vector<int> input(INPUT_SIZE);
+    vector<float> input(INPUT_SIZE);
 
     cout<<"Input:"<<endl;
     for(auto val : input)
@@ -20,7 +20,7 @@ int main()
     }
 
     ///Test output
-    vector<int> output = ai.output(input);
+    vector<float> output = ai.output(input);
 
     cout<<"Output:"<<endl;
     for(auto value : output)

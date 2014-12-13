@@ -25,25 +25,7 @@ class GeneralAI// : public SaveSystem
         const int INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
 
         GeneralAI(int inputSize, int outputSize, int inputAmplitude, int outputAmplitude);
-        virtual ~GeneralAI();
-
-        ///Serialization (save/load)
-        template<class AI, class Archive = cereal::BinaryOutputArchive>
-        static void save(const AI& ai, const std::string& fileName)
-        {
-            std::ofstream os(fileName.data());
-            Archive ar( os );
-            ar( ai );
-        }
-
-        template<class AI, class Archive = cereal::BinaryInputArchive>
-        static void load(AI& ai, const std::string& fileName)
-        {
-            std::ifstream is(fileName.data());
-            Archive ar( is );
-            ar( ai );
-        }
-
+         virtual ~GeneralAI(){}
         /// Returns AI's output
         std::vector<float> output(const std::vector<float>& input);
 
@@ -65,11 +47,36 @@ class GeneralAI// : public SaveSystem
         bool validOutput(const std::vector<float>& output) const;
         bool validOutcome(float outcome) const;
 
+        static float randomProbability();
+
+        ///Serialization (save/load)
+        template<class AI, class Archive = cereal::BinaryOutputArchive>
+        static bool save(const AI& ai, const std::string& fileName)
+        {
+            std::ofstream file(fileName, std::ios::binary);
+            if(file.fail()) return false;
+
+            Archive archive( file );
+            archive( ai );
+
+            return true;
+        }
+
+        template<class AI, class Archive = cereal::BinaryInputArchive>
+        static bool load(AI& ai, const std::string& fileName)
+        {
+            std::ifstream file(fileName, std::ios::binary);
+            if(file.fail()) return false;
+
+            Archive archive( file );
+            archive( ai );
+
+            return true;
+        }
+
     protected:
         static bool validVector(const std::vector<float>& v, unsigned int size, int amplitude);
-
         static std::mt19937_64 m_randomNumberGenerator; //Shared random number generator
-        static float randomProbability();
 
     private:
         //Serialization

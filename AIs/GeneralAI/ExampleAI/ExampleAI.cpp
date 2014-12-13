@@ -8,14 +8,14 @@ ExampleAI::ExampleAI(int inputSize, int outputSize, int maxInput, int maxOutput)
     //Constructor
 }
 
-void ExampleAI::coreLearn(const vector<int>& input, const vector<int>& output, float outcome)
+void ExampleAI::coreLearn(const vector<float>& input, const vector<float>& output, float outcome)
 {
     //Learn
 }
 
-vector<int> ExampleAI::coreOutput(const vector<int>& input)
+vector<float> ExampleAI::coreOutput(const vector<float>& input)
 {
     //Output
-    vector<int> output(OUTPUT_SIZE);
+    vector<float> output(OUTPUT_SIZE);
     return output;
 }

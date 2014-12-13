@@ -18,21 +18,20 @@ class CaseBasedAI : public GeneralAI
 
     public:
         CaseBasedAI(int inputSize, int outputSize, int maxInput, int maxOutput);
-        virtual ~CaseBasedAI();
-
+         virtual ~CaseBasedAI(){}
     private:
-        virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
-        virtual std::vector<int> coreOutput(const std::vector<int>& input);
+        virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
+        virtual std::vector<float> coreOutput(const std::vector<float>& input);
 
         //             Input                     Output       Outcome
-        std::map< std::vector<int>, std::map<std::vector<int>, float> > m_memory;
+        std::map< std::vector<float>, std::map<std::vector<float>, float> > m_memory;
 
         std::default_random_engine randomGenerator;
         float randomProbability();
-        std::vector<int> randomOutput();
-        std::vector<int> randomNewOutput(const std::map<std::vector<int>, float>& reactions);
+        std::vector<float> randomOutput();
+        std::vector<float> randomNewOutput(const std::map<std::vector<float>, float>& reactions);
 
-        std::vector<int> bestOutput(const std::map<std::vector<int>, float>& reactions);
+        std::vector<float> bestOutput(const std::map<std::vector<float>, float>& reactions);
 
         template <class Archive>
         void serialize( Archive & ar )

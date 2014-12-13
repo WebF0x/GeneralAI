@@ -10,14 +10,13 @@ class RandomAI : public GeneralAI
 {
     public:
         RandomAI(int inputSize, int outputSize, int maxInput, int maxOutput);
-        virtual ~RandomAI();
+        virtual ~RandomAI(){}
 
     private:
-        std::default_random_engine randomGenerator;
-        std::vector<int> randomOutput();
+        std::vector<float> randomOutput();
 
-        virtual void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
-        virtual std::vector<int> coreOutput(const std::vector<int>& input);
+        virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
+        virtual std::vector<float> coreOutput(const std::vector<float>& input);
 
         template <class Archive>
         void serialize( Archive & ar )

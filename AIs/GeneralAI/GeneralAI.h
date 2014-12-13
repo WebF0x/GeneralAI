@@ -25,7 +25,8 @@ class GeneralAI// : public SaveSystem
         const int INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
 
         GeneralAI(int inputSize, int outputSize, int inputAmplitude, int outputAmplitude);
-         virtual ~GeneralAI(){}
+        virtual ~GeneralAI(){}
+
         /// Returns AI's output
         std::vector<float> output(const std::vector<float>& input);
 

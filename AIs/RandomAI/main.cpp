@@ -7,15 +7,15 @@ int main()
 {
     const unsigned int inputSize(10), outputSize(10);
     const int maxInput(3), maxOutput(100);
-    const string fileName = "myDummySave";
+    const string fileName = "myDummySave.txt";
 
     RandomAI *ai = new RandomAI(inputSize,outputSize,maxInput,maxOutput);
 
     //output
     try
     {
-        vector<int> v(inputSize);
-        vector<int> v2 = ai->output(v);
+        vector<float> v(inputSize);
+        vector<float> v2 = ai->output(v);
 
         for(unsigned int i=0; i<outputSize; ++i)
         {
@@ -30,7 +30,7 @@ int main()
     //learn
     try
     {
-        vector<int> input(inputSize), output(outputSize);
+        vector<float> input(inputSize), output(outputSize);
         float outcome = -1;
         ai->learn(input, output, outcome);
     }

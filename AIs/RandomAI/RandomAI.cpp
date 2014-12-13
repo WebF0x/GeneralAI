@@ -5,32 +5,26 @@ using namespace std;
 RandomAI::RandomAI(int inputSize, int outputSize, int maxInput, int maxOutput)
     : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
 {
-    unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
-    randomGenerator = default_random_engine(seed);
 }
 
-RandomAI::~RandomAI()
-{
-}
-
-void RandomAI::coreLearn(const vector<int>& input, const vector<int>& output, float outcome)
+void RandomAI::coreLearn(const vector<float>& input, const vector<float>& output, float outcome)
 {
     //This AI is too dumb to learn anything!
 }
 
-vector<int> RandomAI::coreOutput(const vector<int>& input)
+vector<float> RandomAI::coreOutput(const vector<float>& input)
 {
     return randomOutput();
 }
 
-vector<int> RandomAI::randomOutput()
+vector<float> RandomAI::randomOutput()
 {
-    vector<int> output(OUTPUT_SIZE);
-    uniform_int_distribution<int> distribution(-OUTPUT_AMPLITUDE,OUTPUT_AMPLITUDE);
+    vector<float> output(OUTPUT_SIZE);
+    uniform_real_distribution<float> distribution(-OUTPUT_AMPLITUDE,OUTPUT_AMPLITUDE);
 
     for(int i=0; i<OUTPUT_SIZE; ++i)
     {
-        output[i] = distribution(randomGenerator);
+        output[i] = distribution(m_randomNumberGenerator);
     }
 
     return output;

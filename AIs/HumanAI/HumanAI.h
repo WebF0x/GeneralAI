@@ -24,10 +24,10 @@ class HumanAI : public GeneralAI
         template <class Archive>
         void save( Archive & ar ) const
         {
-            std::cout<<"Write notes to save:"<<std::endl;
+            std::cout<<"Write memory to save:"<<std::endl;
 
             std::string memory;
-            std::getline (std::cin,memory);
+            std::cin>>memory;
 
             std::cout<<std::endl;
 
@@ -40,7 +40,8 @@ class HumanAI : public GeneralAI
             std::string memory;
             ar(cereal::virtual_base_class<GeneralAI>( this ), memory);
 
-            std::cout<<"Here is your memory:"<<std::endl<<memory<<std::endl;
+            std::cout   <<"Here is your memory:"<<std::endl
+                        <<memory<<std::endl;
         }
 
 };

@@ -8,7 +8,7 @@ using namespace std;
 
 default_random_engine randomGenerator;
 const int AMPLITUDE = 100;
-const int NUM_OF_GENERATIONS = 9000;
+const int NUM_OF_GENERATIONS = 100;
 const int POPULATION_SIZE = 100;
 
 //Functions

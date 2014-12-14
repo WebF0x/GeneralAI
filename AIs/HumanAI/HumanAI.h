@@ -13,6 +13,7 @@ class HumanAI : public GeneralAI
 
     public:
         HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput);
+        virtual ~HumanAI(){}
 
     private:
         virtual std::vector<float> coreOutput(const std::vector<float>& input) ;

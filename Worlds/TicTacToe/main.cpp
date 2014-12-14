@@ -1,6 +1,7 @@
 #include "TicTacToe.h"
 #include "TicTacToeHuman.h"
 #include "../../AIs/CaseBasedAI/CaseBasedAI.h"
+#include "../../AIs/NeuralNetAI/NeuralNetAI.h"
 #include "../../AIs/RandomAI/RandomAI.h"
 
 using namespace std;
@@ -15,15 +16,17 @@ int main()
     const string SAVE_FILE_O = "TicTacToeO.save";
     const bool VERBOSE_ENABLED = false;          //if(VERBOSE_ENABLED): the stats are calculated for playerO. Use with small NUMBER_OF_GAMES or with a human player
 
-
     TicTacToe game;
-    CaseBasedAI playerX(9, 1, 1, 4);
-    CaseBasedAI playerO(9, 1, 1, 4);
+
+    CaseBasedAI playerX(9, 9, 1, 1);
+    TicTacToeHuman playerO(9, 9, 1, 1);
+    //CaseBasedAI playerO(9, 9, 1, 1);
 
     cout<<"start load"<<endl;
 
     GeneralAI::load<CaseBasedAI>(playerX, SAVE_FILE_X);
-    GeneralAI::load<CaseBasedAI>(playerO, SAVE_FILE_O);
+    //GeneralAI::load<NeuralNetAI>(playerO, SAVE_FILE_O);
+    //GeneralAI::load<CaseBasedAI>(playerO, SAVE_FILE_O);
 
     cout<<"load completed"<<endl;
     cout<<"start games"<<endl;
@@ -47,7 +50,8 @@ int main()
     cout<<"start save"<<endl;
 
     GeneralAI::save<CaseBasedAI>(playerX, SAVE_FILE_X);
-    GeneralAI::save<CaseBasedAI>(playerO, SAVE_FILE_O);
+    //GeneralAI::save<NeuralNetAI>(playerO, SAVE_FILE_O);
+    //GeneralAI::save<CaseBasedAI>(playerO, SAVE_FILE_O);
 
     cout<<"save completed"<<endl;
 

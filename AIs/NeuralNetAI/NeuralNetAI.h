@@ -60,8 +60,8 @@ public:
     const float INIT_NODE_VALUE = 0.f;
     const float INIT_WEIGHT_VALUE = 0.f;
 
-    const int MAX_NUMBER_OF_CYCLES = 50;        //Prevent infinite loops in case the trigger node is never triggered
-    const int MAX_NUMBER_OF_LEARN_CYCLES = 1000;  //Either successfully learn something or quit after trying this many times
+    const int MAX_NUMBER_OF_CYCLES = 5;        //Prevent infinite loops in case the trigger node is never triggered
+    const int MAX_NUMBER_OF_LEARN_CYCLES = 10;  //Either successfully learn something or quit after trying this many times
     const float MAX_WEIGHT_VALUE;               //Prevent overflows and NaN bullshit
     const float MAX_NODE_VALUE;                 //Prevent overflows and NaN bullshit
 
@@ -72,7 +72,7 @@ public:
     const float AMPLITUDE_ADD = 1.f; //Probabilities related to a mutation
     const float AMPLITUDE_MUL = 2.f; //Probabilities related to a mutation
 
-    const float ACCEPTABLE_ERROR = .05f;  //Useless right now: the network doesn't learn()
+    const float ACCEPTABLE_ERROR = .1f;  //Useless right now: the network doesn't learn()
 };
 
 #endif // NEURALNETAI_H

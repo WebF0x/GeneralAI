@@ -96,7 +96,7 @@ vector<float> CaseBasedAI::randomOutput()
 
     for(int i=0; i<OUTPUT_SIZE; ++i)
     {
-        output[i] = distribution(randomGenerator);
+        output[i] = distribution(m_randomNumberGenerator);
     }
 
     return output;
@@ -144,6 +144,6 @@ vector<float> CaseBasedAI::bestOutput(const map<vector<float>, float>& reactions
 
     ///Return one of the bestKnownOutputs at random
     uniform_int_distribution<int> distribution(0, bestKnownOutputs.size()-1);
-    return bestKnownOutputs[distribution(randomGenerator)];
+    return bestKnownOutputs[distribution(m_randomNumberGenerator)];
 }
 

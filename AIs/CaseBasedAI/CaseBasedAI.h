@@ -26,7 +26,6 @@ class CaseBasedAI : public GeneralAI
         //             Input                     Output       Outcome
         std::map< std::vector<float>, std::map<std::vector<float>, float> > m_memory;
 
-        std::default_random_engine randomGenerator;
         float randomProbability();
         std::vector<float> randomOutput();
         std::vector<float> randomNewOutput(const std::map<std::vector<float>, float>& reactions);

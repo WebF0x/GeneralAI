@@ -42,14 +42,26 @@ void GeneralAI::learn(const vector<float>& input, const vector<float>& output, c
 
 void GeneralAI::learn(const tuple< vector<float>, vector<float>, float>& lesson)
 {
-    learn(get<0>(lesson), get<1>(lesson), get<2>(lesson));
+    auto& input = get<0>(lesson);
+    auto& output = get<1>(lesson);
+    auto& outcome = get<2>(lesson);
+
+    learn(input, output, outcome);
+}
+
+void GeneralAI::learn(const pair<vector<float>,vector<float>>& decision, float outcome)
+{
+    auto& input = decision.first;
+    auto& output = decision.second;
+
+    learn(input, output, outcome);
 }
 
 void GeneralAI::learn(const float outcome)
 {
-    if(m_lastDecisionEnabled) //m_lastInput and m_lastOutput are defined
+    if(m_lastDecisionEnabled) //m_lastDecision is not undefined
     {
-        learn(get<0>(m_lastDecision), get<1>(m_lastDecision), outcome);
+        learn(m_lastDecision, outcome);
     }
 }
 

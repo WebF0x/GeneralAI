@@ -38,6 +38,7 @@ class GeneralAI// : public SaveSystem
         **/
         void learn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
         void learn(const std::tuple<std::vector<float>, std::vector<float>, float>& lesson);
+        void learn(const std::pair<std::vector<float>,std::vector<float>>& decision, float outcome);
         void learn(float outcome);  /// Learn the outcome of the lastDecision
 
         std::pair < std::vector<float>, std::vector<float> >       lastDecision() const;
@@ -75,9 +76,8 @@ class GeneralAI// : public SaveSystem
             return true;
         }
 
-    protected:
-        static bool validVector(const std::vector<float>& v, unsigned int size, int amplitude);
         static std::mt19937_64 m_randomNumberGenerator; //Shared random number generator
+        static bool validVector(const std::vector<float>& v, unsigned int size, int amplitude);
 
     private:
         //Serialization

@@ -3,10 +3,10 @@
 
 #include "../GeneralAI/GeneralAI.h"
 #include <map>
+#include <vector>
 #include <chrono>
 #include <random>
 #include <limits>   //numeric_limits<int>::max()
-
 #include <cereal/types/map.hpp>
 #include <cereal/types/vector.hpp>
 

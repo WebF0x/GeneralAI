@@ -2,23 +2,29 @@
 #define NEURALNETAI_H
 
 #include "../GeneralAI/GeneralAI.h"
-#include <vector>
 #include <map>
+#include <vector>
 #include <chrono>
-
-#include <cereal/types/vector.hpp>
-#include <iostream>
-#include <limits>
 #include <random>   //Distributions
+#include <limits>
+#include <cereal/types/map.hpp>
+#include <cereal/types/vector.hpp>
 
 struct Node
 {
     float value;
     std::map<int, float> incomingSynapses;  //incomingSynapses[source] = weight
+
+    template <class Archive>
+    void serialize( Archive & archive )
+    {
+        archive( value, incomingSynapses );
+    }
 };
 
 class NeuralNetAI : public GeneralAI
 {
+    friend cereal::access;
 public:
     NeuralNetAI(int inputSize, int outputSize, int maxInput, int maxOutput);
 
@@ -26,8 +32,7 @@ public:
 
     void mutate();
 
-public:
-//private:
+private:
     ///GeneralAI
     virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
     virtual std::vector<float> coreOutput(const std::vector<float>& input);
@@ -48,12 +53,6 @@ public:
     float function(float x);
     virtual float coreFunction(float x);
 
-    template <class Archive>
-    void serialize( Archive & ar )
-    {
-        //ar(cereal::virtual_base_class<GeneralAI>( this ),m_nodes);
-    }
-
     ///Constants
     const int INIT_NUMBER_OF_NEURONS=0;
     const int NUMBER_OF_NODES;
@@ -73,6 +72,14 @@ public:
     const float AMPLITUDE_MUL = 2.f; //Probabilities related to a mutation
 
     const float ACCEPTABLE_ERROR = .1f;  //Useless right now: the network doesn't learn()
+
+    //Serialization
+
+    template <class Archive>
+    void serialize( Archive & ar )
+    {
+        ar(cereal::virtual_base_class<GeneralAI>( this ),m_nodes);
+    }
 };
 
 #endif // NEURALNETAI_H

@@ -19,8 +19,6 @@
 **/
 class GeneralAI// : public SaveSystem
 {
-    friend cereal::access;
-
     public:
         const int INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
 
@@ -86,11 +84,8 @@ class GeneralAI// : public SaveSystem
         *
         *   Use this format:
         *       ar(cereal::virtual_base_class<Base>( this ), member1, member2, ...);
-        *
-        *   Is there a neater way to do this?
-        *   Make this method use a virtual method maybe...
-        *   Apparently, templates functions can't be virtual...
         */
+        friend cereal::access;
         template <class Archive>
         void serialize( Archive & ar )
         {

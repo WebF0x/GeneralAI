@@ -13,14 +13,11 @@ class TicTacToeHuman : public HumanAI
         TicTacToeHuman(int inputSize, int outputSize, int maxInput, int maxOutput);
 
     private:
-        std::vector<int> coreOutput(const std::vector<int>& input);
-        void coreLearn(const std::vector<int>& input, const std::vector<int>& output, float outcome);
+        std::vector<float> coreOutput(const std::vector<float>& input);
+        void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome){}
 
-        std::vector<int> getMemory() const;
-        void setMemory(std::vector<int> memory);
-
-        void visualizeInput(const std::vector<int>& input);
-        char inputToChar(int input);
+        void visualizeInput(const std::vector<float>& input);
+        char inputToChar(float input);
 };
 
 #endif // TICTACTOEHUMAN_H

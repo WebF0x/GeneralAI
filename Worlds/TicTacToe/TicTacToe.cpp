@@ -2,34 +2,23 @@
 
 using namespace std;
 
-TicTacToe::TicTacToe()
-{
-    /// Random
-    unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
-    randomGenerator = default_random_engine(seed);
-}
-
-TicTacToe::~TicTacToe()
-{
-}
-
 TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
 {
     ///Precondition:
-    ///-Players are the kind GeneralAI(9,1,1,4)
+    ///Players are the kind GeneralAI(9,9,1,1)
     if(
         playerX.INPUT_SIZE != 9 ||
+        playerX.OUTPUT_SIZE != 9 ||
         playerX.INPUT_AMPLITUDE != 1 ||
-        playerX.OUTPUT_SIZE != 1 ||
-        playerX.OUTPUT_AMPLITUDE != 4 ||
+        playerX.OUTPUT_AMPLITUDE != 1 ||
 
         playerO.INPUT_SIZE != 9 ||
+        playerO.OUTPUT_SIZE != 9 ||
         playerO.INPUT_AMPLITUDE != 1 ||
-        playerO.OUTPUT_SIZE != 1 ||
-        playerO.OUTPUT_AMPLITUDE != 4
+        playerO.OUTPUT_AMPLITUDE != 1
       )
     {
-        throw invalid_argument(string("Invalid GeneralAI properties"));
+        throw invalid_argument(string("Incompatible GeneralAI properties"));
     }
 
     ///Let AI's know this is the start of a new game
@@ -42,38 +31,37 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
     ///Pick random first player
     GeneralAI *currentPlayer = &playerX;
     GeneralAI *waitingPlayer = &playerO;
-    uniform_int_distribution<int> distribution(0,1);
-    if(distribution(randomGenerator) == 0)
+
+    if(GeneralAI::randomProbability() < .5f)
     {
         swap(currentPlayer,waitingPlayer);
     }
 
-
     ///Play match
     while(true)
     {
-        //Create data to be sent to player
-        vector<int> input(9);
+        //Create input to be sent to player
+        vector<float> input(9);
         for(int i=0; i<9; ++i)
         {
-            switch(board[i])
+            switch(board.at(i))
             {
                 case Token::None:
-                    input[i] = 0;
+                    input.at(i) = 0;
                     break;
 
                 case Token::X:
-                    input[i] = 1;
+                    input.at(i) = 1;
                     break;
 
                 case Token::O:
-                    input[i] = -1;
+                    input.at(i) = -1;
                     break;
             }
 
             if(currentPlayer == &playerO)
             {
-                input[i] *= -1; //That way, for every player, 1 means your token and -1 the enemy's token
+                input.at(i) *= -1; //That way, for every player, 1 means your token and -1 the enemy's token
             }
         }
 
@@ -93,57 +81,35 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
         }
 
         //Player plays his move
-        Token turn;
+        Token turn = (currentPlayer == &playerX) ? Token::X : Token::O;
+        board.at(playerMove) = turn;
 
-        if(currentPlayer == &playerX)
-        {
-            turn = Token::X;
-        }
-        else
-        {
-            turn = Token::O;
-        }
-
-        board[playerMove] = turn;
-
-
-        /// Check endgame conditions
+        // Check endgame conditions
         if(isWinning(board, turn))
         {
-            //Reward and Punish appropriate player
-            if(currentPlayer == &playerX)
-            {
-                playerX.learn(WON_GAME_WORTH);
-                playerO.learn(LOST_GAME_WORTH);
+            //Teach lessons to players
+            auto winningDecision = currentPlayer->lastDecision();
+            auto losingDecision = waitingPlayer->lastDecision();
 
-                return Token::X;
-            }
-            else
-            {
-                playerX.learn(LOST_GAME_WORTH);
-                playerO.learn(WON_GAME_WORTH);
+            playerX.learn(winningDecision, WON_GAME_WORTH);
+            playerX.learn(losingDecision, LOST_GAME_WORTH);
 
-                return Token::O;
-            }
+            playerO.learn(winningDecision, WON_GAME_WORTH);
+            playerO.learn(losingDecision, LOST_GAME_WORTH);
 
-            //Learn from other player's success/failure
-            auto lastLessonX = playerX.lastLesson();
-            auto lastLessonO = playerO.lastLesson();
-
-            playerX.learn(lastLessonO);
-            playerO.learn(lastLessonX);
+            return turn;
         }
         else if(boardIsFull(board))
         {
-            playerX.learn(TIE_GAME_WORTH);
-            playerO.learn(TIE_GAME_WORTH);
+            //Teach lessons to players
+            auto decisionCurrentPlayer = currentPlayer->lastDecision();
+            auto decisionWaitingPlayer = waitingPlayer->lastDecision();
 
-            //Learn from other player's success/failure
-            auto lastLessonX = playerX.lastLesson();
-            auto lastLessonO = playerO.lastLesson();
+            playerX.learn(decisionCurrentPlayer, TIE_GAME_WORTH);
+            playerX.learn(decisionWaitingPlayer, TIE_GAME_WORTH);
 
-            playerX.learn(lastLessonO);
-            playerO.learn(lastLessonX);
+            playerO.learn(decisionCurrentPlayer, TIE_GAME_WORTH);
+            playerO.learn(decisionWaitingPlayer, TIE_GAME_WORTH);
 
             return Token::None;
         }
@@ -154,9 +120,25 @@ TicTacToe::Token TicTacToe::match(GeneralAI& playerX, GeneralAI& playerO)
     }
 }
 
-int TicTacToe::getPlayerMove(GeneralAI& player, const vector<int>& input)
+/**
+*   Input of the kind: [0,0,0,1,-1,0,-1,-1,1]
+*   Returns an index in range [0,8]
+**/
+int TicTacToe::getPlayerMove(GeneralAI& player, const vector<float>& input)
 {
-    return player.output(input)[0] + 4; //We want the value to be in range [0,8]
+    vector<float> output = player.output(input);
+
+    //Player move is the output with the biggest value
+    float playerMove = 0;
+    for(unsigned int i=0; i<output.size(); ++i)
+    {
+        if(output.at(i) > output.at(playerMove))
+        {
+            playerMove = i;
+        }
+    }
+
+    return playerMove;
 }
 
 bool TicTacToe::isWinning(const vector<Token>& board, Token turn)
@@ -167,7 +149,7 @@ bool TicTacToe::isWinning(const vector<Token>& board, Token turn)
     {
         for(int j=0; j<3; ++j)
         {
-            formattedBoard[i][j] = board[i*3+j];
+            formattedBoard[i][j] = board.at(i*3+j);
         }
     }
 
@@ -186,7 +168,8 @@ bool TicTacToe::isWinning(const vector<Token>& board, Token turn)
     }
 
     ///Check diagonals
-    if (((formattedBoard[0][0]==turn)&&(formattedBoard[1][1]==turn)&&(formattedBoard[2][2]==turn)) || ((formattedBoard[2][0]==turn)&&(formattedBoard[1][1]==turn)&&(formattedBoard[0][2]==turn)))
+    if (((formattedBoard[0][0]==turn)&&(formattedBoard[1][1]==turn)&&(formattedBoard[2][2]==turn)) ||
+        ((formattedBoard[2][0]==turn)&&(formattedBoard[1][1]==turn)&&(formattedBoard[0][2]==turn)))
     {
         return true;
     }
@@ -196,12 +179,7 @@ bool TicTacToe::isWinning(const vector<Token>& board, Token turn)
 
 bool TicTacToe::boardIsFull(const vector<Token>& board)
 {
-    for(int i=0; i<9; ++i)
-    {
-        if (board[i] == Token::None)
-            return false;
-    }
-
-    return true;
+    auto emptySquare = find(board.begin(), board.end(), Token::None);
+    return ( emptySquare == board.end() );  //Cannot find empty square
 }
 

@@ -1,40 +1,23 @@
 #include <iostream>
-#include "NeuralNetAI.h"
 #include <map>
 #include <ctime>
-#include "../HumanAI/HumanAI.h"
+#include "DarwinAI.h"
 #include <cereal/types/memory.hpp>
 
 using namespace std;
 
-default_random_engine randomGenerator;
 const int AMPLITUDE = 100;
-const int NUM_OF_GENERATIONS = 100;
-const int POPULATION_SIZE = 100;
 
-//Functions
-float fitnessEval(NeuralNetAI& ai);
-
-void init();
-
-void initPopulation(vector<unique_ptr<NeuralNetAI>>& population);
-
-//Returns range of fitnessScores (max-min)
-float calculateFitnessScores(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores, float& minFitness, float& maxFitness);
-
-void calculateFitnessScores(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores);
-
-//Update population with a next generation
-void createNextGeneration(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores, float minFitness, float maxFitness);
+default_random_engine randomGenerator;
 
 void manualTesting(unique_ptr<NeuralNetAI>& individual);
 
-//Return the best individual of the population
-//Parameter population cannot be empty
-unique_ptr<NeuralNetAI>& bestIndividual(vector<unique_ptr<NeuralNetAI>>& population);
-
 int main()
 {
+    //Task: Output the sum of the two inputs
+
+    DarwinAI population(2,1,AMPLITUDE,2*AMPLITUDE);
+
     cout<<"Initializing random number generator"<<endl;
     init();
 

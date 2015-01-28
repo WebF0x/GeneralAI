@@ -24,7 +24,6 @@ struct Node
 
 class NeuralNetAI : public GeneralAI
 {
-    friend cereal::access;
 public:
     NeuralNetAI(int inputSize, int outputSize, int maxInput, int maxOutput);
 
@@ -74,11 +73,17 @@ private:
     const float ACCEPTABLE_ERROR = .1f;  //Useless right now: the network doesn't learn()
 
     //Serialization
-
+    friend cereal::access;
     template <class Archive>
-    void serialize( Archive & ar )
+    void serialize( Archive & archive )
     {
-        ar(cereal::virtual_base_class<GeneralAI>( this ),m_nodes);
+        archive(    cereal::virtual_base_class<GeneralAI>( this ),
+                    m_nodes,
+                    const_cast<int &>(INPUT_SIZE),
+                    const_cast<int &>(OUTPUT_SIZE),
+                    const_cast<int &>(INPUT_AMPLITUDE),
+                    const_cast<int &>(OUTPUT_AMPLITUDE)
+                );
     }
 };
 

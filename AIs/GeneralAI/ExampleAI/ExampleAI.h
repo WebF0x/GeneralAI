@@ -12,6 +12,7 @@ class ExampleAI : public GeneralAI
         std::vector<float> coreOutput(const std::vector<float>& input);
         void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
 
+        friend cereal::access;
         template <class Archive>
         void serialize( Archive & ar )
         {
@@ -23,7 +24,7 @@ class ExampleAI : public GeneralAI
             **/
         }
 
-    friend cereal::access;
+
 };
 
 #endif // EXAMPLEAI_H

@@ -10,8 +10,6 @@
 #include <cereal/types/map.hpp>
 #include <cereal/types/vector.hpp>
 
-
-
 class CaseBasedAI : public GeneralAI
 {
     friend cereal::access;

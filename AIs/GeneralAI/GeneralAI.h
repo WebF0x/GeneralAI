@@ -50,26 +50,26 @@ class GeneralAI// : public SaveSystem
         static float randomProbability();
 
         ///Serialization (save/load)
-        template<class AI, class Archive = cereal::BinaryOutputArchive>
-        static bool save(const AI& ai, const std::string& fileName)
+        template<class Object, class Archive = cereal::BinaryOutputArchive>
+        static bool save(const Object& obj, const std::string& fileName)
         {
             std::ofstream file(fileName, std::ios::binary);
             if(file.fail()) return false;
 
             Archive archive( file );
-            archive( ai );
+            archive(cereal::make_nvp("Object",  obj));
 
             return true;
         }
 
-        template<class AI, class Archive = cereal::BinaryInputArchive>
-        static bool load(AI& ai, const std::string& fileName)
+        template<class Object, class Archive = cereal::BinaryInputArchive>
+        static bool load(Object& obj, const std::string& fileName)
         {
             std::ifstream file(fileName, std::ios::binary);
             if(file.fail()) return false;
 
             Archive archive( file );
-            archive( ai );
+            archive(cereal::make_nvp("Object",  obj));
 
             return true;
         }
@@ -89,12 +89,10 @@ class GeneralAI// : public SaveSystem
         template <class Archive>
         void serialize( Archive & ar )
         {
-            //ar(cereal::virtual_base_class<Base>( this ), member1, member2, ...);
-
-            ar(const_cast<int &>(INPUT_SIZE),
-               const_cast<int &>(OUTPUT_SIZE),
-               const_cast<int &>(INPUT_AMPLITUDE),
-               const_cast<int &>(OUTPUT_AMPLITUDE));
+            ar(cereal::make_nvp("Input size"        , const_cast<int &>(INPUT_SIZE)));
+            ar(cereal::make_nvp("Output size"       , const_cast<int &>(OUTPUT_SIZE)));
+            ar(cereal::make_nvp("Input amplitude"   , const_cast<int &>(INPUT_AMPLITUDE)));
+            ar(cereal::make_nvp("Output amplitude"  , const_cast<int &>(OUTPUT_AMPLITUDE)));
         }
 
         /// Subclasses must implement these methods

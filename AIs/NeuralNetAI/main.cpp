@@ -35,13 +35,22 @@ unique_ptr<NeuralNetAI>& bestIndividual(vector<unique_ptr<NeuralNetAI>>& populat
 
 int main()
 {
+    vector<NeuralNetAI> population;
+    population.push_back(NeuralNetAI(1,1,1,1));
+    population.push_back(NeuralNetAI(1,1,1,1));
+
+    GeneralAI::save<vector<NeuralNetAI>, cereal::JSONOutputArchive>(population, "save.txt");
+
+    return 0;
+
+    /*
     cout<<"Initializing random number generator"<<endl;
     init();
 
     cout<<"Generating initial population"<<endl;
     vector<unique_ptr<NeuralNetAI>> population;
 
-    //*
+
     //unique_ptr<NeuralNetAI> bob(new NeuralNetAI(2,1,AMPLITUDE,2*AMPLITUDE));
     cout<<"Attempting to load"<<endl;
     if(GeneralAI::load< decltype(population), cereal::JSONInputArchive>(population, "save.txt"))
@@ -55,13 +64,6 @@ int main()
         initPopulation(population);
     }
 
-    //GeneralAI::load<NeuralNetAI, cereal::JSONInputArchive>(*bob, "save.txt")<<endl;
-    //manualTesting(bob);
-    //return 0;
-    //*/
-
-
-
     ///Evolve a better population over the course of many generations
     for(int i=0;i<NUM_OF_GENERATIONS;++i)
     {
@@ -74,13 +76,12 @@ int main()
 
     unique_ptr<NeuralNetAI>& champion = bestIndividual(population);
 
-
     GeneralAI::save<vector<unique_ptr<NeuralNetAI>>, cereal::JSONOutputArchive>(population, "save.txt");
-    //GeneralAI::save<NeuralNetAI, cereal::JSONOutputArchive>(*champion, "save.txt");
 
     manualTesting(champion);
 
     return 0;
+    */
 }
 
 //Returns the fitness of the AI

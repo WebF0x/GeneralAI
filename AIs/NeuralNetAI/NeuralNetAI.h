@@ -75,15 +75,10 @@ private:
     //Serialization
     friend cereal::access;
     template <class Archive>
-    void serialize( Archive & archive )
+    void serialize( Archive & ar )
     {
-        archive(    cereal::virtual_base_class<GeneralAI>( this ),
-                    m_nodes,
-                    const_cast<int &>(INPUT_SIZE),
-                    const_cast<int &>(OUTPUT_SIZE),
-                    const_cast<int &>(INPUT_AMPLITUDE),
-                    const_cast<int &>(OUTPUT_AMPLITUDE)
-                );
+        ar(cereal::make_nvp("GeneralAI",cereal::virtual_base_class<GeneralAI>( this )));
+        ar(cereal::make_nvp("Nodes",    m_nodes));
     }
 };
 

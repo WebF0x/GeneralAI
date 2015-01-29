@@ -68,7 +68,7 @@ void DarwinAI::createNextGeneration(vector<float>& fitnessScores, float minFitne
 {
     vector<unique_ptr<NeuralNetAI>> newPopulation;
     vector<bool> parentCloned(POPULATION_SIZE, false);
-    while(newPopulation.size() < POPULATION_SIZE)
+    while(newPopulation.size() < (unsigned int)POPULATION_SIZE)
     {
         //Pick a random individual
         uniform_int_distribution<int> distribution(0, POPULATION_SIZE - 1);
@@ -88,7 +88,7 @@ void DarwinAI::createNextGeneration(vector<float>& fitnessScores, float minFitne
                 newPopulation.push_back(move(parent));
             }
 
-            if(newPopulation.size() < POPULATION_SIZE)  //Can have multiple mutated children
+            if(newPopulation.size() < (unsigned int)POPULATION_SIZE)  //Can have multiple mutated children
             {
                 unique_ptr<NeuralNetAI> child(new NeuralNetAI(*(m_population.at(index))));
                 child->mutate();

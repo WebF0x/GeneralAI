@@ -2,8 +2,9 @@
 
 using namespace std;
 
-DarwinAI::DarwinAI(int inputSize, int outputSize, int maxInput, int maxOutput)
-    : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
+DarwinAI::DarwinAI(int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize)
+    : GeneralAI(inputSize, outputSize, maxInput, maxOutput),
+    POPULATION_SIZE(populationSize)
 {
     initPopulation();
 }
@@ -27,16 +28,16 @@ void DarwinAI::evolve(int generations)
     {
         vector<float> fitnessScores;
         float minFitness, maxFitness;
-        calculateFitnessScores(population, fitnessScores, minFitness, maxFitness);
-        createNextGeneration(population, fitnessScores, minFitness, maxFitness);
+        calculateFitnessScores(fitnessScores, minFitness, maxFitness);
+        createNextGeneration(fitnessScores, minFitness, maxFitness);
     }
 }
 
-float DarwinAI::calculateFitnessScores(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores, float& minFitness, float& maxFitness)
+float DarwinAI::calculateFitnessScores(vector<float>& fitnessScores, float& minFitness, float& maxFitness)
 {
-    for(unsigned int i=0; i<population.size(); ++i)
+    for(unsigned int i=0; i<m_population.size(); ++i)
     {
-        float fitness = fitnessEval(*population[i]);
+        float fitness = fitnessEval(*m_population[i]);
         fitnessScores.push_back(fitness);
 
         if(i==0)
@@ -54,16 +55,16 @@ float DarwinAI::calculateFitnessScores(vector<unique_ptr<NeuralNetAI>>& populati
     return maxFitness-minFitness;
 }
 
-void DarwinAI::calculateFitnessScores(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores)
+void DarwinAI::calculateFitnessScores(vector<float>& fitnessScores)
 {
-    for(unsigned int i=0; i<population.size(); ++i)
+    for(unsigned int i=0; i<m_population.size(); ++i)
     {
-        float fitness = fitnessEval(*population[i]);
+        float fitness = fitnessEval(*m_population[i]);
         fitnessScores.push_back(fitness);
     }
 }
 
-void DarwinAI::createNextGeneration(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores, float minFitness, float maxFitness)
+void DarwinAI::createNextGeneration(vector<float>& fitnessScores, float minFitness, float maxFitness)
 {
     vector<unique_ptr<NeuralNetAI>> newPopulation;
     vector<bool> parentCloned(POPULATION_SIZE, false);
@@ -71,11 +72,11 @@ void DarwinAI::createNextGeneration(vector<unique_ptr<NeuralNetAI>>& population,
     {
         //Pick a random individual
         uniform_int_distribution<int> distribution(0, POPULATION_SIZE - 1);
-        int index = distribution(randomGenerator);
+        int index = distribution(m_randomNumberGenerator);
         float fitness = fitnessScores.at(index);
 
         uniform_real_distribution<float> distribution0_1(0,1);
-        float chance = distribution0_1(randomGenerator);
+        float chance = distribution0_1(m_randomNumberGenerator);
 
         if(chance <= (fitness-minFitness)/(maxFitness-minFitness) ) //Gets picked by the roulette
         {
@@ -83,30 +84,30 @@ void DarwinAI::createNextGeneration(vector<unique_ptr<NeuralNetAI>>& population,
             {
                 parentCloned.at(index) = true;
 
-                unique_ptr<NeuralNetAI> parent(new NeuralNetAI(*(population.at(index))));
+                unique_ptr<NeuralNetAI> parent(new NeuralNetAI(*(m_population.at(index))));
                 newPopulation.push_back(move(parent));
             }
 
             if(newPopulation.size() < POPULATION_SIZE)  //Can have multiple mutated children
             {
-                unique_ptr<NeuralNetAI> child(new NeuralNetAI(*(population.at(index))));
+                unique_ptr<NeuralNetAI> child(new NeuralNetAI(*(m_population.at(index))));
                 child->mutate();
                 newPopulation.push_back(move(child));
             }
         }
     }
 
-    population.clear();
+    m_population.clear();
     for(auto it=newPopulation.rbegin(); it!=newPopulation.rend(); ++it)
     {
-        population.push_back(move(*it));
+        m_population.push_back(move(*it));
     }
 }
 
-unique_ptr<NeuralNetAI>& DarwinAI::bestIndividual(vector<unique_ptr<NeuralNetAI>>& population)
+unique_ptr<NeuralNetAI>& DarwinAI::bestIndividual()
 {
     vector<float> fitnessScores;
-    calculateFitnessScores(population, fitnessScores);
+    calculateFitnessScores(fitnessScores);
 
     int indexOfBestIndividual = 0;
     float fitnessOfBestIndividual = fitnessScores.at(0);
@@ -121,7 +122,7 @@ unique_ptr<NeuralNetAI>& DarwinAI::bestIndividual(vector<unique_ptr<NeuralNetAI>
         }
     }
 
-    return population.at(indexOfBestIndividual);
+    return m_population.at(indexOfBestIndividual);
 }
 
 void DarwinAI::coreLearn(const vector<float>& input, const vector<float>& output, float outcome)

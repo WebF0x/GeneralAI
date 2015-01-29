@@ -6,25 +6,25 @@
 class DarwinAI : public GeneralAI
 {
     public:
-        DarwinAI(int inputSize, int outputSize, int maxInput, int maxOutput);
+        DarwinAI(int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize = 2);
         void evolve(int generations);
 
         virtual float fitnessEval(NeuralNetAI& ai) = 0;
 
         //Returns range of fitnessScores (max-min)
-        float calculateFitnessScores(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores, float& minFitness, float& maxFitness);
+        float calculateFitnessScores(std::vector<float>& fitnessScores, float& minFitness, float& maxFitness);
 
-        void calculateFitnessScores(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores);
+        void calculateFitnessScores(std::vector<float>& fitnessScores);
 
         //Update population with a next generation
-        void createNextGeneration(vector<unique_ptr<NeuralNetAI>>& population, vector<float>& fitnessScores, float minFitness, float maxFitness);
+        void createNextGeneration(std::vector<float>& fitnessScores, float minFitness, float maxFitness);
 
         //Return the best individual of the population
         //Parameter population cannot be empty
-        unique_ptr<NeuralNetAI>& bestIndividual(vector<unique_ptr<NeuralNetAI>>& population);
+        std::unique_ptr<NeuralNetAI>& bestIndividual();
 
     private:
-        vector<unique_ptr<NeuralNetAI>> m_population;
+        std::vector<std::unique_ptr<NeuralNetAI>> m_population;
 
         const int POPULATION_SIZE;
 

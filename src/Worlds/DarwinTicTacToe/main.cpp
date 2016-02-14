@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
-#include "../../AIs/NeuralNetAI/NeuralNetAI.h"
+#include "../../AIs/NeuralNetAI/NeuralNetAI.hpp"
 #include <map>
 #include <ctime>
-#include "TicTacToe.h"
-#include "TicTacToeHuman.h"
+#include "TicTacToe.hpp"
+#include "TicTacToeHuman.hpp"
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/archives/binary.hpp>

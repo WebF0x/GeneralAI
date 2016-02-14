@@ -1,7 +1,7 @@
-#ifndef NEURALNETAI_H
-#define NEURALNETAI_H
+#ifndef NEURAL_NET_AI_HPP
+#define NEURAL_NET_AI_HPP
 
-#include "../GeneralAI/GeneralAI.h"
+#include "../GeneralAI/GeneralAI.hpp"
 #include <map>
 #include <vector>
 #include <chrono>
@@ -82,4 +82,4 @@ private:
     }
 };
 
-#endif // NEURALNETAI_H
+#endif // NEURAL_NET_AI_HPP

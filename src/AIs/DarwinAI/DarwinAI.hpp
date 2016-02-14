@@ -1,7 +1,7 @@
-#ifndef DARWINAI_H_INCLUDED
-#define DARWINAI_H_INCLUDED
+#ifndef DARWIN_AI_HPP
+#define DARWIN_AI_HPP
 
-#include "../NeuralNetAI/NeuralNetAI.h"
+#include "../NeuralNetAI/NeuralNetAI.hpp"
 
 class DarwinAI : public GeneralAI
 {
@@ -47,4 +47,4 @@ class DarwinAI : public GeneralAI
 };
 
 
-#endif // DARWINAI_H_INCLUDED
+#endif // DARWIN_AI_HPP

@@ -1,7 +1,7 @@
-#ifndef HUMANAI_H
-#define HUMANAI_H
+#ifndef HUMAN_AI_HPP
+#define HUMAN_AI_HPP
 
-#include "../GeneralAI/GeneralAI.h"
+#include "../GeneralAI/GeneralAI.hpp"
 #include <iostream>
 #include <string>
 
@@ -54,4 +54,4 @@ namespace cereal
   struct specialize<Archive, HumanAI, cereal::specialization::member_load_save> {};
 }
 
-#endif // HUMANAI_H
+#endif // HUMAN_AI_HPP

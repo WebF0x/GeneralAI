@@ -1,5 +1,5 @@
 #include <iostream>
-#include "GeneralAI.h"
+#include "GeneralAI.hpp"
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-#include "NeuralNetAI.h"
+#include "NeuralNetAI.hpp"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ExampleAI.h"
+#include "ExampleAI.hpp"
 
 using namespace std;
 

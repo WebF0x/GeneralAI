@@ -1,8 +1,8 @@
-#include "TicTacToe.h"
-#include "TicTacToeHuman.h"
-#include "../../AIs/CaseBasedAI/CaseBasedAI.h"
-#include "../../AIs/NeuralNetAI/NeuralNetAI.h"
-#include "../../AIs/RandomAI/RandomAI.h"
+#include "TicTacToe.hpp"
+#include "TicTacToeHuman.hpp"
+#include "../../AIs/CaseBasedAI/CaseBasedAI.hpp"
+#include "../../AIs/NeuralNetAI/NeuralNetAI.hpp"
+#include "../../AIs/RandomAI/RandomAI.hpp"
 
 using namespace std;
 

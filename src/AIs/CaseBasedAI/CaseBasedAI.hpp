@@ -1,7 +1,7 @@
-#ifndef CASEBASEDAI_H
-#define CASEBASEDAI_H
+#ifndef CASE_BASED_AI_HPP
+#define CASE_BASED_AI_HPP
 
-#include "../GeneralAI/GeneralAI.h"
+#include "../GeneralAI/GeneralAI.hpp"
 #include <map>
 #include <vector>
 #include <chrono>
@@ -39,4 +39,4 @@ class CaseBasedAI : public GeneralAI
 
 };
 
-#endif // CASEBASEDAI_H
+#endif // CASE_BASED_AI_HPP

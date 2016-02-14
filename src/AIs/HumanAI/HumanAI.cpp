@@ -1,4 +1,4 @@
-#include "HumanAI.h"
+#include "HumanAI.hpp"
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-#include "CaseBasedAI.h"
+#include "CaseBasedAI.hpp"
 
 using namespace std;
 

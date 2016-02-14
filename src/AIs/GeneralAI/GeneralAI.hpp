@@ -1,5 +1,5 @@
-#ifndef GENERALAI_H
-#define GENERALAI_H
+#ifndef GENERAL_AI_HPP
+#define GENERAL_AI_HPP
 
 #include <stdexcept>
 #include <tuple>
@@ -110,4 +110,4 @@ class GeneralAI// : public SaveSystem
         bool m_lastLessonEnabled = false;
 };
 
-#endif // GENERALAI_H
+#endif // GENERAL_AI_HPP

@@ -1,4 +1,4 @@
-#include "TicTacToe.h"
+#include "TicTacToe.hpp"
 
 using namespace std;
 

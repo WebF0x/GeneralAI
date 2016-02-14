@@ -1,5 +1,5 @@
 #include <iostream>
-#include "RandomAI.h"
+#include "RandomAI.hpp"
 
 using namespace std;
 

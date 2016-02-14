@@ -1,8 +1,8 @@
 #include <iostream>
-#include "NeuralNetAI.h"
+#include "NeuralNetAI.hpp"
 #include <map>
 #include <ctime>
-#include "../HumanAI/HumanAI.h"
+#include "../HumanAI/HumanAI.hpp"
 #include <cereal/types/memory.hpp>
 
 using namespace std;

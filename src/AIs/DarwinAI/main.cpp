@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <ctime>
-#include "DarwinAI.h"
+#include "DarwinAI.hpp"
 #include <cereal/types/memory.hpp>
 
 using namespace std;

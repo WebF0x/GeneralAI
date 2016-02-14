@@ -1,7 +1,7 @@
-#ifndef EXAMPLEAI_H
-#define EXAMPLEAI_H
+#ifndef EXAMPLE_AI_HPP
+#define EXAMPLE_AI_HPP
 
-#include "../GeneralAI.h"
+#include "../GeneralAI.hpp"
 
 class ExampleAI : public GeneralAI
 {
@@ -27,4 +27,4 @@ class ExampleAI : public GeneralAI
 
 };
 
-#endif // EXAMPLEAI_H
+#endif // EXAMPLE_AI_HPP

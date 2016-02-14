@@ -1,8 +1,8 @@
-#ifndef TICTACTOEHUMAN_H
-#define TICTACTOEHUMAN_H
+#ifndef TIC_TAC_TOE_HUMAN_HPP
+#define TIC_TAC_TOE_HUMAN_HPP
 
-#include "../../AIs/HumanAI/HumanAI.h"
-#include "TicTacToe.h"
+#include "../../AIs/HumanAI/HumanAI.hpp"
+#include "TicTacToe.hpp"
 
 #include <iostream>
 #include <vector>
@@ -20,4 +20,4 @@ class TicTacToeHuman : public HumanAI
         char inputToChar(float input);
 };
 
-#endif // TICTACTOEHUMAN_H
+#endif // TIC_TAC_TOE_HUMAN_HPP

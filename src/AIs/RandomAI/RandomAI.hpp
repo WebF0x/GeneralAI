@@ -1,7 +1,7 @@
-#ifndef RANDOMAI_H
-#define RANDOMAI_H
+#ifndef RANDOM_AI_HPP
+#define RANDOM_AI_HPP
 
-#include "../GeneralAI/GeneralAI.h"
+#include "../GeneralAI/GeneralAI.hpp"
 
 #include <chrono>   //To generate seed for randomGenerator
 #include <random>   //To generate random values
@@ -25,4 +25,4 @@ class RandomAI : public GeneralAI
         }
 };
 
-#endif // RANDOMAI_H
+#endif // RANDOM_AI_HPP

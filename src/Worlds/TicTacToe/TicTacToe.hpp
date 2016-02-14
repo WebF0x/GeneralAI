@@ -1,7 +1,7 @@
-#ifndef TICTACTOE_H
-#define TICTACTOE_H
+#ifndef TIC_TAC_TOE_HPP
+#define TIC_TAC_TOE_HPP
 
-#include "../../AIs/GeneralAI/GeneralAI.h"
+#include "../../AIs/GeneralAI/GeneralAI.hpp"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -38,4 +38,4 @@ class TicTacToe
         std::vector<float> boardToInput(const std::vector<Token>& board);
 };
 
-#endif // TICTACTOE_H
+#endif // TIC_TAC_TOE_HPP

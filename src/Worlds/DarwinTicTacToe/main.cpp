@@ -20,7 +20,7 @@ const std::string& SAVE_FILE_NAME = "population.save";
 //Functions
 float fitnessEval(NeuralNetAI& ai);
 
-void init();
+void initRandom();
 
 void initPopulation(vector<unique_ptr<NeuralNetAI>>& population);
 

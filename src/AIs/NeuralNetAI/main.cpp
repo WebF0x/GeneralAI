@@ -35,6 +35,7 @@ unique_ptr<NeuralNetAI>& bestIndividual(vector<unique_ptr<NeuralNetAI>>& populat
 
 int main()
 {
+    //*
     vector<NeuralNetAI> population;
     population.push_back(NeuralNetAI(1,1,1,1));
     population.push_back(NeuralNetAI(1,1,1,1));
@@ -43,7 +44,7 @@ int main()
 
     return 0;
 
-    /*
+    /*/
     cout<<"Initializing random number generator"<<endl;
     init();
 
@@ -81,7 +82,7 @@ int main()
     manualTesting(champion);
 
     return 0;
-    */
+    //*/
 }
 
 //Returns the fitness of the AI

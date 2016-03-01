@@ -23,9 +23,9 @@ class DarwinAI : public GeneralAI
         //Parameter population cannot be empty
         std::unique_ptr<NeuralNetAI>& bestIndividual();
 
-    private:
         std::vector<std::unique_ptr<NeuralNetAI>> m_population;
 
+        private:
         const int POPULATION_SIZE;
 
         void initPopulation();
@@ -38,11 +38,7 @@ class DarwinAI : public GeneralAI
         void serialize( Archive & ar )
         {
             ar( cereal::virtual_base_class<GeneralAI>(this) );
-
-            /**
-                You can serialize any variables that you want like this:
-                    ar( cereal::virtual_base_class<GeneralAI>(this), var1, var2, varN );
-            **/
+            ar( m_population );
         }
 };
 

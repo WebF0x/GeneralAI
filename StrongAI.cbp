@@ -7,164 +7,211 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="GeneralAI">
-				<Option output="bin/GeneralAI" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/GeneralAI/GeneralAI" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/GeneralAI" />
 				<Option object_output="obj/GeneralAI" />
 				<Option type="1" />
+				<Option compiler="gcc" />
+			</Target>
+			<Target title="ExampleAI">
+				<Option output="bin/ExampleAI/ExampleAI" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/ExampleAI" />
+				<Option object_output="obj/ExampleAI" />
+				<Option type="1" />
+				<Option compiler="gcc" />
 			</Target>
 			<Target title="NeuralNetAI">
-				<Option output="bin/NeuralNetAI" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/NeuralNetAI/NeuralNetAI" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/NeuralNetAI" />
 				<Option object_output="obj/NeuralNetAI" />
 				<Option type="1" />
+				<Option compiler="gcc" />
 			</Target>
 			<Target title="DarwinAI">
-				<Option output="bin/DarwinAI" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/DarwinAI/DarwinAI" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/DarwinAI" />
 				<Option object_output="obj/DarwinAI" />
 				<Option type="1" />
+				<Option compiler="gcc" />
 			</Target>
 			<Target title="CaseBasedAI">
-				<Option output="bin/CaseBasedAI" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/CaseBasedAI/CaseBasedAI" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/CaseBasedAI" />
 				<Option object_output="obj/CaseBasedAI" />
 				<Option type="1" />
+				<Option compiler="gcc" />
 			</Target>
 			<Target title="HumanAI">
-				<Option output="bin/HumanAI" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/HumanAI/HumanAI" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/HumanAI" />
 				<Option object_output="obj/HumanAI" />
 				<Option type="1" />
+				<Option compiler="gcc" />
 			</Target>
 			<Target title="RandomAI">
-				<Option output="bin/RandomAI" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/RandomAI/RandomAI" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/RandomAI" />
 				<Option object_output="obj/RandomAI" />
 				<Option type="1" />
+				<Option compiler="gcc" />
 			</Target>
 			<Target title="DarwinTicTacToe">
-				<Option output="bin/DarwinTicTacToe" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/DarwinTicTacToe/DarwinTicTacToe" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/DarwinTicTacToe" />
 				<Option object_output="obj/DarwinTicTacToe" />
 				<Option type="1" />
+				<Option compiler="gcc" />
 			</Target>
 			<Target title="TicTacToe">
-				<Option output="bin/TicTacToe" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/TicTacToe/TicTacToe" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/TicTacToe" />
 				<Option object_output="obj/TicTacToe" />
 				<Option type="1" />
+				<Option compiler="gcc" />
+			</Target>
+			<Target title="Test">
+				<Option output="bin/Test/Test" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Test" />
+				<Option object_output="obj/Test" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Linker>
+					<Add library="lib/UnitTest++/libUnitTest++.a" />
+				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="include" />
 			<Add option="-O2" />
+			<Add directory="include" />
 		</Compiler>
 		<Linker>
 			<Add option="-s" />
 		</Linker>
-		<Unit filename="StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp">
+		<Unit filename="include/StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp">
 			<Option target="CaseBasedAI" />
 			<Option target="TicTacToe" />
 		</Unit>
-		<Unit filename="StrongAI/AI/DarwinAI/DarwinAI.hpp">
+		<Unit filename="include/StrongAI/AI/DarwinAI/DarwinAI.hpp">
 			<Option target="DarwinAI" />
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="StrongAI/AI/GeneralAI/GeneralAI.hpp">
+		<Unit filename="include/StrongAI/AI/ExampleAI/ExampleAI.hpp">
+			<Option target="ExampleAI" />
+		</Unit>
+		<Unit filename="include/StrongAI/AI/GeneralAI/GeneralAI.hpp">
 			<Option target="NeuralNetAI" />
 			<Option target="CaseBasedAI" />
 			<Option target="HumanAI" />
 			<Option target="RandomAI" />
+			<Option target="DarwinTicTacToe" />
+			<Option target="TicTacToe" />
+			<Option target="DarwinAI" />
 			<Option target="GeneralAI" />
-			<Option target="DarwinTicTacToe" />
-			<Option target="TicTacToe" />
-			<Option target="DarwinAI" />
+			<Option target="ExampleAI" />
 		</Unit>
-		<Unit filename="StrongAI/AI/HumanAI/HumanAI.hpp">
+		<Unit filename="include/StrongAI/AI/HumanAI/HumanAI.hpp">
 			<Option target="HumanAI" />
 			<Option target="TicTacToe" />
 			<Option target="DarwinTicTacToe" />
 			<Option target="NeuralNetAI" />
 		</Unit>
-		<Unit filename="StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp">
+		<Unit filename="include/StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp">
 			<Option target="DarwinTicTacToe" />
 			<Option target="DarwinAI" />
 			<Option target="NeuralNetAI" />
 		</Unit>
-		<Unit filename="StrongAI/AI/RandomAI/RandomAI.hpp">
+		<Unit filename="include/StrongAI/AI/RandomAI/RandomAI.hpp">
 			<Option target="RandomAI" />
 		</Unit>
-		<Unit filename="StrongAI/World/DarwinTicTacToe/TicTacToe.hpp">
+		<Unit filename="include/StrongAI/World/DarwinTicTacToe/TicTacToe.hpp">
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="StrongAI/World/DarwinTicTacToe/TicTacToeHuman.hpp">
+		<Unit filename="include/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.hpp">
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="StrongAI/World/TicTacToe/TicTacToe.hpp">
+		<Unit filename="include/StrongAI/World/TicTacToe/TicTacToe.hpp">
 			<Option target="TicTacToe" />
 		</Unit>
-		<Unit filename="StrongAI/World/TicTacToe/TicTacToeHuman.hpp">
+		<Unit filename="include/StrongAI/World/TicTacToe/TicTacToeHuman.hpp">
 			<Option target="TicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp">
+		<Unit filename="source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp">
 			<Option target="CaseBasedAI" />
 			<Option target="TicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/CaseBasedAI/main.cpp">
+		<Unit filename="source/StrongAI/AI/CaseBasedAI/main.cpp">
 			<Option target="CaseBasedAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/DarwinAI/DarwinAI.cpp">
+		<Unit filename="source/StrongAI/AI/DarwinAI/DarwinAI.cpp">
 			<Option target="DarwinAI" />
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/DarwinAI/main.cpp">
+		<Unit filename="source/StrongAI/AI/DarwinAI/main.cpp">
 			<Option target="DarwinAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/GeneralAI/GeneralAI.cpp">
+		<Unit filename="source/StrongAI/AI/ExampleAI/ExampleAI.cpp">
+			<Option target="ExampleAI" />
+		</Unit>
+		<Unit filename="source/StrongAI/AI/ExampleAI/main.cpp">
+			<Option target="ExampleAI" />
+		</Unit>
+		<Unit filename="source/StrongAI/AI/GeneralAI/GeneralAI.cpp">
 			<Option target="NeuralNetAI" />
 			<Option target="CaseBasedAI" />
 			<Option target="HumanAI" />
 			<Option target="RandomAI" />
+			<Option target="DarwinTicTacToe" />
+			<Option target="TicTacToe" />
+			<Option target="DarwinAI" />
 			<Option target="GeneralAI" />
-			<Option target="DarwinTicTacToe" />
-			<Option target="TicTacToe" />
-			<Option target="DarwinAI" />
+			<Option target="ExampleAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/GeneralAI/main.cpp">
+		<Unit filename="source/StrongAI/AI/GeneralAI/main.cpp">
 			<Option target="GeneralAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/HumanAI/HumanAI.cpp">
+		<Unit filename="source/StrongAI/AI/HumanAI/HumanAI.cpp">
 			<Option target="HumanAI" />
 			<Option target="TicTacToe" />
 			<Option target="DarwinTicTacToe" />
 			<Option target="NeuralNetAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/HumanAI/main.cpp">
+		<Unit filename="source/StrongAI/AI/HumanAI/main.cpp">
 			<Option target="HumanAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/NeuralNetAI/NeuralNetAI.cpp">
+		<Unit filename="source/StrongAI/AI/NeuralNetAI/NeuralNetAI.cpp">
 			<Option target="NeuralNetAI" />
 			<Option target="DarwinTicTacToe" />
 			<Option target="DarwinAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/NeuralNetAI/main.cpp">
+		<Unit filename="source/StrongAI/AI/NeuralNetAI/main.cpp">
 			<Option target="NeuralNetAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/RandomAI/RandomAI.cpp">
+		<Unit filename="source/StrongAI/AI/RandomAI/RandomAI.cpp">
 			<Option target="RandomAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/AI/RandomAI/main.cpp">
+		<Unit filename="source/StrongAI/AI/RandomAI/main.cpp">
 			<Option target="RandomAI" />
 		</Unit>
-		<Unit filename="src/StrongAI/World/DarwinTicTacToe/TicTacToe.cpp">
+		<Unit filename="source/StrongAI/World/DarwinTicTacToe/TicTacToe.cpp">
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.cpp">
+		<Unit filename="source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.cpp">
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/World/DarwinTicTacToe/main.cpp">
+		<Unit filename="source/StrongAI/World/DarwinTicTacToe/main.cpp">
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/World/TicTacToe/TicTacToe.cpp">
+		<Unit filename="source/StrongAI/World/TicTacToe/TicTacToe.cpp">
 			<Option target="TicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/World/TicTacToe/TicTacToeHuman.cpp">
+		<Unit filename="source/StrongAI/World/TicTacToe/TicTacToeHuman.cpp">
 			<Option target="TicTacToe" />
 		</Unit>
-		<Unit filename="src/StrongAI/World/TicTacToe/main.cpp">
+		<Unit filename="source/StrongAI/World/TicTacToe/main.cpp">
 			<Option target="TicTacToe" />
+		</Unit>
+		<Unit filename="test/main.cpp">
+			<Option target="Test" />
 		</Unit>
 		<Extensions>
 			<code_completion />

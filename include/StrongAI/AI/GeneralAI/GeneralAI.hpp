@@ -45,7 +45,7 @@ class GeneralAI// : public SaveSystem
 
         bool validInput(const std::vector<float>& input) const;
         bool validOutput(const std::vector<float>& output) const;
-        bool validOutcome(float outcome) const;
+        static bool validOutcome(float outcome);
 
         static float randomProbability();
 

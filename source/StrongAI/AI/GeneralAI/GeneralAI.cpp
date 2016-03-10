@@ -140,7 +140,7 @@ bool GeneralAI::validOutput(const vector<float>& output) const
     return validVector(output, (unsigned int)OUTPUT_SIZE, OUTPUT_AMPLITUDE);
 }
 
-bool GeneralAI::validOutcome(const float outcome) const
+bool GeneralAI::validOutcome(const float outcome)
 {
     return (-1.f <= outcome && outcome <= 1.f);
 }

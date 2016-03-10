@@ -9,7 +9,7 @@
 			<Target title="Test">
 				<Option output="bin/Test/Test" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/Test" />
-				<Option object_output="obj/Test" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Linker>
@@ -23,49 +23,49 @@
 			<Target title="DarwinAI">
 				<Option output="bin/DarwinAI/DarwinAI" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/DarwinAI" />
-				<Option object_output="obj/DarwinAI" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
 			<Target title="NeuralNetAI">
 				<Option output="bin/NeuralNetAI/NeuralNetAI" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/NeuralNetAI" />
-				<Option object_output="obj/NeuralNetAI" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
 			<Target title="CaseBasedAI">
 				<Option output="bin/CaseBasedAI/CaseBasedAI" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/CaseBasedAI" />
-				<Option object_output="obj/CaseBasedAI" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
 			<Target title="HumanAI">
 				<Option output="bin/HumanAI/HumanAI" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/HumanAI" />
-				<Option object_output="obj/HumanAI" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
 			<Target title="RandomAI">
 				<Option output="bin/RandomAI/RandomAI" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/RandomAI" />
-				<Option object_output="obj/RandomAI" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
 			<Target title="DarwinTicTacToe">
 				<Option output="bin/DarwinTicTacToe/DarwinTicTacToe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/DarwinTicTacToe" />
-				<Option object_output="obj/DarwinTicTacToe" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
 			<Target title="TicTacToe">
 				<Option output="bin/TicTacToe/TicTacToe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/TicTacToe" />
-				<Option object_output="obj/TicTacToe" />
+				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>

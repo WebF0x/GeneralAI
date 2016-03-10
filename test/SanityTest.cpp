@@ -3,7 +3,7 @@
 #include <vector>
 #include <exception>
 
-SUITE(Sanity)
+SUITE(SanityTest)
 {
     TEST(check)
     {

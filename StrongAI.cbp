@@ -181,6 +181,9 @@
 		<Unit filename="test/GeneralAITest.cpp">
 			<Option target="Test" />
 		</Unit>
+		<Unit filename="test/RandomAITest.cpp">
+			<Option target="Test" />
+		</Unit>
 		<Unit filename="test/SanityTest.cpp">
 			<Option target="Test" />
 		</Unit>

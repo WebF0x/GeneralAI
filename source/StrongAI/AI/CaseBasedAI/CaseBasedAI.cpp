@@ -7,6 +7,16 @@ CaseBasedAI::CaseBasedAI(int inputSize, int outputSize, int maxInput, int maxOut
 {
 }
 
+const std::map< std::vector<float>, std::map<std::vector<float>, float> >& CaseBasedAI::getMemory()
+{
+    return m_memory;
+}
+
+unsigned int CaseBasedAI::getMemorySize()
+{
+    return getMemory().size();
+}
+
 vector<float> CaseBasedAI::coreOutput(const vector<float>& input)
 {
     ///Try to recall a similar past experience

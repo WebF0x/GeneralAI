@@ -61,4 +61,38 @@ SUITE( CaseBasedAITest )
         // Delete save file
         CHECK( !remove( saveFileName.data() ) ) ;
     }
+
+    TEST( remembersTheSameLessonOnlyOnce )
+    {
+        CaseBasedAI ai( 1, 1, 1, 2 );
+
+        const std::vector< float > input( { 0 } );
+        const std::vector< float > outputToLearn( { 2 } );
+
+        CHECK_EQUAL( 0, ai.getMemorySize() );
+
+        for( int i = 0; i<10; i++ )
+        {
+            ai.learn( input, outputToLearn, 1 );
+        }
+
+        CHECK_EQUAL( 1, ai.getMemorySize() );
+    }
+
+    TEST( remembersEachDifferentLessons )
+    {
+        CaseBasedAI ai( 1, 1, 10, 2 );
+
+        const std::vector< float > outputToLearn( { 2 } );
+
+        CHECK_EQUAL( 0, ai.getMemorySize() );
+
+        for( int i = 0; i<10; i++ )
+        {
+            const std::vector< float > input( { (float)i } );
+            ai.learn( input, outputToLearn, 1 );
+        }
+
+        CHECK_EQUAL( 10, ai.getMemorySize() );
+    }
 }

@@ -17,6 +17,10 @@ class CaseBasedAI : public GeneralAI
     public:
         CaseBasedAI(int inputSize, int outputSize, int maxInput, int maxOutput);
          virtual ~CaseBasedAI(){}
+
+         const std::map< std::vector<float>, std::map<std::vector<float>, float> >& getMemory();
+         unsigned int getMemorySize();
+
     private:
         virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
         virtual std::vector<float> coreOutput(const std::vector<float>& input);

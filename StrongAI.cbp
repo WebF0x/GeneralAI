@@ -20,41 +20,6 @@
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
-			<Target title="DarwinAI">
-				<Option output="bin/DarwinAI/DarwinAI" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/DarwinAI" />
-				<Option object_output="obj/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-			</Target>
-			<Target title="NeuralNetAI">
-				<Option output="bin/NeuralNetAI/NeuralNetAI" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/NeuralNetAI" />
-				<Option object_output="obj/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-			</Target>
-			<Target title="CaseBasedAI">
-				<Option output="bin/CaseBasedAI/CaseBasedAI" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/CaseBasedAI" />
-				<Option object_output="obj/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-			</Target>
-			<Target title="HumanAI">
-				<Option output="bin/HumanAI/HumanAI" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/HumanAI" />
-				<Option object_output="obj/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-			</Target>
-			<Target title="RandomAI">
-				<Option output="bin/RandomAI/RandomAI" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/RandomAI" />
-				<Option object_output="obj/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-			</Target>
 			<Target title="DarwinTicTacToe">
 				<Option output="bin/DarwinTicTacToe/DarwinTicTacToe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/DarwinTicTacToe" />
@@ -78,31 +43,20 @@
 			<Add option="-s" />
 		</Linker>
 		<Unit filename="include/StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp">
-			<Option target="CaseBasedAI" />
 			<Option target="TicTacToe" />
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="include/StrongAI/AI/DarwinAI/DarwinAI.hpp">
-			<Option target="DarwinAI" />
 			<Option target="DarwinTicTacToe" />
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="include/StrongAI/AI/GeneralAI/GeneralAI.hpp" />
-		<Unit filename="include/StrongAI/AI/HumanAI/HumanAI.hpp">
-			<Option target="HumanAI" />
-			<Option target="TicTacToe" />
-			<Option target="DarwinTicTacToe" />
-			<Option target="NeuralNetAI" />
-			<Option target="Test" />
-		</Unit>
+		<Unit filename="include/StrongAI/AI/HumanAI/HumanAI.hpp" />
 		<Unit filename="include/StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp">
 			<Option target="DarwinTicTacToe" />
-			<Option target="DarwinAI" />
-			<Option target="NeuralNetAI" />
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="include/StrongAI/AI/RandomAI/RandomAI.hpp">
-			<Option target="RandomAI" />
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="include/StrongAI/World/DarwinTicTacToe/TicTacToe.hpp">
@@ -118,47 +72,33 @@
 			<Option target="TicTacToe" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp">
-			<Option target="CaseBasedAI" />
 			<Option target="TicTacToe" />
 			<Option target="Test" />
 		</Unit>
-		<Unit filename="source/StrongAI/AI/CaseBasedAI/main.cpp">
-			<Option target="CaseBasedAI" />
-		</Unit>
 		<Unit filename="source/StrongAI/AI/DarwinAI/DarwinAI.cpp">
-			<Option target="DarwinAI" />
 			<Option target="DarwinTicTacToe" />
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/DarwinAI/main.cpp">
-			<Option target="DarwinAI" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/GeneralAI/GeneralAI.cpp" />
-		<Unit filename="source/StrongAI/AI/HumanAI/HumanAI.cpp">
-			<Option target="HumanAI" />
-			<Option target="TicTacToe" />
-			<Option target="DarwinTicTacToe" />
-			<Option target="NeuralNetAI" />
-			<Option target="Test" />
-		</Unit>
+		<Unit filename="source/StrongAI/AI/HumanAI/HumanAI.cpp" />
 		<Unit filename="source/StrongAI/AI/HumanAI/main.cpp">
-			<Option target="HumanAI" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/NeuralNetAI/NeuralNetAI.cpp">
-			<Option target="NeuralNetAI" />
 			<Option target="DarwinTicTacToe" />
-			<Option target="DarwinAI" />
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/NeuralNetAI/main.cpp">
-			<Option target="NeuralNetAI" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/RandomAI/RandomAI.cpp">
-			<Option target="RandomAI" />
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/RandomAI/main.cpp">
-			<Option target="RandomAI" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/StrongAI/World/DarwinTicTacToe/TicTacToe.cpp">
 			<Option target="DarwinTicTacToe" />
@@ -177,6 +117,9 @@
 		</Unit>
 		<Unit filename="source/StrongAI/World/TicTacToe/main.cpp">
 			<Option target="TicTacToe" />
+		</Unit>
+		<Unit filename="test/CaseBasedAITest.cpp">
+			<Option target="Test" />
 		</Unit>
 		<Unit filename="test/GeneralAITest.cpp">
 			<Option target="Test" />

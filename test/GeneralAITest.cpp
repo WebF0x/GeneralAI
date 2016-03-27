@@ -98,7 +98,7 @@ SUITE( GeneralAITest )
     {
         MockAI mockAI = MockAI( 0, 1, 0, 0 );
         auto output = mockAI.output();
-        CHECK_EQUAL( 0, output.size() );
+        CHECK_EQUAL( 1, output.size() );
     }
 
     TEST( outputNoParamZeroAmplitudeInput )

@@ -65,6 +65,12 @@ void GeneralAI::learn(const float outcome)
     }
 }
 
+std::vector<float> GeneralAI::output()
+{
+    const std::vector<float> defaultInput( INPUT_SIZE, 0 );
+    return output( defaultInput );
+}
+
 vector<float> GeneralAI::output(const vector<float>& input)
 {
     ///Check parameters validity
@@ -73,7 +79,7 @@ vector<float> GeneralAI::output(const vector<float>& input)
         throw length_error(string( "invalid input" ));
     }
 
-    vector<float> output = coreOutput(input);
+    const vector<float> output = coreOutput(input);
 
     if(!validOutput(output))
     {
@@ -112,16 +118,16 @@ tuple< vector<float>, vector<float>, float> GeneralAI::lastLesson() const
     return m_lastLesson;
 }
 
-bool GeneralAI::validVector(const vector<float>& v, const unsigned int size, const int amplitude)
+bool GeneralAI::validVector(const vector<float>& myVector, const unsigned int size, const int amplitude)
 {
-    if(v.size() != size)
+    if(myVector.size() != size)
     {
         return false;
     }
 
-    for(unsigned int i=0; i<v.size(); ++i)
+    for(unsigned int i=0; i<myVector.size(); ++i)
     {
-        if(!(-amplitude <= v[i] && v[i] <= amplitude))
+        if(!(-amplitude <= myVector[i] && myVector[i] <= amplitude))
         {
             return false;
         }

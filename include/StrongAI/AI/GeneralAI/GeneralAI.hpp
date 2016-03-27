@@ -26,6 +26,7 @@ class GeneralAI// : public SaveSystem
         virtual ~GeneralAI(){}
 
         /// Returns AI's output
+        std::vector<float> output();
         std::vector<float> output(const std::vector<float>& input);
 
         /**

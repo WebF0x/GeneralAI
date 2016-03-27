@@ -20,7 +20,8 @@ class MockAI : public GeneralAI
 
         virtual std::vector< float > coreOutput( const std::vector< float >& input )
         {
-            return std::vector< float >( OUTPUT_AMPLITUDE, 0 );
+            const std::vector< float > output( OUTPUT_SIZE, 0 );
+            return output;
         }
 
         friend cereal::access;
@@ -51,8 +52,59 @@ SUITE( GeneralAITest )
 
     TEST( output )
     {
+        MockAI mockAI = MockAI( 1, 1, 1, 1 );
+        const std::vector< float > dummyInput(1, 0);
+        auto output = mockAI.output( dummyInput );
+        CHECK_EQUAL( 1, output.size() );
+    }
+
+    TEST( outputNoParam )
+    {
+        std::vector<MockAI> mockAIs;
+        mockAIs.push_back( MockAI( 0, 0, 0, 0 ) );
+        mockAIs.push_back( MockAI( 0, 0, 0, 1 ) );
+        mockAIs.push_back( MockAI( 0, 0, 1, 0 ) );
+        mockAIs.push_back( MockAI( 0, 0, 1, 1 ) );
+
+        mockAIs.push_back( MockAI( 0, 1, 0, 0 ) );
+        mockAIs.push_back( MockAI( 0, 1, 0, 1 ) );
+        mockAIs.push_back( MockAI( 0, 1, 1, 0 ) );
+        mockAIs.push_back( MockAI( 0, 1, 1, 1 ) );
+
+        mockAIs.push_back( MockAI( 1, 0, 0, 0 ) );
+        mockAIs.push_back( MockAI( 1, 0, 0, 1 ) );
+        mockAIs.push_back( MockAI( 1, 0, 1, 0 ) );
+        mockAIs.push_back( MockAI( 1, 0, 1, 1 ) );
+
+        mockAIs.push_back( MockAI( 1, 1, 0, 0 ) );
+        mockAIs.push_back( MockAI( 1, 1, 0, 1 ) );
+        mockAIs.push_back( MockAI( 1, 1, 1, 0 ) );
+        mockAIs.push_back( MockAI( 1, 1, 1, 1 ) );
+
+        for(auto& mockAI : mockAIs)
+        {
+            auto output = mockAI.output();
+        }
+    }
+
+    TEST( outputNoParamZeroAmplitude )
+    {
         MockAI mockAI = MockAI( 0, 0, 0, 0 );
-        auto output = mockAI.output( std::vector< float >( 0, 0 ) );
+        auto output = mockAI.output();
+        CHECK_EQUAL( 0, output.size() );
+    }
+
+    TEST( outputNoParamZeroAmplitudeOutput )
+    {
+        MockAI mockAI = MockAI( 0, 1, 0, 0 );
+        auto output = mockAI.output();
+        CHECK_EQUAL( 0, output.size() );
+    }
+
+    TEST( outputNoParamZeroAmplitudeInput )
+    {
+        MockAI mockAI = MockAI( 0, 0, 0, 1 );
+        auto output = mockAI.output();
         CHECK_EQUAL( 0, output.size() );
     }
 
@@ -162,5 +214,31 @@ SUITE( GeneralAITest )
         CHECK(  GeneralAI::validOutcome( -1.f ) );
         CHECK( !GeneralAI::validOutcome(  1.01f ) );
         CHECK( !GeneralAI::validOutcome( -1.01f ) );
+    }
+
+    TEST( validVectorEmpty )
+    {
+        CHECK( GeneralAI::validVector(  std::vector< float >( {   } ), 0, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< float >( {   } ), 0, 1 ) );
+
+        CHECK( GeneralAI::validVector(  std::vector< float >( 0, 0 ) , 0, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< float >( 0, 1 ) , 0, 0 ) );
+
+        CHECK( !GeneralAI::validVector(  std::vector< float >( {   } ), 1, 0 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< float >( {   } ), 1, 1 ) );
+    }
+
+    TEST( validVectorOnlyContainsZeros )
+    {
+        CHECK( GeneralAI::validVector(  std::vector< float >( { 0 } ), 1, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< float >( { 0 } ), 1, 1 ) );
+
+        CHECK( GeneralAI::validVector(  std::vector< float >( 1, 0 ) , 1, 0 ) );
+
+        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 0, 0 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 0, 1 ) );
+
+        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 2, 0 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 2, 1 ) );
     }
 }

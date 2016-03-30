@@ -53,14 +53,14 @@ SUITE( GeneralAITest )
     TEST( output )
     {
         MockAI mockAI = MockAI( 1, 1, 1, 1 );
-        const std::vector< float > dummyInput(1, 0);
+        const std::vector< float > dummyInput( 1, 0 );
         auto output = mockAI.output( dummyInput );
         CHECK_EQUAL( 1, output.size() );
     }
 
     TEST( outputNoParam )
     {
-        std::vector<MockAI> mockAIs;
+        std::vector< MockAI > mockAIs;
         mockAIs.push_back( MockAI( 0, 0, 0, 0 ) );
         mockAIs.push_back( MockAI( 0, 0, 0, 1 ) );
         mockAIs.push_back( MockAI( 0, 0, 1, 0 ) );
@@ -81,7 +81,7 @@ SUITE( GeneralAITest )
         mockAIs.push_back( MockAI( 1, 1, 1, 0 ) );
         mockAIs.push_back( MockAI( 1, 1, 1, 1 ) );
 
-        for(auto& mockAI : mockAIs)
+        for( auto& mockAI : mockAIs )
         {
             auto output = mockAI.output();
         }

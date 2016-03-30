@@ -2,85 +2,85 @@
 
 using namespace std;
 
-HumanAI::HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput)
-    : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
+HumanAI::HumanAI( int inputSize, int outputSize, int maxInput, int maxOutput )
+    : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
 {
 
 }
 
-vector<float> HumanAI::coreOutput(const vector<float>& input)
+vector< float > HumanAI::coreOutput( const vector< float >& input )
 {
-    cout<<"What is your Output?"<<endl
-        <<"===================="<<endl;
+    cout << "What is your Output?" << endl
+         << "====================" << endl;
 
-    //Display inputs
-    cout<<"Input"<<endl
-        <<"-----"<<endl;
+    // Display inputs
+    cout << "Input" << endl
+         << "-----" << endl;
 
-    visualizeInput(input);
-    cout<<endl;
+    visualizeInput( input );
+    cout << endl;
 
-    //Ask outputs
-    cout<<"Output"<<endl
-        <<"------"<<endl
-        <<"( Between "<<-OUTPUT_AMPLITUDE<<" and "<<OUTPUT_AMPLITUDE<<" )"<<endl;
+    // Ask outputs
+    cout << "Output" << endl
+         << "------" << endl
+         << "( Between " << -OUTPUT_AMPLITUDE << " and " << OUTPUT_AMPLITUDE << " )" << endl;
 
-    vector<float> output;
-    for(int i=0; i<OUTPUT_SIZE; ++i)
+    vector< float > output;
+    for( int i = 0; i < OUTPUT_SIZE; i++ )
     {
-        cout<<"Output "<<i<<"/"<<OUTPUT_SIZE-1<<": "<<endl;
+        cout << "Output " << i << "/" << OUTPUT_SIZE - 1 << ": " << endl;
 
         float userInput;
 
         do
         {
-            cout<<"";
-            cin>>userInput;
-        }while(userInput < -OUTPUT_AMPLITUDE || userInput > OUTPUT_AMPLITUDE);
-        cout<<endl;
+            cout << "";
+            cin >> userInput;
+        }while( userInput < -OUTPUT_AMPLITUDE || userInput > OUTPUT_AMPLITUDE );
+        cout << endl;
 
-        output.push_back(userInput);
+        output.push_back( userInput );
     }
 
     return output;
 }
 
-void HumanAI::coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome)
+void HumanAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
 {
-    cout<<"Learn this"<<endl
-        <<"=========="<<endl;
+    cout << "Learn this" << endl
+         << "==========" << endl;
 
-    cout<<"Input: ";
-    visualizeInput(input);
-    cout<<endl
-        <<endl;
+    cout << "Input: ";
+    visualizeInput( input );
+    cout << endl
+         << endl;
 
-    cout<<"Output: ";
-    printVector(output);
-    cout<<endl
-        <<endl;
+    cout << "Output: ";
+    printVector( output );
+    cout << endl
+         << endl;
 
-    cout<<"Outcome: "<<outcome<<endl
-        <<endl;
+    cout << "Outcome: " << outcome << endl
+         << endl;
 }
 
-void HumanAI::printVector(const std::vector<float>& vect) const
+void HumanAI::printVector( const std::vector< float >& vect ) const
 {
-    cout<<'[';
+    cout << '[';
 
-    if(!vect.empty())
+    if( !vect.empty() )
     {
-        cout<<vect[0];
-        for(unsigned int i=1; i<vect.size(); ++i)
+        cout << vect[ 0 ];
+        for( unsigned int i = 1; i < vect.size(); i++ )
         {
-            cout<<", "<<vect[i];
+            cout << ", " << vect[ i ];
         }
     }
 
-    cout<<']'<<endl;
+    cout << ']' << endl;
 }
 
-void HumanAI::visualizeInput(const vector<float>& input)
+void HumanAI::visualizeInput( const vector< float >& input )
 {
-    printVector(input);
+    printVector( input );
 }

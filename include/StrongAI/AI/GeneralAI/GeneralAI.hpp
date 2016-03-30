@@ -22,61 +22,61 @@ class GeneralAI// : public SaveSystem
     public:
         const int INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE;
 
-        GeneralAI(int inputSize, int outputSize, int inputAmplitude, int outputAmplitude);
-        virtual ~GeneralAI(){}
+        GeneralAI( int inputSize, int outputSize, int inputAmplitude, int outputAmplitude );
+        virtual ~GeneralAI() {}
 
         /// Returns AI's output
-        std::vector<float> output();
-        std::vector<float> output(const std::vector<float>& input);
+        std::vector< float > output();
+        std::vector< float > output( const std::vector< float >& input );
 
         /**
-        *   Learn the outcome of output(input)
+        *   Learn the outcome of output( input )
         *
         *   Worst outcome: -1.f
         *   Best outcome :  1.f
         **/
-        void learn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
-        void learn(const std::tuple<std::vector<float>, std::vector<float>, float>& lesson);
-        void learn(const std::pair<std::vector<float>,std::vector<float>>& decision, float outcome);
-        void learn(float outcome);  /// Learn the outcome of the lastDecision
+        void learn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
+        void learn( const std::tuple< std::vector< float >, std::vector< float >, float>& lesson );
+        void learn( const std::pair< std::vector< float >,std::vector< float > >& decision, float outcome );
+        void learn( float outcome );  /// Learn the outcome of the lastDecision
 
-        std::pair < std::vector<float>, std::vector<float> >       lastDecision() const;
-        std::tuple< std::vector<float>, std::vector<float>, float> lastLesson() const;
+        std::pair < std::vector< float >, std::vector< float > >       lastDecision() const;
+        std::tuple< std::vector< float >, std::vector< float >, float > lastLesson() const;
         void reset();
 
-        bool validInput(const std::vector<float>& input) const;
-        bool validOutput(const std::vector<float>& output) const;
-        static bool validOutcome(float outcome);
+        bool validInput( const std::vector< float >& input ) const;
+        bool validOutput( const std::vector< float >& output ) const;
+        static bool validOutcome( float outcome );
 
         static float randomProbability();
 
-        ///Serialization (save/load)
-        template<class Object, class Archive = cereal::BinaryOutputArchive>
-        static bool save(const Object& obj, const std::string& fileName)
+        ///Serialization ( save/load )
+        template< class Object, class Archive = cereal::BinaryOutputArchive >
+        static bool save( const Object& obj, const std::string& fileName )
         {
-            std::ofstream file(fileName, std::ios::binary);
-            if(file.fail()) return false;
+            std::ofstream file( fileName, std::ios::binary );
+            if( file.fail() ) return false;
 
             Archive archive( file );
-            archive(cereal::make_nvp("Object",  obj));
+            archive( cereal::make_nvp( "Object",  obj ) );
 
             return true;
         }
 
-        template<class Object, class Archive = cereal::BinaryInputArchive>
-        static bool load(Object& obj, const std::string& fileName)
+        template< class Object, class Archive = cereal::BinaryInputArchive >
+        static bool load( Object& obj, const std::string& fileName )
         {
-            std::ifstream file(fileName, std::ios::binary);
-            if(file.fail()) return false;
+            std::ifstream file( fileName, std::ios::binary );
+            if( file.fail() ) return false;
 
             Archive archive( file );
-            archive(cereal::make_nvp("Object",  obj));
+            archive( cereal::make_nvp( "Object",  obj ) );
 
             return true;
         }
 
         static std::mt19937_64 m_randomNumberGenerator; //Shared random number generator
-        static bool validVector(const std::vector<float>& v, unsigned int size, int amplitude);
+        static bool validVector( const std::vector< float >& v, unsigned int size, int amplitude );
 
     private:
         //Serialization
@@ -84,29 +84,29 @@ class GeneralAI// : public SaveSystem
         *   Copy/paste this method in subclasses
         *
         *   Use this format:
-        *       ar(cereal::virtual_base_class<Base>( this ), member1, member2, ...);
+        *       ar( cereal::virtual_base_class< Base >( this ), member1, member2, ...);
         */
         friend cereal::access;
-        template <class Archive>
+        template < class Archive >
         void serialize( Archive & ar )
         {
-            ar(cereal::make_nvp("Input size"        , const_cast<int &>(INPUT_SIZE)));
-            ar(cereal::make_nvp("Output size"       , const_cast<int &>(OUTPUT_SIZE)));
-            ar(cereal::make_nvp("Input amplitude"   , const_cast<int &>(INPUT_AMPLITUDE)));
-            ar(cereal::make_nvp("Output amplitude"  , const_cast<int &>(OUTPUT_AMPLITUDE)));
+            ar( cereal::make_nvp( "Input size"        , const_cast< int & >( INPUT_SIZE ) ) );
+            ar( cereal::make_nvp( "Output size"       , const_cast< int & >( OUTPUT_SIZE ) ) );
+            ar( cereal::make_nvp( "Input amplitude"   , const_cast< int & >( INPUT_AMPLITUDE ) ) );
+            ar( cereal::make_nvp( "Output amplitude"  , const_cast< int & >( OUTPUT_AMPLITUDE ) ) );
         }
 
         /// Subclasses must implement these methods
-        virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome) = 0;
-        virtual std::vector<float> coreOutput(const std::vector<float>& input) = 0;
+        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome ) = 0;
+        virtual std::vector< float > coreOutput( const std::vector< float >& input ) = 0;
 
         /// Short-term memory
         /*
         *   Should this be covered in GeneralAI or the worlds should take care of it?
         *   This is useless overhead for some AI's
         */
-        std::pair<std::vector<float>,std::vector<float> > m_lastDecision;
-        std::tuple<std::vector<float>, std::vector<float>, float> m_lastLesson;
+        std::pair< std::vector< float >,std::vector< float > > m_lastDecision;
+        std::tuple< std::vector< float >, std::vector< float >, float > m_lastLesson;
         bool m_lastDecisionEnabled = false;
         bool m_lastLessonEnabled = false;
 };

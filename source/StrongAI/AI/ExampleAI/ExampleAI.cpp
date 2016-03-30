@@ -2,20 +2,20 @@
 
 using namespace std;
 
-ExampleAI::ExampleAI(int inputSize, int outputSize, int maxInput, int maxOutput)
-    : GeneralAI(inputSize, outputSize, maxInput, maxOutput)
+ExampleAI::ExampleAI( int inputSize, int outputSize, int maxInput, int maxOutput )
+    : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
 {
-    //Constructor
+    // Constructor
 }
 
-void ExampleAI::coreLearn(const vector<float>& input, const vector<float>& output, float outcome)
+void ExampleAI::coreLearn( const vector< float >& input, const vector< float >& output, float outcome )
 {
-    //Learn
+    // Learn
 }
 
-vector<float> ExampleAI::coreOutput(const vector<float>& input)
+vector< float > ExampleAI::coreOutput( const vector< float >& input )
 {
-    //Output
-    vector<float> output(OUTPUT_SIZE);
+    // Output
+    vector< float > output( OUTPUT_SIZE );
     return output;
 }

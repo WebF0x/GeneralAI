@@ -12,46 +12,45 @@ class HumanAI : public GeneralAI
     friend cereal::access;
 
     public:
-        HumanAI(int inputSize, int outputSize, int maxInput, int maxOutput);
-        virtual ~HumanAI(){}
+        HumanAI( int inputSize, int outputSize, int maxInput, int maxOutput );
+        virtual ~HumanAI() {}
 
     private:
-        virtual std::vector<float> coreOutput(const std::vector<float>& input) ;
-        virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
-        virtual void visualizeInput(const std::vector<float>& input);
+        virtual std::vector< float > coreOutput( const std::vector< float >& input ) ;
+        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
+        virtual void visualizeInput( const std::vector< float >& input );
 
-        void printVector(const std::vector<float>& vect) const;
+        void printVector( const std::vector< float >& vect ) const;
 
-        template <class Archive>
+        template < class Archive >
         void save( Archive & ar ) const
         {
-            std::cout<<"Write memory to save:"<<std::endl;
+            std::cout << "Write memory to save:" << std::endl;
 
             std::string memory;
             std::cin>>memory;
 
-            std::cout<<std::endl;
+            std::cout << std::endl;
 
-            ar(cereal::virtual_base_class<GeneralAI>( this ), memory);
+            ar( cereal::virtual_base_class< GeneralAI >( this ), memory );
         }
 
-        template <class Archive>
+        template < class Archive >
         void load( Archive & ar )
         {
             std::string memory;
-            ar(cereal::virtual_base_class<GeneralAI>( this ), memory);
+            ar( cereal::virtual_base_class< GeneralAI >( this ), memory );
 
-            std::cout   <<"Here is your memory:"<<std::endl
-                        <<memory<<std::endl;
+            std::cout << "Here is your memory:" << std::endl
+                      << memory << std::endl;
         }
-
 };
 
 //Separate the serialization in two parts: save and load
 namespace cereal
 {
-  template <class Archive>
-  struct specialize<Archive, HumanAI, cereal::specialization::member_load_save> {};
+  template < class Archive >
+  struct specialize< Archive, HumanAI, cereal::specialization::member_load_save > {};
 }
 
 #endif // HUMAN_AI_HPP

@@ -71,7 +71,7 @@ SUITE( CaseBasedAITest )
 
         CHECK_EQUAL( 0, ai.getMemorySize() );
 
-        for( int i = 0; i<10; i++ )
+        for( int i = 0; i < 10; i++ )
         {
             ai.learn( input, outputToLearn, 1 );
         }
@@ -87,9 +87,9 @@ SUITE( CaseBasedAITest )
 
         CHECK_EQUAL( 0, ai.getMemorySize() );
 
-        for( int i = 0; i<10; i++ )
+        for( int i = 0; i < 10; i++ )
         {
-            const std::vector< float > input( { (float)i } );
+            const std::vector< float > input( { ( float )i } );
             ai.learn( input, outputToLearn, 1 );
         }
 

@@ -8,19 +8,19 @@
 class RandomAI : public GeneralAI
 {
     public:
-        RandomAI(int inputSize, int outputSize, int maxInput, int maxOutput);
-        virtual ~RandomAI(){}
+        RandomAI( int inputSize, int outputSize, int maxInput, int maxOutput );
+        virtual ~RandomAI() {}
 
     private:
-        std::vector<float> randomOutput();
+        std::vector< float > randomOutput();
 
-        virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
-        virtual std::vector<float> coreOutput(const std::vector<float>& input);
+        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
+        virtual std::vector< float > coreOutput( const std::vector< float >& input );
 
-        template <class Archive>
+        template < class Archive >
         void serialize( Archive & ar )
         {
-            ar(cereal::virtual_base_class<GeneralAI>( this ));
+            ar( cereal::virtual_base_class< GeneralAI >( this ) );
         }
 };
 

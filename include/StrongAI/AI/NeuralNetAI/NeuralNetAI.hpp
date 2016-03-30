@@ -13,9 +13,9 @@
 struct Node
 {
     float value;
-    std::map<int, float> incomingSynapses;  //incomingSynapses[source] = weight
+    std::map< int, float > incomingSynapses;  //incomingSynapses[ source ] = weight
 
-    template <class Archive>
+    template < class Archive >
     void serialize( Archive & archive )
     {
         archive( value, incomingSynapses );
@@ -25,7 +25,7 @@ struct Node
 class NeuralNetAI : public GeneralAI
 {
 public:
-    NeuralNetAI(int inputSize, int outputSize, int maxInput, int maxOutput);
+    NeuralNetAI( int inputSize, int outputSize, int maxInput, int maxOutput );
 
     void debug();
 
@@ -33,27 +33,27 @@ public:
 
 private:
     ///GeneralAI
-    virtual void coreLearn(const std::vector<float>& input, const std::vector<float>& output, float outcome);
-    virtual std::vector<float> coreOutput(const std::vector<float>& input);
+    virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
+    virtual std::vector< float > coreOutput( const std::vector< float >& input );
 
     ///Network
-    void setSynapseWeight(int nodeIndex, int synapseIndex, float weight);
-    void setNodeValue(int nodeIndex, float value);
+    void setSynapseWeight( int nodeIndex, int synapseIndex, float weight );
+    void setNodeValue( int nodeIndex, float value );
 
-    std::vector<Node> m_nodes; // [trigger, bias, inputs, outputs, neurons]
+    std::vector< Node > m_nodes; // [ trigger, bias, inputs, outputs, neurons ]
 
     void computeCycle();
 
     void resetNodesValues();
-    void setInput(const std::vector<float>& input);
+    void setInput( const std::vector< float >& input );
 
     bool triggered();
 
-    float function(float x);
-    virtual float coreFunction(float x);
+    float function( float x );
+    virtual float coreFunction( float x );
 
     ///Constants
-    const int INIT_NUMBER_OF_NEURONS=0;
+    const int INIT_NUMBER_OF_NEURONS = 0;
     const int NUMBER_OF_NODES;
     const float INIT_NODE_VALUE = 0.f;
     const float INIT_WEIGHT_VALUE = 0.f;
@@ -74,11 +74,11 @@ private:
 
     //Serialization
     friend cereal::access;
-    template <class Archive>
+    template < class Archive >
     void serialize( Archive & ar )
     {
-        ar(cereal::make_nvp("GeneralAI",cereal::virtual_base_class<GeneralAI>( this )));
-        ar(cereal::make_nvp("Nodes",    m_nodes));
+        ar( cereal::make_nvp( "GeneralAI",cereal::virtual_base_class< GeneralAI >( this ) ) );
+        ar( cereal::make_nvp( "Nodes",    m_nodes ) );
     }
 };
 

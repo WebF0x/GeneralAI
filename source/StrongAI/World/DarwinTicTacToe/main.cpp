@@ -12,52 +12,52 @@
 
 using namespace std;
 
-bool verboseEndGame(TicTacToe::Token winner);
+bool verboseEndGame( TicTacToe::Token winner );
 
-void manualTesting(unique_ptr<NeuralNetAI>& ai)
+void manualTesting( unique_ptr< NeuralNetAI >& ai )
 {
-    TicTacToeHuman human(9,9,1,1);
+    TicTacToeHuman human( 9, 9, 1, 1 );
     TicTacToe game;
     const int NUM_OF_GAMES = 10;
 
-    for(int i=0;i<NUM_OF_GAMES; ++i)
+    for( int i = 0; i < NUM_OF_GAMES; i++ )
     {
-        TicTacToe::Token winner = game.match(*ai, human);
-        verboseEndGame(winner);
+        TicTacToe::Token winner = game.match(*ai, human );
+        verboseEndGame( winner );
     }
 }
 
 class AdderDarwinAI : public DarwinAI
 {
     public:
-    AdderDarwinAI() : DarwinAI(9,9,1,1)
+    AdderDarwinAI() : DarwinAI( 9, 9, 1, 1 )
     {
 
     }
 
     private:
 
-    //Task: Play TicTacToe
-    virtual float fitnessEval(NeuralNetAI& ai)
+    // Task: Play TicTacToe
+    virtual float fitnessEval( NeuralNetAI& ai )
     {
         TicTacToe game;
         float score = 0;
         const int NUM_OF_GAMES = 1;
 
-        for(int i=0;i<NUM_OF_GAMES; ++i)
+        for( int i = 0; i < NUM_OF_GAMES; i++ )
         {
             int randomIndex;
 
-            uniform_int_distribution<int> distribution(0,m_population.size());
-            randomIndex = distribution(GeneralAI::m_randomNumberGenerator);
+            uniform_int_distribution< int > distribution( 0, m_population.size() );
+            randomIndex = distribution( GeneralAI::m_randomNumberGenerator );
 
-            TicTacToe::Token winner = game.match(ai, *m_population.at(randomIndex));
+            TicTacToe::Token winner = game.match( ai, *m_population.at( randomIndex ) );
 
-            if(winner==TicTacToe::Token::X)
+            if( winner == TicTacToe::Token::X_ )
             {
                 score += 1;
             }
-            else if(winner==TicTacToe::Token::O)
+            else if( winner == TicTacToe::Token::O_ )
             {
                 score -= 1;
             }
@@ -69,72 +69,72 @@ class AdderDarwinAI : public DarwinAI
 
 int main()
 {
-    cout<<"Generating initial population"<<endl;
+    cout << "Generating initial population" << endl;
     AdderDarwinAI population;
 
-    cout<<"Population is evolving"<<endl;
-    for(int i=0; i<100; i++)
+    cout << "Population is evolving" << endl;
+    for( int i = 0; i < 100; i++)
     {
-        cout<<"\t"<<i<<" %"<<endl;
-        population.evolve(100);
+        cout << "\t" << i << " %" << endl;
+        population.evolve( 100 );
     }
 
-    cout<<"Saving population"<<endl;
-    //GeneralAI::save<AdderDarwinAI>, cereal::JSONOutputArchive>(AdderDarwinAI, "save.txt");
+    cout << "Saving population" << endl;
+    // GeneralAI::save< AdderDarwinAI >, cereal::JSONOutputArchive >( AdderDarwinAI, "save.txt" );
 
-    cout<<"Selecting best individual"<<endl;
-    unique_ptr<NeuralNetAI>& champion = population.bestIndividual();
+    cout << "Selecting best individual" << endl;
+    unique_ptr< NeuralNetAI >& champion = population.bestIndividual();
 
-    cout<<"Manual Testing"<<endl;
-    manualTesting(champion);
+    cout << "Manual Testing" << endl;
+    manualTesting( champion );
 
     return 0;
 }
 
-bool verboseEndGame(TicTacToe::Token winner)
+bool verboseEndGame( TicTacToe::Token winner )
 {
-    ///Stats
-    static vector<bool> recentGamesResults(100);
+    /// Stats
+    static vector< bool > recentGamesResults( 100 );
     static int gameNumber = 0;
 
-    ///Evaluation
-    switch(winner)
+    /// Evaluation
+    switch( winner )
     {
         case TicTacToe::Token::None:
-            cout<<"Tie game!"<<endl<<endl;
+            cout << "Tie game!" << endl << endl;
             break;
 
         case TicTacToe::Token::X:
-            cout<<"Player X wins!"<<endl<<endl;
-            recentGamesResults[gameNumber%100] = false;
-            ++gameNumber;
+            cout << "Player X wins!" << endl << endl;
+            recentGamesResults[ gameNumber % 100 ] = false;
+            gameNumber++;
             break;
 
         case TicTacToe::Token::O:
-            cout<<"Player O wins!"<<endl<<endl;
-            recentGamesResults[gameNumber%100] = true;
-            ++gameNumber;
+            cout << "Player O wins!" << endl << endl;
+            recentGamesResults[ gameNumber % 100 ] = true;
+            gameNumber++;
             break;
     }
 
-    ///More stats stuff
-    if(gameNumber>=100)  //Start checking stats
+    /// More stats stuff
+    if( gameNumber >= 100 )  // Start checking stats
     {
-        int totalWins=0;
-        for(unsigned int i=0; i<recentGamesResults.size(); ++i)
+        int totalWins = 0;
+        for( unsigned int i = 0; i < recentGamesResults.size(); i++ )
         {
-            if(recentGamesResults[i])
+            if( recentGamesResults[ i ] )
             {
-                ++totalWins;
+                totalWins++;
             }
         }
 
-        float winPercentage = float(totalWins)/100.f;
-        cout<<"Game #"<<gameNumber<<" winPercentage: "<<winPercentage<<endl;
+        float winPercentage = float( totalWins ) / 100.f;
+        cout << "Game #" << gameNumber << " winPercentage: " << winPercentage << endl;
 
-        if(winPercentage >= .9f)
+        if( winPercentage >= .9f )
         {
-            cout<<"It took "<<gameNumber<<" games to be so awesome!"<<endl;
+            cout << "It took " << gameNumber << " games to be so awesome!" << endl;
             return false;
         }
     }

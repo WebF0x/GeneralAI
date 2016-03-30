@@ -2,92 +2,92 @@
 
 using namespace std;
 
-//To do: Seed the random number generator with a random_device when it's implemented (*wink wink GCC*)
-mt19937_64 GeneralAI::m_randomNumberGenerator(time(NULL));  //Shared random number generator
+// To do: Seed the random number generator with a random_device when it's implemented ( *wink wink GCC* )
+mt19937_64 GeneralAI::m_randomNumberGenerator( time( NULL ) );  // Shared random number generator
 
-GeneralAI::GeneralAI(const int inputSize, const int outputSize, const int inputAmplitude, const int outputAmplitude) :
-    INPUT_SIZE(inputSize), OUTPUT_SIZE(outputSize), INPUT_AMPLITUDE(inputAmplitude), OUTPUT_AMPLITUDE(outputAmplitude)
+GeneralAI::GeneralAI( const int inputSize, const int outputSize, const int inputAmplitude, const int outputAmplitude ) :
+    INPUT_SIZE( inputSize ), OUTPUT_SIZE( outputSize ), INPUT_AMPLITUDE( inputAmplitude ), OUTPUT_AMPLITUDE( outputAmplitude )
 {
-    if(INPUT_SIZE < 0)  throw out_of_range(string( "negative INPUT_SIZE" ));
-    if(OUTPUT_SIZE < 0) throw out_of_range(string( "negative OUTPUT_SIZE" ));
-    if(INPUT_AMPLITUDE < 0) throw out_of_range(string( "negative INPUT_AMPLITUDE" ));
-    if(OUTPUT_AMPLITUDE < 0)throw out_of_range(string( "negative OUTPUT_AMPLITUDE" ));
+    if( INPUT_SIZE          < 0 ) throw out_of_range( string ( "negative INPUT_SIZE" ) );
+    if( OUTPUT_SIZE         < 0 ) throw out_of_range( string ( "negative OUTPUT_SIZE" ) );
+    if( INPUT_AMPLITUDE     < 0 ) throw out_of_range( string ( "negative INPUT_AMPLITUDE" ) );
+    if( OUTPUT_AMPLITUDE    < 0 ) throw out_of_range( string ( "negative OUTPUT_AMPLITUDE" ) );
 }
 
-void GeneralAI::learn(const vector<float>& input, const vector<float>& output, const float outcome)
+void GeneralAI::learn( const vector< float >& input, const vector< float >& output, const float outcome )
 {
-    ///Check parameters validity
-    if(!validInput(input))
+    /// Check parameters validity
+    if( !validInput( input ) )
     {
-        throw length_error(string( "invalid input" ));
+        throw length_error( string( "invalid input" ) );
     }
 
-    if(!validOutput(output))
+    if( !validOutput( output ) )
     {
-        throw length_error(string( "invalid output" ));
+        throw length_error( string( "invalid output" ) );
     }
 
-    if(!validOutcome(outcome))
+    if( !validOutcome( outcome ) )
     {
-        throw length_error(string( "invalid outcome" ));
+        throw length_error( string( "invalid outcome" ) );
     }
 
-    ///Learn lesson
-    coreLearn(input, output, outcome);
+    /// Learn lesson
+    coreLearn( input, output, outcome );
 
-    ///Short-term memory
-    m_lastLesson = make_tuple(input,output,outcome);
+    /// Short - term memory
+    m_lastLesson = make_tuple( input, output, outcome );
     m_lastLessonEnabled = true;
 }
 
-void GeneralAI::learn(const tuple< vector<float>, vector<float>, float>& lesson)
+void GeneralAI::learn( const tuple< vector< float >, vector< float >, float >& lesson )
 {
-    auto& input = get<0>(lesson);
-    auto& output = get<1>(lesson);
-    auto& outcome = get<2>(lesson);
+    auto& input     = get< 0 >( lesson );
+    auto& output    = get< 1 >( lesson );
+    auto& outcome   = get< 2 >( lesson );
 
-    learn(input, output, outcome);
+    learn( input, output, outcome );
 }
 
-void GeneralAI::learn(const pair<vector<float>,vector<float>>& decision, float outcome)
+void GeneralAI::learn( const pair< vector< float >, vector< float > >& decision, float outcome )
 {
-    auto& input = decision.first;
-    auto& output = decision.second;
+    auto& input     = decision.first;
+    auto& output    = decision.second;
 
-    learn(input, output, outcome);
+    learn( input, output, outcome );
 }
 
-void GeneralAI::learn(const float outcome)
+void GeneralAI::learn( const float outcome )
 {
-    if(m_lastDecisionEnabled) //m_lastDecision is not undefined
+    if( m_lastDecisionEnabled ) // m_lastDecision is not undefined
     {
-        learn(m_lastDecision, outcome);
+        learn( m_lastDecision, outcome );
     }
 }
 
-std::vector<float> GeneralAI::output()
+std::vector< float > GeneralAI::output()
 {
-    const std::vector<float> defaultInput( INPUT_SIZE, 0 );
+    const std::vector< float > defaultInput( INPUT_SIZE, 0 );
     return output( defaultInput );
 }
 
-vector<float> GeneralAI::output(const vector<float>& input)
+vector< float > GeneralAI::output( const vector< float >& input )
 {
-    ///Check parameters validity
-    if(!validInput(input))
+    /// Check parameters validity
+    if( !validInput( input ) )
     {
-        throw length_error(string( "invalid input" ));
+        throw length_error( string( "invalid input" ) );
     }
 
-    const vector<float> output = coreOutput(input);
+    const vector< float > output = coreOutput( input );
 
-    if(!validOutput(output))
+    if( !validOutput( output ) )
     {
-        throw length_error(string( "invalid output" ));
+        throw length_error( string( "invalid output" ) );
     }
 
     /// Remember the last decision made
-    m_lastDecision = make_pair(input, output);
+    m_lastDecision = make_pair( input, output );
     m_lastDecisionEnabled = true;
 
     return output;
@@ -98,36 +98,36 @@ void GeneralAI::reset()
     m_lastDecisionEnabled = false;
 }
 
-pair< vector<float>, vector<float> > GeneralAI::lastDecision() const
+pair< vector< float >, vector< float > > GeneralAI::lastDecision() const
 {
-    if(!m_lastDecisionEnabled)
+    if( !m_lastDecisionEnabled )
     {
-        throw logic_error(string("m_lastDecisionEnabled == false"));
+        throw logic_error( string( "m_lastDecisionEnabled == false" ) );
     }
 
     return m_lastDecision;
 }
 
-tuple< vector<float>, vector<float>, float> GeneralAI::lastLesson() const
+tuple< vector< float >, vector< float >, float > GeneralAI::lastLesson() const
 {
-    if(!m_lastLessonEnabled)
+    if( !m_lastLessonEnabled )
     {
-        throw logic_error(string("GeneralAI::m_lastLessonLearnedEnabled == false"));
+        throw logic_error( string( "GeneralAI::m_lastLessonLearnedEnabled == false") );
     }
 
     return m_lastLesson;
 }
 
-bool GeneralAI::validVector(const vector<float>& myVector, const unsigned int size, const int amplitude)
+bool GeneralAI::validVector( const vector< float >& myVector, const unsigned int size, const int amplitude )
 {
-    if(myVector.size() != size)
+    if( myVector.size() != size )
     {
         return false;
     }
 
-    for(unsigned int i=0; i<myVector.size(); ++i)
+    for( unsigned int i = 0; i < myVector.size(); i++ )
     {
-        if(!(-amplitude <= myVector[i] && myVector[i] <= amplitude))
+        if( !( - amplitude <= myVector[ i ] && myVector[ i ] <= amplitude ) )
         {
             return false;
         }
@@ -136,28 +136,26 @@ bool GeneralAI::validVector(const vector<float>& myVector, const unsigned int si
     return true;
 }
 
-bool GeneralAI::validInput(const vector<float>& input) const
+bool GeneralAI::validInput( const vector< float >& input ) const
 {
-    return validVector(input, (unsigned int)INPUT_SIZE, INPUT_AMPLITUDE);
+    return validVector( input, ( unsigned int )INPUT_SIZE, INPUT_AMPLITUDE );
 }
 
-bool GeneralAI::validOutput(const vector<float>& output) const
+bool GeneralAI::validOutput( const vector< float >& output ) const
 {
-    return validVector(output, (unsigned int)OUTPUT_SIZE, OUTPUT_AMPLITUDE);
+    return validVector( output, ( unsigned int )OUTPUT_SIZE, OUTPUT_AMPLITUDE );
 }
 
-bool GeneralAI::validOutcome(const float outcome)
+bool GeneralAI::validOutcome( const float outcome )
 {
-    return (-1.f <= outcome && outcome <= 1.f);
+    return ( -1.f <= outcome && outcome <= 1.f );
 }
 
 /**
-*   Returns a random float in [0,1]
+*   Returns a random float in [ 0, 1 ]
 **/
 float GeneralAI::randomProbability()
 {
-    uniform_real_distribution<float> distribution(0, 1);
-    return distribution(m_randomNumberGenerator);
+    uniform_real_distribution< float > distribution( 0, 1 );
+    return distribution( m_randomNumberGenerator );
 }
-
-

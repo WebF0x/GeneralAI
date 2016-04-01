@@ -4,21 +4,19 @@
 #include "StrongAI/AI/DarwinAI/DarwinAI.hpp"
 #include <cereal/types/memory.hpp>
 
-using namespace std;
-
 const int AMPLITUDE = 100;
 
-void manualTesting( unique_ptr< NeuralNetAI >& individual )
+void manualTesting( std::unique_ptr< NeuralNetAI >& individual )
 {
     while( true )
     {
         float in1, in2;
-        cin >> in1;
-        cin >> in2;
-        vector< float > input( { in1, in2 } );
+        std::cin >> in1;
+        std::cin >> in2;
+        std::vector< float > input( { in1, in2 } );
 
         float out = individual -> output( input ) [ 0 ];
-        cout << in1 << " + " << in2 << " => " << out << endl;
+        std::cout << in1 << " + " << in2 << " => " << out << std::endl;
     }
 }
 
@@ -42,7 +40,7 @@ class AdderDarwinAI : public DarwinAI
             float b = GeneralAI::randomProbability() * 100;
             float sum = a + b;
 
-            vector< float > input( { a, b } );
+            std::vector< float > input( { a, b } );
 
             auto output = ai.output( input );
             float out = output[ 0 ];
@@ -56,23 +54,23 @@ class AdderDarwinAI : public DarwinAI
 
 int main()
 {
-    cout << "Generating initial population" << endl;
+    std::cout << "Generating initial population" << std::endl;
     AdderDarwinAI population;
 
-    cout << "Population is evolving" << endl;
+    std::cout << "Population is evolving" << std::endl;
     for( int i = 0; i < 100; i++ )
     {
-        cout << "\t" << i << " %" << endl;
+        std::cout << "\t" << i << " %" << std::endl;
         population.evolve( 100 );
     }
 
-    cout << "Saving population" << endl;
+    std::cout << "Saving population" << std::endl;
     // GeneralAI::save< AdderDarwinAI, cereal::JSONOutputArchive > ( AdderDarwinAI, "save.txt" );
 
-    cout << "Selecting best individual" << endl;
-    unique_ptr< NeuralNetAI >& champion = population.bestIndividual();
+    std::cout << "Selecting best individual" << std::endl;
+    std::unique_ptr< NeuralNetAI >& champion = population.bestIndividual();
 
-    cout << "Manual Testing" << endl;
+    std::cout << "Manual Testing" << std::endl;
     manualTesting( champion );
 
     return 0;

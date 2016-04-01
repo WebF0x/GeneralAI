@@ -1,7 +1,5 @@
 #include "StrongAI/World/TicTacToe/TicTacToe.hpp"
 
-using namespace std;
-
 TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
 {
     /// Precondition:
@@ -18,7 +16,7 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
         playerO.OUTPUT_AMPLITUDE != 1
       )
     {
-        throw invalid_argument( string("Incompatible GeneralAI properties") );
+        throw invalid_argument( std::string("Incompatible GeneralAI properties") );
     }
 
     /// Let AI's know this is the start of a new game
@@ -26,7 +24,7 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
     playerO.reset();
 
     /// Empty board of 9 empty squares
-    vector< Token > board = vector< Token >( 9, Token::None );
+    std::vector< Token > board = std::vector< Token >( 9, Token::None );
 
     /// Pick random first player
     GeneralAI *currentPlayer = &playerX;
@@ -41,7 +39,7 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
     while( true )
     {
         // Create input to be sent to player
-        vector< float > input( 9 ) ;
+        std::vector< float > input( 9 ) ;
         for( int i = 0; i < 9; i++ )
         {
             switch( board.at( i_ ) )
@@ -124,9 +122,9 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
 *   Input of the kind: [ 0, 0, 0, 1, -1, 0, -1, -1, 1 ]
 *   Returns an index in range [ 0, 8 ]
 **/
-int TicTacToe::getPlayerMove( GeneralAI& player, const vector< float >& input )
+int TicTacToe::getPlayerMove( GeneralAI& player, const std::vector< float >& input )
 {
-    vector< float > output = player.output( input );
+    std::vector< float > output = player.output( input );
 
     // Player move is the output with the biggest value
     float playerMove = 0;
@@ -141,7 +139,7 @@ int TicTacToe::getPlayerMove( GeneralAI& player, const vector< float >& input )
     return playerMove;
 }
 
-bool TicTacToe::isWinning( const vector< Token >& board, Token turn )
+bool TicTacToe::isWinning( const std::vector< Token >& board, Token turn )
 {
     /// Format in a 3X3 board
     Token formattedBoard[ 3 ][ 3 ];
@@ -177,7 +175,7 @@ bool TicTacToe::isWinning( const vector< Token >& board, Token turn )
     return false;
 }
 
-bool TicTacToe::boardIsFull( const vector< Token >& board )
+bool TicTacToe::boardIsFull( const std::vector< Token >& board )
 {
     auto emptySquare = find( board.begin(), board.end(), Token::None );
     return ( emptySquare == board.end() );  // Cannot find empty square

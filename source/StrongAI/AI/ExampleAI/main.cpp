@@ -1,31 +1,29 @@
 #include <iostream>
 #include "StrongAI/AI/ExampleAI/ExampleAI.hpp"
 
-using namespace std;
-
 int main()
 {
     const int INPUT_SIZE( 2 ), OUTPUT_SIZE( 2 );
     const int INPUT_AMPLITUDE( 2 ), OUTPUT_AMPLITUDE( 2 );
-    const string FILE_NAME = "example.save";
+    const std::string FILE_NAME = "example.save";
 
     ExampleAI ai = ExampleAI( INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE );
 
-    vector< float > input( INPUT_SIZE );
+    std::vector< float > input( INPUT_SIZE );
 
-    cout << "Input:" << endl;
+    std::cout << "Input:" << std::endl;
     for( auto val : input )
     {
-        cout << '\t' << val << endl;
+        std::cout << '\t' << val << std::endl;
     }
 
     /// Test output
-    vector< float > output = ai.output( input );
+    std::vector< float > output = ai.output( input );
 
-    cout << "Output:" << endl;
+    std::cout << "Output:" << std::endl;
     for( auto value : output )
     {
-        cout << '\t' << value << endl;
+        std::cout << '\t' << value << std::endl;
     }
 
     /// Test learn
@@ -43,17 +41,17 @@ int main()
         clone.INPUT_AMPLITUDE   == INPUT_AMPLITUDE  &&
         clone.OUTPUT_AMPLITUDE  == OUTPUT_AMPLITUDE )
     {
-        cout << "Save and load successful!" << endl;
+        std::cout << "Save and load successful!" << std::endl;
     }
 
     /// Test JSON save format
-    const string JSON_FILE_NAME = "example.JSON";
+    const std::string JSON_FILE_NAME = "example.JSON";
     GeneralAI::save< ExampleAI, cereal::JSONOutputArchive >( clone, JSON_FILE_NAME );
-    cout    << endl
-            << "Open the file " << JSON_FILE_NAME << "!" << endl
-            << "JSON is a human readable format really useful for debugging!" << endl
-            << "You can also use XML" << endl
-            << "You can also use the default format ( binary ) when you are done debugging, it is way more efficient" << endl;
+    std::cout    << std::endl
+            << "Open the file " << JSON_FILE_NAME << "!" << std::endl
+            << "JSON is a human readable format really useful for debugging!" << std::endl
+            << "You can also use XML" << std::endl
+            << "You can also use the default format ( binary ) when you are done debugging, it is way more efficient" << std::endl;
 
     return 0;
 }

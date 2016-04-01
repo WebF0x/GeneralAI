@@ -1,7 +1,5 @@
 #include "StrongAI/World/TicTacToe/TicTacToeHuman.hpp"
 
-using namespace std;
-
 TicTacToeHuman::TicTacToeHuman( int inputSize, int outputSize, int maxInput, int maxOutput )
     : HumanAI( inputSize, outputSize, maxInput, maxOutput )
 {
@@ -10,31 +8,31 @@ TicTacToeHuman::TicTacToeHuman( int inputSize, int outputSize, int maxInput, int
 
 void TicTacToeHuman::visualizeInput( const std::vector< float >& input )
 {
-    cout << inputToChar( input[ 6 ] ) << "_|_" << inputToChar( input[ 7 ] ) << "_|_" << inputToChar( input[ 8 ] ) << endl;
-    cout << inputToChar( input[ 3 ] ) << "_|_" << inputToChar( input[ 4 ] ) << "_|_" << inputToChar( input[ 5 ] ) << endl;
-    cout << inputToChar( input[ 0 ] ) << " | " << inputToChar( input[ 1 ] ) << " | " << inputToChar( input[ 2 ] ) << endl;
+    std::cout << inputToChar( input[ 6 ] ) << "_|_" << inputToChar( input[ 7 ] ) << "_|_" << inputToChar( input[ 8 ] ) << std::endl;
+    std::cout << inputToChar( input[ 3 ] ) << "_|_" << inputToChar( input[ 4 ] ) << "_|_" << inputToChar( input[ 5 ] ) << std::endl;
+    std::cout << inputToChar( input[ 0 ] ) << " | " << inputToChar( input[ 1 ] ) << " | " << inputToChar( input[ 2 ] ) << std::endl;
 }
 
-vector< float > TicTacToeHuman::coreOutput( const vector< float >& input )
+std::vector< float > TicTacToeHuman::coreOutput( const std::vector< float >& input )
 {
-    cout << "TicTacToe Board:" << endl
-        << "================" << endl;
+    std::cout << "TicTacToe Board:" << std::endl
+        << "================" << std::endl;
 
     visualizeInput( input );
-    cout << endl;
+    std::cout << std::endl;
 
-    cout << "What is your move? ( Use NumPad )" << endl
-        << "===============================" << endl;
+    std::cout << "What is your move? ( Use NumPad )" << std::endl
+        << "===============================" << std::endl;
 
     int userInput;
     do
     {
-        cout << "";
-        cin >> userInput;
+        std::cout << "";
+        std::cin >> userInput;
     }while( userInput < 1 || userInput > 9 );
-    cout << endl;
+    std::cout << std::endl;
 
-    vector< float > output( 9, 0 );
+    std::vector< float > output( 9, 0 );
     output.at( userInput - 1 ) = 1;
     return output;
 }

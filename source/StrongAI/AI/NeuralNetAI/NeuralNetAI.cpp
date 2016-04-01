@@ -1,25 +1,23 @@
 #include "StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp"
 
-using namespace std;
-
 NeuralNetAI::NeuralNetAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput ),
     NUMBER_OF_NODES( 2 + INPUT_SIZE + OUTPUT_SIZE + INIT_NUMBER_OF_NEURONS ),
-    MAX_WEIGHT_VALUE( sqrt( numeric_limits< float >::max() / NUMBER_OF_NODES ) ),
+    MAX_WEIGHT_VALUE( sqrt( std::numeric_limits< float >::max() / NUMBER_OF_NODES ) ),
     MAX_NODE_VALUE( MAX_WEIGHT_VALUE )
 {
-    m_nodes = vector< Node >( NUMBER_OF_NODES, Node() );
+    m_nodes = std::vector< Node >( NUMBER_OF_NODES, Node() );
     resetNodesValues();
 }
 
-void NeuralNetAI::coreLearn( const vector< float >& input, const vector< float >& output, float outcome )
+void NeuralNetAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
 {
     if( outcome == 0.f ) return;    // Can't learn neutral lessons, only good or bad
 
     for( int c = 0; c < MAX_NUMBER_OF_LEARN_CYCLES; c++ )
     {
         // Check if AI's output matches given output
-        vector< float > out = this->output( input );
+        std::vector< float > out = this->output( input );
 
         bool kindaClose = true;
         for( unsigned int i = 0; i < out.size(); i++ )
@@ -37,7 +35,7 @@ void NeuralNetAI::coreLearn( const vector< float >& input, const vector< float >
     }
 }
 
-vector< float > NeuralNetAI::coreOutput( const vector< float >& input )
+std::vector< float > NeuralNetAI::coreOutput( const std::vector< float >& input )
 {
     resetNodesValues();
 
@@ -51,7 +49,7 @@ vector< float > NeuralNetAI::coreOutput( const vector< float >& input )
     }
 
     // Return output nodes
-    vector< float > output;
+    std::vector< float > output;
     auto start = m_nodes.begin()+2 + INPUT_SIZE;
     auto stop = start + OUTPUT_SIZE;
     for( auto it=start; it!=stop; it++ )
@@ -64,7 +62,7 @@ vector< float > NeuralNetAI::coreOutput( const vector< float >& input )
 
 void NeuralNetAI::computeCycle()
 {
-    vector< float > newValues;
+    std::vector< float > newValues;
 
     // Calculate new node values
     for( auto& node : m_nodes )
@@ -81,9 +79,9 @@ void NeuralNetAI::computeCycle()
         /*
         if( isnan( newValue ) )
         {
-            cout << "NANNNN" << node.value << endl;
+            std::cout << "NANNNN" << node.value << std::endl;
             int a;
-            cin >> a;
+            std::cin >> a;
         }
         //*/
 
@@ -126,8 +124,8 @@ void NeuralNetAI::mutate()
             else
             {
                 // Find existing synapse or create it
-                map< int, float >& synapses = m_nodes.at( DEST ).incomingSynapses;
-                map< int, float >::iterator synapse = synapses.insert( synapses.begin(), make_pair( SOURCE, INIT_WEIGHT_VALUE ) );
+                std::map< int, float >& synapses = m_nodes.at( DEST ).incomingSynapses;
+                std::map< int, float >::iterator synapse = synapses.insert( synapses.begin(), std::make_pair( SOURCE, INIT_WEIGHT_VALUE ) );
 
                 // Small probability to mutate synapse
                 const int SYNAPSE_INDEX = synapse->first;
@@ -135,13 +133,13 @@ void NeuralNetAI::mutate()
 
                 if( randomProbability() < CHANCE_TO_MUTATE_ADD )
                 {
-                    uniform_real_distribution< float > dist( -AMPLITUDE_ADD, AMPLITUDE_ADD );
+                    std::uniform_real_distribution< float > dist( -AMPLITUDE_ADD, AMPLITUDE_ADD );
                     mutatedWeight += dist( m_randomNumberGenerator );
                 }
 
                 if( randomProbability() < CHANCE_TO_MUTATE_MUL )
                 {
-                    uniform_real_distribution< float > dist( -AMPLITUDE_MUL, AMPLITUDE_MUL );
+                    std::uniform_real_distribution< float > dist( -AMPLITUDE_MUL, AMPLITUDE_MUL );
                     mutatedWeight *= dist( m_randomNumberGenerator );
                 }
 
@@ -188,7 +186,7 @@ void NeuralNetAI::setNodeValue( int nodeIndex, float value )
     m_nodes.at( nodeIndex ).value = value;
 }
 
-void NeuralNetAI::setInput( const vector< float >& input )
+void NeuralNetAI::setInput( const std::vector< float >& input )
 {
     const int INPUT_START_INDEX = 2;
     for( int i = 0; i < INPUT_SIZE; i++ )
@@ -245,14 +243,14 @@ void NeuralNetAI::resetNodesValues()
 void NeuralNetAI::debug()
 {
     //*
-    cout << "Nodes:\t";
+    std::cout << "Nodes:\t";
     for( int i = 0; i < NUMBER_OF_NODES; i++ )
     {
-        cout << m_nodes[ i ].value << "\t";
+        std::cout << m_nodes[ i ].value << "\t";
     }
-    cout << endl;
+    std::cout << std::endl;
 
-    cout << "Weights:" << endl;
+    std::cout << "Weights:" << std::endl;
     for( int i = 0; i < NUMBER_OF_NODES; i++ )
     {
         for( int j = 0; j < NUMBER_OF_NODES; j++ )
@@ -261,15 +259,15 @@ void NeuralNetAI::debug()
             auto synapse = synapses.find( i );
             if( synapse != synapses.end() ) // If synapse exists
             {
-                cout << "\t" << m_nodes.at( j ).incomingSynapses.at( i );
+                std::cout << "\t" << m_nodes.at( j ).incomingSynapses.at( i );
             }
             else
             {
-                cout << "\t@";
+                std::cout << "\t@";
             }
         }
-        cout << endl;
+        std::cout << std::endl;
     }
-    cout << endl;
+    std::cout << std::endl;
     //*/
 }

@@ -4,16 +4,14 @@
 #include "StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp"
 #include "StrongAI/AI/RandomAI/RandomAI.hpp"
 
-using namespace std;
-
 bool verboseEndGame( TicTacToe::Token );
 
 int main()
 {
     /// Initialization
     const unsigned int NUMBER_OF_GAMES = 1000; //-1 to play an infinite number of games
-    const string SAVE_FILE_X = "TicTacToeX.save";
-    const string SAVE_FILE_O = "TicTacToeO.save";
+    const std::string SAVE_FILE_X = "TicTacToeX.save";
+    const std::string SAVE_FILE_O = "TicTacToeO.save";
     const bool VERBOSE_ENABLED = false;          // if( VERBOSE_ENABLED ): the stats are calculated for playerO. Use with small NUMBER_OF_GAMES or with a human player
 
     TicTacToe game;
@@ -22,14 +20,14 @@ int main()
     TicTacToeHuman playerO( 9, 9, 1, 1 );
     // CaseBasedAI playerO( 9, 9, 1, 1 );
 
-    cout << "start load" << endl;
+    std::cout << "start load" << std::endl;
 
     GeneralAI::load< CaseBasedAI >( playerX, SAVE_FILE_X );
     // GeneralAI::load< NeuralNetAI >( playerO, SAVE_FILE_O );
     // GeneralAI::load< CaseBasedAI >( playerO, SAVE_FILE_O );
 
-    cout << "load completed" << endl;
-    cout << "start games" << endl;
+    std::cout << "load completed" << std::endl;
+    std::cout << "start games" << std::endl;
 
     /// Play games
     for( unsigned int i = 0; i != NUMBER_OF_GAMES; i++ )
@@ -46,14 +44,14 @@ int main()
         }
     }
 
-    cout << "games completed" << endl;
-    cout << "start save" << endl;
+    std::cout << "games completed" << std::endl;
+    std::cout << "start save" << std::endl;
 
     GeneralAI::save< CaseBasedAI >( playerX, SAVE_FILE_X );
     // GeneralAI::save< NeuralNetAI >( playerO, SAVE_FILE_O );
     // GeneralAI::save< CaseBasedAI >( playerO, SAVE_FILE_O );
 
-    cout << "save completed" << endl;
+    std::cout << "save completed" << std::endl;
 
     return 0;
 }
@@ -61,24 +59,24 @@ int main()
 bool verboseEndGame( TicTacToe::Token winner )
 {
     /// Stats
-    static vector< bool > recentGamesResults( 100 );
+    static std::vector< bool > recentGamesResults( 100 );
     static int gameNumber = 0;
 
     /// Evaluation
     switch( winner )
     {
         case TicTacToe::Token::None:
-            cout << "Tie game!" << endl << endl;
+            std::cout << "Tie game!" << std::endl << std::endl;
             break;
 
         case TicTacToe::Token::X:
-            cout << "Player X wins!" << endl << endl;
+            std::cout << "Player X wins!" << std::endl << std::endl;
             recentGamesResults[ gameNumber % 100 ] = false;
             gameNumber++;
             break;
 
         case TicTacToe::Token::O:
-            cout << "Player O wins!" << endl << endl;
+            std::cout << "Player O wins!" << std::endl << std::endl;
             recentGamesResults[ gameNumber % 100 ] = true;
             gameNumber++;
             break;
@@ -97,11 +95,11 @@ bool verboseEndGame( TicTacToe::Token winner )
         }
 
         float winPercentage = float( totalWins ) / 100.f;
-        cout << "Game #" << gameNumber << " winPercentage: " << winPercentage << endl;
+        std::cout << "Game #" << gameNumber << " winPercentage: " << winPercentage << std::endl;
 
         if( winPercentage >= .9f )
         {
-            cout << "It took " << gameNumber << " games to be so awesome!" << endl;
+            std::cout << "It took " << gameNumber << " games to be so awesome!" << std::endl;
             return false;
         }
     }

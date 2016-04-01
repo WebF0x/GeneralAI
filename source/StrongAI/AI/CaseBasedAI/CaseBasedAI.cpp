@@ -1,7 +1,5 @@
 #include "StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp"
 
-using namespace std;
-
 CaseBasedAI::CaseBasedAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
 {
@@ -17,10 +15,10 @@ unsigned int CaseBasedAI::getMemorySize()
     return getMemory().size();
 }
 
-vector< float > CaseBasedAI::coreOutput( const vector< float >& input )
+std::vector< float > CaseBasedAI::coreOutput( const std::vector< float >& input )
 {
     /// Try to recall a similar past experience
-    map< vector< float >, map< vector< float >, float > >::iterator pastExperience = m_memory.find( input );
+    std::map< std::vector< float >, std::map< std::vector< float >, float > >::iterator pastExperience = m_memory.find( input );
 
     /// Past experience never seen before
     if( pastExperience == m_memory.end() )
@@ -29,8 +27,8 @@ vector< float > CaseBasedAI::coreOutput( const vector< float >& input )
     }
 
     /// Past experience seen before
-    map< vector< float >, float >& reactions = pastExperience->second;
-    vector< float > bestKnownOutput = bestOutput( reactions );
+    std::map< std::vector< float >, float >& reactions = pastExperience->second;
+    std::vector< float > bestKnownOutput = bestOutput( reactions );
     float bestKnownOutcome = reactions.at( bestKnownOutput );
 
     /**
@@ -52,7 +50,7 @@ vector< float > CaseBasedAI::coreOutput( const vector< float >& input )
             return randomNewOutput( reactions );
         }
         // Not a single new output exists
-        catch( runtime_error e )
+        catch( std::runtime_error e )
         {
             // Last decision made must be worth either less than or equal to this bestKnownOutput
             learn( bestKnownOutcome );
@@ -64,20 +62,20 @@ vector< float > CaseBasedAI::coreOutput( const vector< float >& input )
 void CaseBasedAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
 {
     /// Try to recall a similar past experience
-    map< vector< float >, map< vector< float >, float > >::iterator pastExperience = m_memory.find( input );
+    std::map< std::vector< float >, std::map< std::vector< float >, float > >::iterator pastExperience = m_memory.find( input );
 
     /// Past experience never seen before
     if( pastExperience == m_memory.end() )
     {
-        map< vector< float >, float > newReaction;
+        std::map< std::vector< float >, float > newReaction;
         newReaction[ output ] = outcome;
         m_memory[ input ] = newReaction;
         return;
     }
 
     /// Past experience seen before
-    map< vector< float >, float >& reactions = pastExperience->second;
-    map< vector< float >, float >::iterator reaction = reactions.find( output );
+    std::map< std::vector< float >, float >& reactions = pastExperience->second;
+    std::map< std::vector< float >, float >::iterator reaction = reactions.find( output );
 
     /// Output never seen before
     if( reaction == reactions.end() )
@@ -99,10 +97,10 @@ void CaseBasedAI::coreLearn( const std::vector< float >& input, const std::vecto
     }
 }
 
-vector< float > CaseBasedAI::randomOutput()
+std::vector< float > CaseBasedAI::randomOutput()
 {
-    vector< float > output( OUTPUT_SIZE );
-    uniform_real_distribution< float > distribution( -OUTPUT_AMPLITUDE, OUTPUT_AMPLITUDE );
+    std::vector< float > output( OUTPUT_SIZE );
+    std::uniform_real_distribution< float > distribution( -OUTPUT_AMPLITUDE, OUTPUT_AMPLITUDE );
 
     for( int i = 0; i < OUTPUT_SIZE; i++ )
     {
@@ -112,9 +110,9 @@ vector< float > CaseBasedAI::randomOutput()
     return output;
 }
 
-vector< float > CaseBasedAI::randomNewOutput( const map< vector< float >, float >& reactions )
+std::vector< float > CaseBasedAI::randomNewOutput( const std::map< std::vector< float >, float >& reactions )
 {
-    vector< float > output;
+    std::vector< float > output;
 
     do
     {
@@ -124,20 +122,20 @@ vector< float > CaseBasedAI::randomNewOutput( const map< vector< float >, float 
     return output;
 }
 
-vector< float > CaseBasedAI::bestOutput( const map< vector< float >, float >& reactions )
+std::vector< float > CaseBasedAI::bestOutput( const std::map< std::vector< float >, float >& reactions )
 {
     if( reactions.empty() )
     {
-        throw length_error( string( " CaseBasedAI::bestOutput()'s parameter is empty" ) );
+        throw std::length_error( std::string( " CaseBasedAI::bestOutput()'s parameter is empty" ) );
     }
 
-    vector< vector< float > > bestKnownOutputs;
+    std::vector< std::vector< float > > bestKnownOutputs;
     bestKnownOutputs.push_back( reactions.begin()->first );
     float bestKnownOutcome =  reactions.begin()->second;
 
-    for ( map< vector< float >, float >::const_iterator it = reactions.begin(); it != reactions.end(); it++ )
+    for ( std::map< std::vector< float >, float >::const_iterator it = reactions.begin(); it != reactions.end(); it++ )
     {
-        const vector< float >& potentialOutput = it->first;
+        const std::vector< float >& potentialOutput = it->first;
         float potentialOutcome = it->second;
 
         if( fabs( potentialOutcome - bestKnownOutcome ) < .00000000001f )
@@ -153,7 +151,7 @@ vector< float > CaseBasedAI::bestOutput( const map< vector< float >, float >& re
     }
 
     /// Return one of the bestKnownOutputs at random
-    uniform_int_distribution< int > distribution( 0, bestKnownOutputs.size() - 1 );
+    std::uniform_int_distribution< int > distribution( 0, bestKnownOutputs.size() - 1 );
     return bestKnownOutputs[ distribution( m_randomNumberGenerator ) ];
 }
 

@@ -6,15 +6,13 @@
 #include <ctime>
 #include "StrongAI/World/DarwinTicTacToe/TicTacToe.hpp"
 #include "StrongAI/World/DarwinTicTacToe/TicTacToeHuman.hpp"
-#include <cereal/types/vector.hpp>
+#include <cereal/types/std::vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/archives/binary.hpp>
 
-using namespace std;
-
 bool verboseEndGame( TicTacToe::Token winner );
 
-void manualTesting( unique_ptr< NeuralNetAI >& ai )
+void manualTesting( std::unique_ptr< NeuralNetAI >& ai )
 {
     TicTacToeHuman human( 9, 9, 1, 1 );
     TicTacToe game;
@@ -48,7 +46,7 @@ class AdderDarwinAI : public DarwinAI
         {
             int randomIndex;
 
-            uniform_int_distribution< int > distribution( 0, m_population.size() );
+            std::uniform_int_distribution< int > distribution( 0, m_population.size() );
             randomIndex = distribution( GeneralAI::m_randomNumberGenerator );
 
             TicTacToe::Token winner = game.match( ai, *m_population.at( randomIndex ) );
@@ -69,23 +67,23 @@ class AdderDarwinAI : public DarwinAI
 
 int main()
 {
-    cout << "Generating initial population" << endl;
+    std::cout << "Generating initial population" << std::endl;
     AdderDarwinAI population;
 
-    cout << "Population is evolving" << endl;
+    std::cout << "Population is evolving" << std::endl;
     for( int i = 0; i < 100; i++)
     {
-        cout << "\t" << i << " %" << endl;
+        std::cout << "\t" << i << " %" << std::endl;
         population.evolve( 100 );
     }
 
-    cout << "Saving population" << endl;
+    std::cout << "Saving population" << std::endl;
     // GeneralAI::save< AdderDarwinAI >, cereal::JSONOutputArchive >( AdderDarwinAI, "save.txt" );
 
-    cout << "Selecting best individual" << endl;
-    unique_ptr< NeuralNetAI >& champion = population.bestIndividual();
+    std::cout << "Selecting best individual" << std::endl;
+    std::unique_ptr< NeuralNetAI >& champion = population.bestIndividual();
 
-    cout << "Manual Testing" << endl;
+    std::cout << "Manual Testing" << std::endl;
     manualTesting( champion );
 
     return 0;
@@ -94,24 +92,24 @@ int main()
 bool verboseEndGame( TicTacToe::Token winner )
 {
     /// Stats
-    static vector< bool > recentGamesResults( 100 );
+    static std::vector< bool > recentGamesResults( 100 );
     static int gameNumber = 0;
 
     /// Evaluation
     switch( winner )
     {
         case TicTacToe::Token::None:
-            cout << "Tie game!" << endl << endl;
+            std::cout << "Tie game!" << std::endl << std::endl;
             break;
 
         case TicTacToe::Token::X:
-            cout << "Player X wins!" << endl << endl;
+            std::cout << "Player X wins!" << std::endl << std::endl;
             recentGamesResults[ gameNumber % 100 ] = false;
             gameNumber++;
             break;
 
         case TicTacToe::Token::O:
-            cout << "Player O wins!" << endl << endl;
+            std::cout << "Player O wins!" << std::endl << std::endl;
             recentGamesResults[ gameNumber % 100 ] = true;
             gameNumber++;
             break;
@@ -130,11 +128,11 @@ bool verboseEndGame( TicTacToe::Token winner )
         }
 
         float winPercentage = float( totalWins ) / 100.f;
-        cout << "Game #" << gameNumber << " winPercentage: " << winPercentage << endl;
+        std::cout << "Game #" << gameNumber << " winPercentage: " << winPercentage << std::endl;
 
         if( winPercentage >= .9f )
         {
-            cout << "It took " << gameNumber << " games to be so awesome!" << endl;
+            std::cout << "It took " << gameNumber << " games to be so awesome!" << std::endl;
             return false;
         }
     }

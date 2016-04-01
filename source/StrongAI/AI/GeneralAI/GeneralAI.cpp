@@ -1,7 +1,7 @@
 #include "StrongAI/AI/GeneralAI/GeneralAI.hpp"
 
 // To do: Seed the random number generator with a random_device when it's implemented ( *wink wink GCC* )
-std::mt19937_64 GeneralAI::m_randomNumberGenerator( time( NULL ) );  // Shared random number generator
+std::mt19937_64 GeneralAI::m_randomNumberGenerator( time( 0 ) );  // Shared random number generator
 
 GeneralAI::GeneralAI( const int inputSize, const int outputSize, const int inputAmplitude, const int outputAmplitude ) :
     INPUT_SIZE( inputSize ), OUTPUT_SIZE( outputSize ), INPUT_AMPLITUDE( inputAmplitude ), OUTPUT_AMPLITUDE( outputAmplitude )

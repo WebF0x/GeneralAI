@@ -70,9 +70,9 @@ void NeuralNetAI::computeCycle()
         float newValue = 0;
         for( auto& synapse : node.incomingSynapses )
         {
-            const int SOURCE = synapse.first;
-            const float WEIGHT = synapse.second;
-            newValue += m_nodes.at( SOURCE ).value * WEIGHT;
+            const int source = synapse.first;
+            const float weight = synapse.second;
+            newValue += m_nodes.at( source ).value * weight;
         }
 
         /** newValue is sometimes not a number ( NaN ),  */
@@ -100,32 +100,32 @@ void NeuralNetAI::computeCycle()
 **/
 void NeuralNetAI::mutate()
 {
-    for( int DEST = 0; DEST < NUMBER_OF_NODES; DEST++ )
+    for( int dest = 0; dest < NUMBER_OF_NODES; dest++ )
     {
-        if( DEST == 1 ) continue;   // Skip bias node
-        if( 2 <= DEST && DEST < 2 + INPUT_SIZE ) continue;   // Skip input nodes
+        if( dest == 1 ) continue;   // Skip bias node
+        if( 2 <= dest && dest < 2 + INPUT_SIZE ) continue;   // Skip input nodes
 
-        for( int SOURCE = 0; SOURCE < NUMBER_OF_NODES; SOURCE++ )
+        for( int source = 0; source < NUMBER_OF_NODES; source++ )
         {
-            if( SOURCE == 0 ) continue; // Skip trigger node
-            if( 2 + INPUT_SIZE <= SOURCE && SOURCE < NUMBER_OF_NODES - INIT_NUMBER_OF_NEURONS ) continue;   // Skip output nodes
+            if( source == 0 ) continue; // Skip trigger node
+            if( 2 + INPUT_SIZE <= source && source < NUMBER_OF_NODES - INIT_NUMBER_OF_NEURONS ) continue;   // Skip output nodes
 
-            // Now we're targetting a valid synapse ( SOURCE to DEST ).
+            // Now we're targetting a valid synapse ( source to dest ).
             // There's a small probability the synapse gets killed
             if( randomProbability() < CHANCE_TO_MUTATE_KILL )
             {
                 // Kill synapse ( if it exists )
-                auto& synapses = m_nodes.at( DEST ).incomingSynapses;
-                if( synapses.find( SOURCE ) != synapses.end() )
+                auto& synapses = m_nodes.at( dest ).incomingSynapses;
+                if( synapses.find( source ) != synapses.end() )
                 {
-                    m_nodes.at( DEST ).incomingSynapses.erase( SOURCE );
+                    m_nodes.at( dest ).incomingSynapses.erase( source );
                 }
             }
             else
             {
                 // Find existing synapse or create it
-                std::map< int, float >& synapses = m_nodes.at( DEST ).incomingSynapses;
-                std::map< int, float >::iterator synapse = synapses.insert( synapses.begin(), std::make_pair( SOURCE, INIT_WEIGHT_VALUE ) );
+                std::map< int, float >& synapses = m_nodes.at( dest ).incomingSynapses;
+                std::map< int, float >::iterator synapse = synapses.insert( synapses.begin(), std::make_pair( source, INIT_WEIGHT_VALUE ) );
 
                 // Small probability to mutate synapse
                 const int SYNAPSE_INDEX = synapse->first;
@@ -143,7 +143,7 @@ void NeuralNetAI::mutate()
                     mutatedWeight *= dist( m_randomNumberGenerator );
                 }
 
-                setSynapseWeight( DEST, SYNAPSE_INDEX, mutatedWeight );
+                setSynapseWeight( dest, SYNAPSE_INDEX, mutatedWeight );
             }
         }
     }

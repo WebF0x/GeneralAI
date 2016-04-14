@@ -40,4 +40,24 @@ SUITE( NeuralNetAITest )
         // Delete save file
         CHECK( !remove( saveFileName.data() ) ) ;
     }
+
+    TEST( seeksGoodOutcome )
+    {
+        const int inputSize       = 1;
+        const int outputSize      = 1;
+        const int inputAmplitude  = 1;
+        const int outputAmplitude = 1;
+        const double tolerance    = 0.1;
+
+        NeuralNetAI ai( inputSize, outputSize, inputAmplitude, outputAmplitude );
+
+        const std::vector< float > input( { 0 } );
+        const std::vector< float > outputToLearn( { 1 } );
+
+        ai.learn( input, outputToLearn, 1 );
+
+        const std::vector< float > actualOutput = ai.output( input );
+
+        CHECK_ARRAY_CLOSE( outputToLearn, actualOutput, outputSize, tolerance );
+    }
 }

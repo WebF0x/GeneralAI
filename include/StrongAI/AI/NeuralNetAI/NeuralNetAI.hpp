@@ -52,6 +52,9 @@ private:
     float function( float x );
     virtual float coreFunction( float x );
 
+    bool almostEqual( const std::vector< float >& left, const std::vector< float >& right, float epsilon ) const;
+    bool almostEqual( float left, float right, float epsilon ) const;
+
     ///Constants
     const int INIT_NUMBER_OF_NEURONS = 0;
     const int NUMBER_OF_NODES;

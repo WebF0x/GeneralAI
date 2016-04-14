@@ -10,29 +10,49 @@ NeuralNetAI::NeuralNetAI( int inputSize, int outputSize, int maxInput, int maxOu
     resetNodesValues();
 }
 
-void NeuralNetAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
+void NeuralNetAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, const float outcome )
 {
-    if( outcome == 0.f ) return;    // Can't learn neutral lessons, only good or bad
+    if( outcome == 0.f ) return;    // Neither good nor bad
 
-    for( int c = 0; c < MAX_NUMBER_OF_LEARN_CYCLES; c++ )
+    const bool isGoodOutcome = ( outcome > 0.f );
+
+    while( true )
     {
-        // Check if AI's output matches given output
-        std::vector< float > out = this->output( input );
+        const std::vector< float > out = this->output( input );
+        const bool isAlmostEqual = almostEqual( out, output, ACCEPTABLE_ERROR );
 
-        bool kindaClose = true;
-        for( unsigned int i = 0; i < out.size(); i++ )
-        {
-            if( abs( out[ i ] - output[ i ] ) > abs( output[ i ] ) * ACCEPTABLE_ERROR )
-            {
-                kindaClose = false;
-                break;
-            }
-        }
+        // If close to something good or far from something bad, the lesson was learned
+        if(  isAlmostEqual &&  isGoodOutcome ) return;
+        if( !isAlmostEqual && !isGoodOutcome ) return;
 
-        // If close to something good or far from something bad, stop
-        if( kindaClose == ( outcome > 0 ) ) return;
-        else mutate();
+        mutate();
     }
+}
+
+bool NeuralNetAI::almostEqual( const std::vector< float >& left,
+                               const std::vector< float >& right,
+                               const float epsilon ) const
+{
+    if( left.size() != right.size() ) return false;
+
+    for( unsigned int i = 0; i < left.size(); i++ )
+    {
+        if( !almostEqual( left[ i ], right[ i ], epsilon ) )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool NeuralNetAI::almostEqual( const float left,
+                               const float right,
+                               const float epsilon ) const
+{
+    const float absoluteDifference = fabs( left - right );
+    const bool almostEqual = ( absoluteDifference < epsilon );
+    return almostEqual;
 }
 
 std::vector< float > NeuralNetAI::coreOutput( const std::vector< float >& input )

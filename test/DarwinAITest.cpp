@@ -15,6 +15,14 @@ class MyDarwinAI : public DarwinAI
         {
             return ai.output().at( 0 );
         };
+
+    private:
+        friend cereal::access;
+        template < class Archive >
+        void serialize( Archive & ar )
+        {
+            ar( cereal::virtual_base_class< GeneralAI >( this ) );
+        }
 };
 
 SUITE( DarwinAITest )
@@ -27,5 +35,24 @@ SUITE( DarwinAITest )
         CHECK_EQUAL( 1, output.size() );
 
         ai->learn( 1 );
+    }
+
+    TEST( saveAndLoad )
+    {
+        const std::string saveFileName = "MyDarwinAI.save";
+
+        MyDarwinAI originalAI;
+        MyDarwinAI cloneAI;
+
+        GeneralAI::save< MyDarwinAI >( originalAI, saveFileName );
+        GeneralAI::load< MyDarwinAI >( cloneAI,    saveFileName );
+
+        const auto originalOutput = originalAI.output().front();
+        const auto cloneOutput    = cloneAI.output().front();
+        const double tolerance    = 0.01;
+        CHECK_CLOSE( originalOutput, cloneOutput, tolerance );
+
+        // Delete save file
+        CHECK( !remove( saveFileName.data() ) ) ;
     }
 }

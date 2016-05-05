@@ -3,24 +3,6 @@
 #include <fstream>
 #include <cereal/archives/binary.hpp>
 
-class Base
-{
-    public:
-        Base() : someConstant(1)
-        {
-        }
-
-    private:
-        const int someConstant;
-
-        friend cereal::access;
-        template < class Archive >
-        void serialize( Archive & ar )
-        {
-            ar( const_cast< int & >( someConstant ) );
-        }
-};
-
 SUITE( CerealTest )
 {
     TEST( basicSaveAndLoad )

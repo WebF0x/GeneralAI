@@ -16,7 +16,7 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
         playerO.OUTPUT_AMPLITUDE != 1
       )
     {
-        throw invalid_argument( std::string("Incompatible GeneralAI properties") );
+        throw std::invalid_argument( std::string("Incompatible GeneralAI properties") );
     }
 
     /// Let AI's know this is the start of a new game
@@ -32,28 +32,28 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
 
     if( GeneralAI::randomProbability() < .5f )
     {
-        swap( currentPlayer, waitingPlayer );
+        std::swap( currentPlayer, waitingPlayer );
     }
 
     /// Play match
-    while( true )
+    for( int c = 0; c < 9; c++ )
     {
         // Create input to be sent to player
-        std::vector< float > input( 9 );
+        std::vector< float > input;
         for( int i = 0; i < 9; i++ )
         {
-            switch( board.at( i_ ) )
+            switch( board.at( i ) )
             {
                 case Token::None:
-                    input.at( i ) = 0;
+                    input.push_back( 0 );
                     break;
 
                 case Token::X:
-                    input.at( i ) = 1;
+                    input.push_back( 1 );
                     break;
 
                 case Token::O:
-                    input.at( i ) = -1;
+                    input.push_back( -1 );
                     break;
             }
 
@@ -113,7 +113,7 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
         }
         else /// Game is not over: Give turn to other player
         {
-            swap( currentPlayer, waitingPlayer );
+            std::swap( currentPlayer, waitingPlayer );
         }
     }
 }
@@ -147,7 +147,7 @@ bool TicTacToe::isWinning( const std::vector< Token >& board, Token turn )
     {
         for( int j = 0; j < 3; j++ )
         {
-            formattedBoard[ i ][ j ] = board.at( i * 3 + j_ );
+            formattedBoard[ i ][ j ] = board.at( i * 3 + j );
         }
     }
 

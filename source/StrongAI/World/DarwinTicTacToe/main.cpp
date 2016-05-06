@@ -6,13 +6,13 @@
 #include <ctime>
 #include "StrongAI/World/DarwinTicTacToe/TicTacToe.hpp"
 #include "StrongAI/World/DarwinTicTacToe/TicTacToeHuman.hpp"
-#include <cereal/types/std::vector.hpp>
+#include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/archives/binary.hpp>
 
 bool verboseEndGame( TicTacToe::Token winner );
 
-void manualTesting( std::unique_ptr< NeuralNetAI >& ai )
+void manualTesting( NeuralNetAI& ai )
 {
     TicTacToeHuman human( 9, 9, 1, 1 );
     TicTacToe game;
@@ -20,7 +20,7 @@ void manualTesting( std::unique_ptr< NeuralNetAI >& ai )
 
     for( int i = 0; i < NUM_OF_GAMES; i++ )
     {
-        TicTacToe::Token winner = game.match(*ai, human );
+        TicTacToe::Token winner = game.match(ai, human );
         verboseEndGame( winner );
     }
 }
@@ -28,7 +28,7 @@ void manualTesting( std::unique_ptr< NeuralNetAI >& ai )
 class AdderDarwinAI : public DarwinAI
 {
     public:
-    AdderDarwinAI() : DarwinAI( 9, 9, 1, 1 )
+    AdderDarwinAI() : DarwinAI( 9, 9, 1, 1, 10 )
     {
 
     }
@@ -45,17 +45,16 @@ class AdderDarwinAI : public DarwinAI
         for( int i = 0; i < NUM_OF_GAMES; i++ )
         {
             int randomIndex;
-
             std::uniform_int_distribution< int > distribution( 0, m_population.size() );
             randomIndex = distribution( GeneralAI::m_randomNumberGenerator );
 
-            TicTacToe::Token winner = game.match( ai, *m_population.at( randomIndex ) );
+            TicTacToe::Token winner = game.match( ai, m_population.at( randomIndex ) );
 
-            if( winner == TicTacToe::Token::X_ )
+            if( winner == TicTacToe::Token::X )
             {
                 score += 1;
             }
-            else if( winner == TicTacToe::Token::O_ )
+            else if( winner == TicTacToe::Token::O )
             {
                 score -= 1;
             }
@@ -74,14 +73,14 @@ int main()
     for( int i = 0; i < 100; i++)
     {
         std::cout << "\t" << i << " %" << std::endl;
-        population.evolve( 100 );
+        population.evolve( 2 );
     }
 
     std::cout << "Saving population" << std::endl;
-    // GeneralAI::save< AdderDarwinAI >, cereal::JSONOutputArchive >( AdderDarwinAI, "save.txt" );
+    GeneralAI::save< AdderDarwinAI, cereal::JSONOutputArchive >( population, "save.txt" );
 
     std::cout << "Selecting best individual" << std::endl;
-    std::unique_ptr< NeuralNetAI >& champion = population.bestIndividual();
+    NeuralNetAI& champion = population.bestIndividual();
 
     std::cout << "Manual Testing" << std::endl;
     manualTesting( champion );

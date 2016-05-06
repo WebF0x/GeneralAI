@@ -1,21 +1,20 @@
 #include "StrongAI/AI/DarwinAI/DarwinAI.hpp"
 
 DarwinAI::DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize )
-    : GeneralAI( inputSize, outputSize, maxInput, maxOutput ),
-    POPULATION_SIZE( populationSize )
+    : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
 {
-    initPopulation();
+    initPopulation( populationSize );
 }
 
-void DarwinAI::initPopulation()
+void DarwinAI::initPopulation( const int populationSize )
 {
     m_population.clear();
 
-    for( int i = 0; i < POPULATION_SIZE; i++ )
+    for( int i = 0; i < populationSize; i++ )
     {
-        std::unique_ptr< NeuralNetAI > individual( new NeuralNetAI( INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE ) );
-        individual->mutate();
-        m_population.push_back( std::move( individual ) );
+        NeuralNetAI individual( INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE );
+        individual.mutate();
+        m_population.push_back( individual );
     }
 }
 
@@ -35,7 +34,7 @@ float DarwinAI::calculateFitnessScores( std::vector< float >& fitnessScores, flo
 {
     for( unsigned int i = 0; i < m_population.size(); i++ )
     {
-        float fitness = fitnessEval( *m_population[ i ] );
+        float fitness = fitnessEval( m_population[ i ] );
         fitnessScores.push_back( fitness );
 
         if( i == 0 )
@@ -57,19 +56,20 @@ void DarwinAI::calculateFitnessScores( std::vector< float >& fitnessScores )
 {
     for( unsigned int i = 0; i < m_population.size(); i++ )
     {
-        float fitness = fitnessEval( *m_population[ i ] );
+        float fitness = fitnessEval( m_population[ i ] );
         fitnessScores.push_back( fitness );
     }
 }
 
 void DarwinAI::createNextGeneration( std::vector< float >& fitnessScores, float minFitness, float maxFitness )
 {
-    std::vector< std::unique_ptr< NeuralNetAI > > newPopulation;
-    std::vector< bool > parentCloned( POPULATION_SIZE, false );
-    while( newPopulation.size() < ( unsigned int )POPULATION_SIZE )
+    const int populationSize = m_population.size();
+    std::vector< NeuralNetAI > newPopulation;
+    std::vector< bool > parentCloned( populationSize, false );
+    while( newPopulation.size() < ( unsigned int )populationSize )
     {
         // Pick a random individual
-        std::uniform_int_distribution< int > distribution( 0, POPULATION_SIZE - 1 );
+        std::uniform_int_distribution< int > distribution( 0, populationSize - 1 );
         int index = distribution( m_randomNumberGenerator );
         float fitness = fitnessScores.at( index );
 
@@ -82,15 +82,15 @@ void DarwinAI::createNextGeneration( std::vector< float >& fitnessScores, float 
             {
                 parentCloned.at( index ) = true;
 
-                std::unique_ptr< NeuralNetAI > parent( new NeuralNetAI( *( m_population.at( index ) ) ) );
-                newPopulation.push_back( std::move( parent ) );
+                NeuralNetAI parent( m_population.at( index ) );
+                newPopulation.push_back( parent );
             }
 
-            if( newPopulation.size() < ( unsigned int )POPULATION_SIZE )  // Can have multiple mutated children
+            if( newPopulation.size() < ( unsigned int )populationSize )  // Can have multiple mutated children
             {
-                std::unique_ptr< NeuralNetAI > child( new NeuralNetAI( *( m_population.at( index ) ) ) );
-                child->mutate();
-                newPopulation.push_back( std::move( child ) );
+                NeuralNetAI child( m_population.at( index ) );
+                child.mutate();
+                newPopulation.push_back( child );
             }
         }
     }
@@ -98,12 +98,15 @@ void DarwinAI::createNextGeneration( std::vector< float >& fitnessScores, float 
     m_population.clear();
     for( auto it = newPopulation.rbegin(); it != newPopulation.rend(); it++ )
     {
-        m_population.push_back( std::move( *it ) );
+        m_population.push_back( *it );
     }
+
+    assert( m_population.size() == populationSize );
 }
 
-std::unique_ptr< NeuralNetAI >& DarwinAI::bestIndividual()
+NeuralNetAI& DarwinAI::bestIndividual()
 {
+    assert( !m_population.empty() );
     std::vector< float > fitnessScores;
     calculateFitnessScores( fitnessScores );
 
@@ -125,12 +128,13 @@ std::unique_ptr< NeuralNetAI >& DarwinAI::bestIndividual()
 
 void DarwinAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
 {
-    // Learn
+    for( auto& individual : m_population )
+    {
+        individual.learn( input, output, outcome );
+    }
 }
 
 std::vector< float > DarwinAI::coreOutput( const std::vector< float >& input )
 {
-    // Output
-    std::vector< float > output( OUTPUT_SIZE );
-    return output;
+    return bestIndividual().output( input );
 }

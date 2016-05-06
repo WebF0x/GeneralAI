@@ -32,8 +32,8 @@ SUITE( NeuralNetAITest )
         GeneralAI::save< NeuralNetAI >( originalAI, saveFileName );
         GeneralAI::load< NeuralNetAI >( cloneAI,    saveFileName );
 
-        const auto cloneOutput    = cloneAI.output();
         const auto originalOutput = originalAI.output();
+        const auto cloneOutput    = cloneAI.output();
 
         CHECK_ARRAY_CLOSE( originalOutput, cloneOutput, outputSize, tolerance );
 

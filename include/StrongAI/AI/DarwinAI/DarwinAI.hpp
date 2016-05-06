@@ -7,6 +7,7 @@ class DarwinAI : public GeneralAI
 {
     public:
         DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize = 2 );
+        void initPopulation( int populationSize );
         void evolve( int generations );
 
         virtual float fitnessEval( NeuralNetAI& ai ) = 0;
@@ -21,15 +22,11 @@ class DarwinAI : public GeneralAI
 
         //Return the best individual of the population
         //Parameter population cannot be empty
-        std::unique_ptr< NeuralNetAI >& bestIndividual();
+        NeuralNetAI& bestIndividual();
 
-        std::vector< std::unique_ptr< NeuralNetAI > > m_population;
+        std::vector< NeuralNetAI > m_population;
 
-        private:
-        const int POPULATION_SIZE;
-
-        void initPopulation();
-
+    private:
         std::vector< float > coreOutput( const std::vector< float >& input );
         void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
 

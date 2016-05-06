@@ -25,6 +25,12 @@ struct Node
 class NeuralNetAI : public GeneralAI
 {
 public:
+    NeuralNetAI() : GeneralAI(0, 0, 0, 0),
+                    NUMBER_OF_NODES( 0 ),
+                    MAX_WEIGHT_VALUE( 0 ),
+                    MAX_NODE_VALUE( 0 )
+    {
+    }
     NeuralNetAI( int inputSize, int outputSize, int maxInput, int maxOutput );
 
     void debug();

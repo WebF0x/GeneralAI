@@ -121,7 +121,16 @@
 		<Unit filename="test/CaseBasedAITest.cpp">
 			<Option target="Test" />
 		</Unit>
+		<Unit filename="test/CerealTest.cpp">
+			<Option target="Test" />
+		</Unit>
+		<Unit filename="test/DarwinAITest.cpp">
+			<Option target="Test" />
+		</Unit>
 		<Unit filename="test/GeneralAITest.cpp">
+			<Option target="Test" />
+		</Unit>
+		<Unit filename="test/HumanAITest.cpp">
 			<Option target="Test" />
 		</Unit>
 		<Unit filename="test/NeuralNetAITest.cpp">

@@ -21,7 +21,7 @@ class MyDarwinAI : public DarwinAI
         template < class Archive >
         void serialize( Archive & ar )
         {
-            ar( cereal::virtual_base_class< GeneralAI >( this ) );
+            ar( cereal::virtual_base_class< DarwinAI >( this ) );
         }
 };
 
@@ -30,6 +30,7 @@ SUITE( DarwinAITest )
     TEST( smokeTest )
     {
         std::unique_ptr< DarwinAI > ai( new MyDarwinAI() );
+        ai->initPopulation( 2 );
 
         auto output = ai->output();
         CHECK_EQUAL( 1, output.size() );
@@ -47,12 +48,27 @@ SUITE( DarwinAITest )
         GeneralAI::save< MyDarwinAI >( originalAI, saveFileName );
         GeneralAI::load< MyDarwinAI >( cloneAI,    saveFileName );
 
-        const auto originalOutput = originalAI.output().front();
-        const auto cloneOutput    = cloneAI.output().front();
+        const auto expectedOutput = originalAI.output();
+        const auto actualOutput   = cloneAI.output();
         const double tolerance    = 0.01;
-        CHECK_CLOSE( originalOutput, cloneOutput, tolerance );
+        CHECK_ARRAY_CLOSE( expectedOutput, actualOutput, 1, tolerance );
 
         // Delete save file
         CHECK( !remove( saveFileName.data() ) ) ;
+    }
+
+    TEST( seeksGoodOutcome )
+    {
+        MyDarwinAI ai;
+        ai.initPopulation( 2 );
+
+        const std::vector< float > input;
+        const std::vector< float > expectedOutput( { 1 } );
+        ai.learn( input, expectedOutput, 1 );
+
+        const auto actualOutput = ai.output( input );
+        const auto outputSize   = expectedOutput.size();
+        const double tolerance  = 0.1;
+        CHECK_ARRAY_CLOSE( expectedOutput, actualOutput, outputSize, tolerance );
     }
 }

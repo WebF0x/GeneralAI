@@ -30,7 +30,6 @@ SUITE( DarwinAITest )
     TEST( smokeTest )
     {
         std::unique_ptr< DarwinAI > ai( new MyDarwinAI() );
-        ai->initPopulation( 2 );
 
         auto output = ai->output();
         CHECK_EQUAL( 1, output.size() );
@@ -60,7 +59,6 @@ SUITE( DarwinAITest )
     TEST( seeksGoodOutcome )
     {
         MyDarwinAI ai;
-        ai.initPopulation( 2 );
 
         const std::vector< float > input;
         const std::vector< float > expectedOutput( { 1 } );

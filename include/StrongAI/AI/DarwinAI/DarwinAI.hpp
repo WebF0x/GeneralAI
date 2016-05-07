@@ -7,8 +7,13 @@ class DarwinAI : public GeneralAI
 {
     public:
         DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize = 2 );
-        void initPopulation( int populationSize );
         void evolve( int generations );
+
+    private:
+        std::vector< float > coreOutput( const std::vector< float >& input );
+        void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
+
+        void initPopulation( int populationSize );
 
         virtual float fitnessEval( NeuralNetAI& ai ) = 0;
 
@@ -25,11 +30,6 @@ class DarwinAI : public GeneralAI
         NeuralNetAI& bestIndividual();
 
         std::vector< NeuralNetAI > m_population;
-
-    private:
-        std::vector< float > coreOutput( const std::vector< float >& input );
-        void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
-
         friend cereal::access;
         template < class Archive >
         void serialize( Archive & ar )

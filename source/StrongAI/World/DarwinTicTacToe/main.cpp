@@ -44,11 +44,7 @@ class AdderDarwinAI : public DarwinAI
 
         for( int i = 0; i < NUM_OF_GAMES; i++ )
         {
-            int randomIndex;
-            std::uniform_int_distribution< int > distribution( 0, m_population.size() );
-            randomIndex = distribution( GeneralAI::m_randomNumberGenerator );
-
-            TicTacToe::Token winner = game.match( ai, m_population.at( randomIndex ) );
+            TicTacToe::Token winner = game.match( ai, randomIndividual() );
 
             if( winner == TicTacToe::Token::X )
             {

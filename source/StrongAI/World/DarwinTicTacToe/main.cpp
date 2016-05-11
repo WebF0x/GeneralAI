@@ -25,10 +25,10 @@ void manualTesting( NeuralNetAI& ai )
     }
 }
 
-class AdderDarwinAI : public DarwinAI
+class TicTacToeAI : public DarwinAI
 {
     public:
-    AdderDarwinAI() : DarwinAI( 9, 9, 1, 1, 10 )
+    TicTacToeAI() : DarwinAI( 9, 9, 1, 1, 10 )
     {
 
     }
@@ -63,7 +63,7 @@ class AdderDarwinAI : public DarwinAI
 int main()
 {
     std::cout << "Generating initial population" << std::endl;
-    AdderDarwinAI population;
+    TicTacToeAI population;
 
     std::cout << "Population is evolving" << std::endl;
     for( int i = 0; i < 100; i++)
@@ -73,7 +73,7 @@ int main()
     }
 
     std::cout << "Saving population" << std::endl;
-    GeneralAI::save< AdderDarwinAI, cereal::JSONOutputArchive >( population, "save.txt" );
+    GeneralAI::save< TicTacToeAI, cereal::JSONOutputArchive >( population, "save.txt" );
 
     std::cout << "Selecting best individual" << std::endl;
     NeuralNetAI& champion = population.bestIndividual();

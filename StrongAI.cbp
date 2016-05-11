@@ -12,9 +12,6 @@
 				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
 				<Linker>
 					<Add library="lib/UnitTest++/libUnitTest++.a" />
 				</Linker>
@@ -35,6 +32,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-g" />
 			<Add directory="include" />
 		</Compiler>
 		<Unit filename="include/StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp">
@@ -53,6 +51,7 @@
 		</Unit>
 		<Unit filename="include/StrongAI/AI/RandomAI/RandomAI.hpp">
 			<Option target="Test" />
+			<Option target="DarwinTicTacToe" />
 		</Unit>
 		<Unit filename="include/StrongAI/World/DarwinTicTacToe/TicTacToe.hpp">
 			<Option target="DarwinTicTacToe" />
@@ -91,6 +90,7 @@
 		</Unit>
 		<Unit filename="source/StrongAI/AI/RandomAI/RandomAI.cpp">
 			<Option target="Test" />
+			<Option target="DarwinTicTacToe" />
 		</Unit>
 		<Unit filename="source/StrongAI/AI/RandomAI/main.cpp">
 			<Option target="&lt;{~None~}&gt;" />

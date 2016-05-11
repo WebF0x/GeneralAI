@@ -2,7 +2,6 @@
 #define TIC_TAC_TOE_HUMAN_HPP
 
 #include "StrongAI/AI/HumanAI/HumanAI.hpp"
-#include "StrongAI/World/TicTacToe/TicTacToe.hpp"
 
 #include <iostream>
 #include <vector>

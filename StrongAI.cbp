@@ -59,9 +59,6 @@
 		<Unit filename="include/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.hpp">
 			<Option target="DarwinTicTacToe" />
 		</Unit>
-		<Unit filename="include/StrongAI/World/TicTacToe/TicTacToe.hpp">
-			<Option target="TicTacToe" />
-		</Unit>
 		<Unit filename="include/StrongAI/World/TicTacToe/TicTacToeHuman.hpp">
 			<Option target="TicTacToe" />
 		</Unit>
@@ -103,9 +100,6 @@
 		</Unit>
 		<Unit filename="source/StrongAI/World/DarwinTicTacToe/main.cpp">
 			<Option target="DarwinTicTacToe" />
-		</Unit>
-		<Unit filename="source/StrongAI/World/TicTacToe/TicTacToe.cpp">
-			<Option target="TicTacToe" />
 		</Unit>
 		<Unit filename="source/StrongAI/World/TicTacToe/TicTacToeHuman.cpp">
 			<Option target="TicTacToe" />

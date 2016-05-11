@@ -17,6 +17,10 @@ class DarwinAI : public GeneralAI
         // Population cannot be empty
         NeuralNetAI& bestIndividual();
 
+        // Return a random individual of the population
+        // Population cannot be empty
+        NeuralNetAI& randomIndividual();
+
     private:
         std::vector< float > coreOutput( const std::vector< float >& input );
         void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );

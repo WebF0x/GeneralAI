@@ -136,6 +136,16 @@ NeuralNetAI& DarwinAI::bestIndividual()
     return m_population.at( indexOfBestIndividual );
 }
 
+NeuralNetAI& DarwinAI::randomIndividual()
+{
+    assert( !m_population.empty() );
+
+    std::uniform_int_distribution< int > distribution( 0, m_population.size() );
+    const int randomIndex = distribution( GeneralAI::m_randomNumberGenerator );
+
+    return m_population.at( randomIndex );
+}
+
 void DarwinAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
 {
     for( auto& individual : m_population )

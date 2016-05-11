@@ -2,6 +2,7 @@
 #include <fstream>
 #include "StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp"
 #include "StrongAI/AI/DarwinAI/DarwinAI.hpp"
+#include "StrongAI/AI/RandomAI/RandomAI.hpp"
 #include <map>
 #include <ctime>
 #include "StrongAI/World/DarwinTicTacToe/TicTacToe.hpp"
@@ -40,11 +41,12 @@ class TicTacToeAI : public DarwinAI
     {
         TicTacToe game;
         float score = 0;
-        const int NUM_OF_GAMES = 1;
+        const int NUM_OF_GAMES = 10;
 
+        RandomAI opponent( INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE );
         for( int i = 0; i < NUM_OF_GAMES; i++ )
         {
-            TicTacToe::Token winner = game.match( ai, randomIndividual() );
+            TicTacToe::Token winner = game.match( ai, opponent );
 
             if( winner == TicTacToe::Token::X )
             {
@@ -66,10 +68,10 @@ int main()
     TicTacToeAI population;
 
     std::cout << "Population is evolving" << std::endl;
-    for( int i = 0; i < 100; i++)
+    for( int i = 0; i < 10; i++)
     {
         std::cout << "\t" << i << " %" << std::endl;
-        population.evolve( 2 );
+        population.evolveToFitness( i + 1 );
     }
 
     std::cout << "Saving population" << std::endl;

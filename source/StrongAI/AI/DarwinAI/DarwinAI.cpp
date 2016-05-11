@@ -18,20 +18,36 @@ void DarwinAI::initPopulation( const int populationSize )
     }
 }
 
+/// Evolve the population for multiple generations
 void DarwinAI::evolve( int generations )
 {
-    /// Evolve a better population over the course of many generations
     for( int i = 0; i < generations; i++ )
     {
-        std::vector< float > fitnessScores;
         float minFitness, maxFitness;
-        calculateFitnessScores( fitnessScores, minFitness, maxFitness );
+        const std::vector< float > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
         createNextGeneration( fitnessScores, minFitness, maxFitness );
     }
 }
 
-float DarwinAI::calculateFitnessScores( std::vector< float >& fitnessScores, float& minFitness, float& maxFitness )
+/// Evolve the population until the desired fitness is reached
+void DarwinAI::evolveToFitness( float desiredFitness )
 {
+    while( fitness() < desiredFitness )
+    {
+        float minFitness, maxFitness;
+        const std::vector< float > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
+        createNextGeneration( fitnessScores, minFitness, maxFitness );
+    }
+}
+
+float DarwinAI::fitness()
+{
+    return fitnessEval( bestIndividual() );
+}
+
+std::vector< float > DarwinAI::calculateFitnessScores( float& minFitness, float& maxFitness )
+{
+    std::vector< float > fitnessScores;
     for( unsigned int i = 0; i < m_population.size(); i++ )
     {
         float fitness = fitnessEval( m_population[ i ] );
@@ -44,85 +60,79 @@ float DarwinAI::calculateFitnessScores( std::vector< float >& fitnessScores, flo
         }
         else
         {
-            if( fitness < minFitness ) minFitness = fitness;
-            if( fitness > maxFitness ) maxFitness = fitness;
+            minFitness = std::min( fitness, minFitness );
+            maxFitness = std::max( fitness, maxFitness );
         }
     }
-
-    return maxFitness - minFitness;
+    return fitnessScores;
 }
 
-void DarwinAI::calculateFitnessScores( std::vector< float >& fitnessScores )
+std::vector< float > DarwinAI::calculateFitnessScores()
 {
-    for( unsigned int i = 0; i < m_population.size(); i++ )
+    std::vector< float > fitnessScores;
+    for( auto& individual : m_population )
     {
-        float fitness = fitnessEval( m_population[ i ] );
+        float fitness = fitnessEval( individual );
         fitnessScores.push_back( fitness );
     }
+    return fitnessScores;
 }
 
-void DarwinAI::createNextGeneration( std::vector< float >& fitnessScores, float minFitness, float maxFitness )
+void DarwinAI::createNextGeneration( const std::vector< float >& fitnessScores, float minFitness, float maxFitness )
 {
-    const int populationSize = m_population.size();
-    std::vector< NeuralNetAI > newPopulation;
-    std::vector< bool > parentCloned( populationSize, false );
-    while( newPopulation.size() < ( unsigned int )populationSize )
+    float totalFitnessGreaterThanMinimum = 0;
+    for( auto fitness : fitnessScores )
     {
-        // Pick a random individual
-        std::uniform_int_distribution< int > distribution( 0, populationSize - 1 );
-        int index = distribution( m_randomNumberGenerator );
-        float fitness = fitnessScores.at( index );
+        float fitnessGreaterThanMinimum = fitness - minFitness;
+        totalFitnessGreaterThanMinimum += fitnessGreaterThanMinimum;
+    }
 
-        std::uniform_real_distribution< float > distribution0_1( 0, 1 );
-        float chance = distribution0_1( m_randomNumberGenerator );
+    std::vector< float > reproductionProbabilities;
+    for( auto fitness : fitnessScores )
+    {
+        float reproductionProbability = ( totalFitnessGreaterThanMinimum != 0 ) ? ( ( fitness - minFitness) / totalFitnessGreaterThanMinimum ) : 1;
+        reproductionProbabilities.push_back( reproductionProbability );
+    }
 
-        if( chance <= ( fitness - minFitness ) / ( maxFitness - minFitness ) ) // Gets picked by the roulette
+    std::vector< NeuralNetAI > newPopulation;
+    while( newPopulation.size() < m_population.size())
+    {
+        float randomChance  = randomProbability();
+        for( int i = 0; i < reproductionProbabilities.size(); i++ )
         {
-            if( !parentCloned.at( index ) )  // We want only one parent cloned
-            {
-                parentCloned.at( index ) = true;
+            float reproductionProbability = reproductionProbabilities.at( i );
 
-                NeuralNetAI parent( m_population.at( index ) );
-                newPopulation.push_back( parent );
+            if( randomChance <= reproductionProbability)
+            {
+                NeuralNetAI clonedIndividual( m_population.at( i ) );
+
+                // Keep the original individual
+                newPopulation.push_back( clonedIndividual );
+
+                // Keep a mutation of the individual ( if there is enough room )
+                if( newPopulation.size() < m_population.size() )
+                {
+                    clonedIndividual.mutate();
+                    newPopulation.push_back( clonedIndividual );
+                }
             }
-
-            if( newPopulation.size() < ( unsigned int )populationSize )  // Can have multiple mutated children
+            else
             {
-                NeuralNetAI child( m_population.at( index ) );
-                child.mutate();
-                newPopulation.push_back( child );
+                randomChance += reproductionProbability;
             }
         }
     }
 
-    m_population.clear();
-    for( auto it = newPopulation.rbegin(); it != newPopulation.rend(); it++ )
-    {
-        m_population.push_back( *it );
-    }
-
-    assert( m_population.size() == populationSize );
+    m_population = std::vector< NeuralNetAI >( newPopulation );
 }
 
 NeuralNetAI& DarwinAI::bestIndividual()
 {
     assert( !m_population.empty() );
-    std::vector< float > fitnessScores;
-    calculateFitnessScores( fitnessScores );
 
-    int indexOfBestIndividual = 0;
-    float fitnessOfBestIndividual = fitnessScores.at( 0 );
-
-    for( unsigned int i = 1; i < fitnessScores.size(); i++ )
-    {
-        float fitness = fitnessScores.at( i );
-        if( fitness > fitnessOfBestIndividual )
-        {
-            indexOfBestIndividual = i;
-            fitnessOfBestIndividual = fitness;
-        }
-    }
-
+    const auto fitnessScores = calculateFitnessScores();
+    const auto bestFitnessScore = std::max_element( fitnessScores.begin(), fitnessScores.end() );
+    const auto indexOfBestIndividual = std::distance( fitnessScores.begin(), bestFitnessScore );
     return m_population.at( indexOfBestIndividual );
 }
 

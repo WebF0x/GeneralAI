@@ -10,13 +10,15 @@ class MyDarwinAI : public DarwinAI
         {
         }
 
+    private:
         //Select for highest output
         float fitnessEval( NeuralNetAI& ai )
         {
-            return ai.output().at( 0 );
+            auto output = ai.output();
+            auto fitness = output.front();
+            return fitness;
         };
 
-    private:
         friend cereal::access;
         template < class Archive >
         void serialize( Archive & ar )
@@ -68,5 +70,15 @@ SUITE( DarwinAITest )
         const auto outputSize   = expectedOutput.size();
         const double tolerance  = 0.1;
         CHECK_ARRAY_CLOSE( expectedOutput, actualOutput, outputSize, tolerance );
+    }
+
+    TEST( evolvesToDesiredFitness )
+    {
+        const float desiredFitness = 0.95;
+
+        MyDarwinAI ai;
+        ai.evolveToFitness( desiredFitness );
+
+        CHECK( ai.fitness() >= desiredFitness );
     }
 }

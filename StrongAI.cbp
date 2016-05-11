@@ -12,13 +12,12 @@
 				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
 				<Linker>
 					<Add library="lib/UnitTest++/libUnitTest++.a" />
 				</Linker>
-				<ExtraCommands>
-					<Add after="$exe_output" />
-					<Mode after="always" />
-				</ExtraCommands>
 			</Target>
 			<Target title="DarwinTicTacToe">
 				<Option output="bin/DarwinTicTacToe/DarwinTicTacToe" prefix_auto="1" extension_auto="1" />
@@ -36,12 +35,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-O2" />
 			<Add directory="include" />
 		</Compiler>
-		<Linker>
-			<Add option="-s" />
-		</Linker>
 		<Unit filename="include/StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp">
 			<Option target="TicTacToe" />
 			<Option target="Test" />

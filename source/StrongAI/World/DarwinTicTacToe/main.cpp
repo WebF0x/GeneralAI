@@ -37,10 +37,10 @@ class TicTacToeAI : public DarwinAI
     private:
 
     // Task: Play TicTacToe
-    virtual float fitnessEval( NeuralNetAI& ai )
+    virtual double fitnessEval( NeuralNetAI& ai )
     {
         TicTacToe game;
-        float score = 0;
+        double score = 0;
         const int NUM_OF_GAMES = 10;
 
         RandomAI opponent( INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE );
@@ -124,7 +124,7 @@ bool verboseEndGame( TicTacToe::Token winner )
             }
         }
 
-        float winPercentage = float( totalWins ) / 100.f;
+        double winPercentage = double( totalWins ) / 100.f;
         std::cout << "Game #" << gameNumber << " winPercentage: " << winPercentage << std::endl;
 
         if( winPercentage >= .9f )

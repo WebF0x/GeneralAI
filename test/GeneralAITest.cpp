@@ -13,14 +13,14 @@ class MockAI : public GeneralAI
         }
 
     private:
-        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
+        virtual void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome )
         {
 
         }
 
-        virtual std::vector< float > coreOutput( const std::vector< float >& input )
+        virtual std::vector< double > coreOutput( const std::vector< double >& input )
         {
-            const std::vector< float > output( OUTPUT_SIZE, 0 );
+            const std::vector< double > output( OUTPUT_SIZE, 0 );
             return output;
         }
 
@@ -53,7 +53,7 @@ SUITE( GeneralAITest )
     TEST( output )
     {
         MockAI mockAI = MockAI( 1, 1, 1, 1 );
-        const std::vector< float > dummyInput( 1, 0 );
+        const std::vector< double > dummyInput( 1, 0 );
         auto output = mockAI.output( dummyInput );
         CHECK_EQUAL( 1, output.size() );
     }
@@ -111,21 +111,21 @@ SUITE( GeneralAITest )
     TEST( outputWithInvalidInputSize )
     {
         MockAI mockAI = MockAI( 0, 0, 0, 0 );
-        CHECK_THROW( mockAI.output( std::vector< float >( 1, 0 ) ), std::length_error );
+        CHECK_THROW( mockAI.output( std::vector< double >( 1, 0 ) ), std::length_error );
     }
 
     TEST( outputWithInvalidInputAmplitude )
     {
         MockAI mockAI = MockAI( 1, 0, 0, 0 );
-        CHECK_THROW( mockAI.output( std::vector< float >( 1, 1 ) ), std::length_error );
+        CHECK_THROW( mockAI.output( std::vector< double >( 1, 1 ) ), std::length_error );
     }
 
     TEST( learn )
     {
         MockAI mockAI = MockAI( 0, 0, 0, 0 );
-        const std::vector< float > input( 0, 0 );
-        const std::vector< float > output( 0, 0 );
-        const float outcome( 0 );
+        const std::vector< double > input( 0, 0 );
+        const std::vector< double > output( 0, 0 );
+        const double outcome( 0 );
 
         mockAI.learn( input, output, outcome );
     }
@@ -133,9 +133,9 @@ SUITE( GeneralAITest )
     TEST( learnWithInvalidInputSize )
     {
         MockAI mockAI = MockAI( 0, 0, 0, 0 );
-        const std::vector< float > input( 1, 0 );
-        const std::vector< float > output( 0, 0 );
-        const float outcome( 0 );
+        const std::vector< double > input( 1, 0 );
+        const std::vector< double > output( 0, 0 );
+        const double outcome( 0 );
 
         CHECK_THROW( mockAI.learn( input, output, outcome ), std::length_error );
     }
@@ -143,9 +143,9 @@ SUITE( GeneralAITest )
     TEST( learnWithInvalidOutputSize )
     {
         MockAI mockAI = MockAI( 0, 0, 0, 0 );
-        const std::vector< float > input( 0, 0 );
-        const std::vector< float > output( 1, 0 );
-        const float outcome( 0 );
+        const std::vector< double > input( 0, 0 );
+        const std::vector< double > output( 1, 0 );
+        const double outcome( 0 );
 
         CHECK_THROW( mockAI.learn( input, output, outcome ), std::length_error );
     }
@@ -153,9 +153,9 @@ SUITE( GeneralAITest )
     TEST( learnWithInvalidInputAmplitude )
     {
         MockAI mockAI = MockAI( 1, 0, 0, 0 );
-        const std::vector< float > input( 1, 1 );
-        const std::vector< float > output( 0, 0 );
-        const float outcome( 0 );
+        const std::vector< double > input( 1, 1 );
+        const std::vector< double > output( 0, 0 );
+        const double outcome( 0 );
 
         CHECK_THROW( mockAI.learn( input, output, outcome ), std::length_error );
     }
@@ -163,9 +163,9 @@ SUITE( GeneralAITest )
     TEST( learnWithInvalidOutputAmplitude )
     {
         MockAI mockAI = MockAI( 0, 1, 0, 0 );
-        const std::vector< float > input( 0, 0 );
-        const std::vector< float > output( 1, 1 );
-        const float outcome( 0 );
+        const std::vector< double > input( 0, 0 );
+        const std::vector< double > output( 1, 1 );
+        const double outcome( 0 );
 
         CHECK_THROW( mockAI.learn( input, output, outcome ), std::length_error );
     }
@@ -193,19 +193,19 @@ SUITE( GeneralAITest )
     TEST( validInput )
     {
         MockAI mockAI = MockAI( 2, 2, 3, 3 );
-        CHECK(  mockAI.validInput( std::vector< float >( 2,  3 ) ) );
-        CHECK(  mockAI.validInput( std::vector< float >( 2, -3 ) ) );
-        CHECK( !mockAI.validInput( std::vector< float >( 2,  3.001 ) ) );
-        CHECK( !mockAI.validInput( std::vector< float >( 2, -3.001 ) ) );
+        CHECK(  mockAI.validInput( std::vector< double >( 2,  3 ) ) );
+        CHECK(  mockAI.validInput( std::vector< double >( 2, -3 ) ) );
+        CHECK( !mockAI.validInput( std::vector< double >( 2,  3.001 ) ) );
+        CHECK( !mockAI.validInput( std::vector< double >( 2, -3.001 ) ) );
     }
 
     TEST( validOutput )
     {
         MockAI mockAI = MockAI( 2, 2, 3, 3 );
-        CHECK(  mockAI.validOutput( std::vector< float >( 2,  3 ) ) );
-        CHECK(  mockAI.validOutput( std::vector< float >( 2, -3 ) ) );
-        CHECK( !mockAI.validOutput( std::vector< float >( 2,  3.001 ) ) );
-        CHECK( !mockAI.validOutput( std::vector< float >( 2, -3.001 ) ) );
+        CHECK(  mockAI.validOutput( std::vector< double >( 2,  3 ) ) );
+        CHECK(  mockAI.validOutput( std::vector< double >( 2, -3 ) ) );
+        CHECK( !mockAI.validOutput( std::vector< double >( 2,  3.001 ) ) );
+        CHECK( !mockAI.validOutput( std::vector< double >( 2, -3.001 ) ) );
     }
 
     TEST( validOutcome )
@@ -218,27 +218,27 @@ SUITE( GeneralAITest )
 
     TEST( validVectorEmpty )
     {
-        CHECK( GeneralAI::validVector(  std::vector< float >( {   } ), 0, 0 ) );
-        CHECK( GeneralAI::validVector(  std::vector< float >( {   } ), 0, 1 ) );
+        CHECK( GeneralAI::validVector(  std::vector< double >( {   } ), 0, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< double >( {   } ), 0, 1 ) );
 
-        CHECK( GeneralAI::validVector(  std::vector< float >( 0, 0 ) , 0, 0 ) );
-        CHECK( GeneralAI::validVector(  std::vector< float >( 0, 1 ) , 0, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< double >( 0, 0 ) , 0, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< double >( 0, 1 ) , 0, 0 ) );
 
-        CHECK( !GeneralAI::validVector(  std::vector< float >( {   } ), 1, 0 ) );
-        CHECK( !GeneralAI::validVector(  std::vector< float >( {   } ), 1, 1 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< double >( {   } ), 1, 0 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< double >( {   } ), 1, 1 ) );
     }
 
     TEST( validVectorOnlyContainsZeros )
     {
-        CHECK( GeneralAI::validVector(  std::vector< float >( { 0 } ), 1, 0 ) );
-        CHECK( GeneralAI::validVector(  std::vector< float >( { 0 } ), 1, 1 ) );
+        CHECK( GeneralAI::validVector(  std::vector< double >( { 0 } ), 1, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< double >( { 0 } ), 1, 1 ) );
 
-        CHECK( GeneralAI::validVector(  std::vector< float >( 1, 0 ) , 1, 0 ) );
+        CHECK( GeneralAI::validVector(  std::vector< double >( 1, 0 ) , 1, 0 ) );
 
-        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 0, 0 ) );
-        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 0, 1 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< double >( { 0 } ), 0, 0 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< double >( { 0 } ), 0, 1 ) );
 
-        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 2, 0 ) );
-        CHECK( !GeneralAI::validVector(  std::vector< float >( { 0 } ), 2, 1 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< double >( { 0 } ), 2, 0 ) );
+        CHECK( !GeneralAI::validVector(  std::vector< double >( { 0 } ), 2, 1 ) );
     }
 }

@@ -11,19 +11,19 @@ const int NUM_OF_GENERATIONS = 100;
 const int POPULATION_SIZE = 100;
 
 // Functions
-float fitnessEval( NeuralNetAI& );
+double fitnessEval( NeuralNetAI& );
 
 void init();
 
 void initPopulation( std::vector< std::unique_ptr< NeuralNetAI > >& population );
 
 // Returns range of fitnessScores ( max - min )
-float calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< float >& fitnessScores, float& minFitness, float& maxFitness );
+double calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< double >& fitnessScores, double& minFitness, double& maxFitness );
 
-void calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< float >& fitnessScores );
+void calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< double >& fitnessScores );
 
 // Update population with a next generation
-void createNextGeneration( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< float >& fitnessScores, float minFitness, float maxFitness );
+void createNextGeneration( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< double >& fitnessScores, double minFitness, double maxFitness );
 
 void manualTesting( std::unique_ptr< NeuralNetAI >& individual );
 
@@ -67,8 +67,8 @@ int main()
     for( int i = 0; i < NUM_OF_GENERATIONS; i++ )
     {
         std::cout << NUM_OF_GENERATIONS - i << std::endl;
-        std::vector< float > fitnessScores;
-        float minFitness, maxFitness;
+        std::vector< double > fitnessScores;
+        double minFitness, maxFitness;
         calculateFitnessScores( population, fitnessScores, minFitness, maxFitness );
         createNextGeneration( population, fitnessScores, minFitness, maxFitness );
     }
@@ -84,22 +84,22 @@ int main()
 }
 
 // Returns the fitness of the AI
-float fitnessEval( NeuralNetAI& ai )
+double fitnessEval( NeuralNetAI& ai )
 {
-    std::uniform_real_distribution< float > distribution( -AMPLITUDE, AMPLITUDE );
+    std::uniform_real_distribution< double > distribution( -AMPLITUDE, AMPLITUDE );
 
-    float fitness = 0;  // Perfect fitness is 0 ( in this case )
+    double fitness = 0;  // Perfect fitness is 0 ( in this case )
 
     for( int i = 0; i < 10; i++ )
     {
-        float in1 = distribution( randomGenerator );
-        float in2 = distribution( randomGenerator );
-        float somme = in1 + in2;
+        double in1 = distribution( randomGenerator );
+        double in2 = distribution( randomGenerator );
+        double somme = in1 + in2;
 
-        std::vector< float > input( { in1, in2 } );
+        std::vector< double > input( { in1, in2 } );
 
         auto output = ai.output( input );
-        float out = output[ 0 ];
+        double out = output[ 0 ];
 
         fitness -= abs( out - somme );
     }
@@ -126,11 +126,11 @@ void initPopulation( std::vector< std::unique_ptr< NeuralNetAI > >& population )
     }
 }
 
-float calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< float >& fitnessScores, float& minFitness, float& maxFitness )
+double calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< double >& fitnessScores, double& minFitness, double& maxFitness )
 {
     for( unsigned int i = 0; i < population.size(); i++ )
     {
-        float fitness = fitnessEval( *population[ i ] );
+        double fitness = fitnessEval( *population[ i ] );
         fitnessScores.push_back( fitness );
 
         if( i == 0 )
@@ -148,16 +148,16 @@ float calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& pop
     return max( Fitness - minFitness );
 }
 
-void calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< float >& fitnessScores )
+void calculateFitnessScores( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< double >& fitnessScores )
 {
     for( unsigned int i = 0; i < population.size(); i++ )
     {
-        float fitness = fitnessEval(*population[ i ] );
+        double fitness = fitnessEval(*population[ i ] );
         fitnessScores.push_back( fitness );
     }
 }
 
-void createNextGeneration( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< float >& fitnessScores, float minFitness, float maxFitness )
+void createNextGeneration( std::vector< std::unique_ptr< NeuralNetAI > >& population, std::vector< double >& fitnessScores, double minFitness, double maxFitness )
 {
     std::vector< std::unique_ptr< NeuralNetAI > > newPopulation;
     std::vector< bool > parentCloned( POPULATION_SIZE, false );
@@ -166,10 +166,10 @@ void createNextGeneration( std::vector< std::unique_ptr< NeuralNetAI > >& popula
         // Pick a random individual
         std::uniform_int_distribution< int > distribution( 0, POPULATION_SIZE - 1 );
         int index = distribution( randomGenerator );
-        float fitness = fitnessScores.at( index );
+        double fitness = fitnessScores.at( index );
 
-        std::uniform_real_distribution< float > distribution0_1( 0, 1 );
-        float chance = distribution0_1( randomGenerator );
+        std::uniform_real_distribution< double > distribution0_1( 0, 1 );
+        double chance = distribution0_1( randomGenerator );
 
         if( chance <= ( ( fitness - minFitness ) )/( max( Fitness - minFitness )_ ) ) // Gets picked by the roulette
         {
@@ -204,27 +204,27 @@ void manualTesting( std::unique_ptr< NeuralNetAI >& individual )
 
     while( true )
     {
-        float in1, in2;
+        double in1, in2;
         std::cin >> in1;
         std::cin >> in2;
-        std::vector< float > input( { in1, in2 } );
+        std::vector< double > input( { in1, in2 } );
 
-        float out = individual->output( input )[ 0 ];
+        double out = individual->output( input )[ 0 ];
         std::cout << in1 << " + " << in2 << " => " << out << std::endl;
     }
 }
 
 std::unique_ptr< NeuralNetAI >& bestIndividual( std::vector< std::unique_ptr< NeuralNetAI > >& population )
 {
-    std::vector< float > fitnessScores;
+    std::vector< double > fitnessScores;
     calculateFitnessScores( population, fitnessScores );
 
     int indexOfBestIndividual = 0;
-    float fitnessOfBestIndividual = fitnessScores.at( 0 ) ;
+    double fitnessOfBestIndividual = fitnessScores.at( 0 ) ;
 
     for( unsigned int i = 1; i < fitnessScores.size(); i++ )
     {
-        float fitness = fitnessScores.at( i );
+        double fitness = fitnessScores.at( i );
         if( fitness > fitnessOfBestIndividual )
         {
             indexOfBestIndividual = i;

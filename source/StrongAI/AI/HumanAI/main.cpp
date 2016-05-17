@@ -11,8 +11,8 @@ int main()
 
     GeneralAI::load< HumanAI, cereal::JSONInputArchive >( ai, fileName );
 
-    std::vector< float > input  = { 1, 2, 3 };
-    std::vector< float > output = ai.output( input );
+    std::vector< double > input  = { 1, 2, 3 };
+    std::vector< double > output = ai.output( input );
 
     std::cout << "Your output is: " << output.at( 0 ) << std::endl;
 

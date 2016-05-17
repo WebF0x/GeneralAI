@@ -94,7 +94,7 @@ bool verboseEndGame( TicTacToe::Token winner )
             }
         }
 
-        float winPercentage = float( totalWins ) / 100.f;
+        double winPercentage = double( totalWins ) / 100.f;
         std::cout << "Game #" << gameNumber << " winPercentage: " << winPercentage << std::endl;
 
         if( winPercentage >= .9f )

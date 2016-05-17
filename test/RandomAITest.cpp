@@ -27,9 +27,9 @@ SUITE( RandomAITest )
     TEST( learn )
     {
         RandomAI randomAI( 1, 1, 1, 1 );
-        const std::vector< float > dummyInput( 1, 0 );
-        const std::vector< float > dummyOutput( 1, 0 );
-        const float dummyOutcome = 1;
+        const std::vector< double > dummyInput( 1, 0 );
+        const std::vector< double > dummyOutput( 1, 0 );
+        const double dummyOutcome = 1;
 
         randomAI.learn( dummyInput, dummyOutput, dummyOutcome );
     }

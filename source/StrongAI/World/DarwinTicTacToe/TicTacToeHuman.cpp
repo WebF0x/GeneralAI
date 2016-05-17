@@ -6,7 +6,7 @@ TicTacToeHuman::TicTacToeHuman( int inputSize, int outputSize, int maxInput, int
 
 }
 
-void TicTacToeHuman::visualizeInput( const std::vector< float >& input )
+void TicTacToeHuman::visualizeInput( const std::vector< double >& input )
 {
 
     std::cout << inputToChar( input[ 6 ] ) << "_|_" << inputToChar( input[ 7 ] ) << "_|_" << inputToChar( input[ 8 ] ) << std::endl;
@@ -14,7 +14,7 @@ void TicTacToeHuman::visualizeInput( const std::vector< float >& input )
     std::cout << inputToChar( input[ 0 ] ) << " | " << inputToChar( input[ 1 ] ) << " | " << inputToChar( input[ 2 ] ) << std::endl;
 }
 
-std::vector< float > TicTacToeHuman::coreOutput( const std::vector< float >& input )
+std::vector< double > TicTacToeHuman::coreOutput( const std::vector< double >& input )
 {
     std::cout << "TicTacToe Board:" << std::endl
 		 << "================" << std::endl;
@@ -33,12 +33,12 @@ std::vector< float > TicTacToeHuman::coreOutput( const std::vector< float >& inp
     }while( userInput < 1 || userInput > 9 );
     std::cout << std::endl;
 
-    std::vector< float > output( 9, 0 );
+    std::vector< double > output( 9, 0 );
     output.at( userInput - 1 ) = 1;
     return output;
 }
 
-char TicTacToeHuman::inputToChar( float input )
+char TicTacToeHuman::inputToChar( double input )
 {
     if( input <= -.5f ) return 'X';
     if( input >=  .5f ) return 'O';

@@ -23,34 +23,34 @@ void DarwinAI::evolve( int generations )
 {
     for( int i = 0; i < generations; i++ )
     {
-        float minFitness, maxFitness;
-        const std::vector< float > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
+        double minFitness, maxFitness;
+        const std::vector< double > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
         createNextGeneration( fitnessScores, minFitness, maxFitness );
     }
 }
 
 /// Evolve the population until the desired fitness is reached
-void DarwinAI::evolveToFitness( float desiredFitness )
+void DarwinAI::evolveToFitness( double desiredFitness )
 {
     while( fitness() < desiredFitness )
     {
-        float minFitness, maxFitness;
-        const std::vector< float > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
+        double minFitness, maxFitness;
+        const std::vector< double > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
         createNextGeneration( fitnessScores, minFitness, maxFitness );
     }
 }
 
-float DarwinAI::fitness()
+double DarwinAI::fitness()
 {
     return fitnessEval( bestIndividual() );
 }
 
-std::vector< float > DarwinAI::calculateFitnessScores( float& minFitness, float& maxFitness )
+std::vector< double > DarwinAI::calculateFitnessScores( double& minFitness, double& maxFitness )
 {
-    std::vector< float > fitnessScores;
+    std::vector< double > fitnessScores;
     for( unsigned int i = 0; i < m_population.size(); i++ )
     {
-        float fitness = fitnessEval( m_population[ i ] );
+        double fitness = fitnessEval( m_population[ i ] );
         fitnessScores.push_back( fitness );
 
         if( i == 0 )
@@ -67,40 +67,40 @@ std::vector< float > DarwinAI::calculateFitnessScores( float& minFitness, float&
     return fitnessScores;
 }
 
-std::vector< float > DarwinAI::calculateFitnessScores()
+std::vector< double > DarwinAI::calculateFitnessScores()
 {
-    std::vector< float > fitnessScores;
+    std::vector< double > fitnessScores;
     for( auto& individual : m_population )
     {
-        float fitness = fitnessEval( individual );
+        double fitness = fitnessEval( individual );
         fitnessScores.push_back( fitness );
     }
     return fitnessScores;
 }
 
-void DarwinAI::createNextGeneration( const std::vector< float >& fitnessScores, float minFitness, float maxFitness )
+void DarwinAI::createNextGeneration( const std::vector< double >& fitnessScores, double minFitness, double maxFitness )
 {
-    float totalFitnessGreaterThanMinimum = 0;
+    double totalFitnessGreaterThanMinimum = 0;
     for( auto fitness : fitnessScores )
     {
-        float fitnessGreaterThanMinimum = fitness - minFitness;
+        double fitnessGreaterThanMinimum = fitness - minFitness;
         totalFitnessGreaterThanMinimum += fitnessGreaterThanMinimum;
     }
 
-    std::vector< float > reproductionProbabilities;
+    std::vector< double > reproductionProbabilities;
     for( auto fitness : fitnessScores )
     {
-        float reproductionProbability = ( totalFitnessGreaterThanMinimum != 0 ) ? ( ( fitness - minFitness) / totalFitnessGreaterThanMinimum ) : 1;
+        double reproductionProbability = ( totalFitnessGreaterThanMinimum != 0 ) ? ( ( fitness - minFitness) / totalFitnessGreaterThanMinimum ) : 1;
         reproductionProbabilities.push_back( reproductionProbability );
     }
 
     std::vector< NeuralNetAI > newPopulation;
     while( newPopulation.size() < m_population.size())
     {
-        float randomChance  = randomProbability();
+        double randomChance  = randomProbability();
         for( int i = 0; i < reproductionProbabilities.size(); i++ )
         {
-            float reproductionProbability = reproductionProbabilities.at( i );
+            double reproductionProbability = reproductionProbabilities.at( i );
 
             if( randomChance <= reproductionProbability)
             {
@@ -146,7 +146,7 @@ NeuralNetAI& DarwinAI::randomIndividual()
     return m_population.at( randomIndex );
 }
 
-void DarwinAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
+void DarwinAI::coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome )
 {
     for( auto& individual : m_population )
     {
@@ -154,7 +154,7 @@ void DarwinAI::coreLearn( const std::vector< float >& input, const std::vector< 
     }
 }
 
-std::vector< float > DarwinAI::coreOutput( const std::vector< float >& input )
+std::vector< double > DarwinAI::coreOutput( const std::vector< double >& input )
 {
     return bestIndividual().output( input );
 }

@@ -9,7 +9,7 @@ int main()
 
     ExampleAI ai = ExampleAI( INPUT_SIZE, OUTPUT_SIZE, INPUT_AMPLITUDE, OUTPUT_AMPLITUDE );
 
-    std::vector< float > input( INPUT_SIZE );
+    std::vector< double > input( INPUT_SIZE );
 
     std::cout << "Input:" << std::endl;
     for( auto val : input )
@@ -18,7 +18,7 @@ int main()
     }
 
     /// Test output
-    std::vector< float > output = ai.output( input );
+    std::vector< double > output = ai.output( input );
 
     std::cout << "Output:" << std::endl;
     for( auto value : output )
@@ -27,7 +27,7 @@ int main()
     }
 
     /// Test learn
-    float outcome = -1;
+    double outcome = -1;
     ai.learn( input, output, outcome );
 
     /// Test save / load

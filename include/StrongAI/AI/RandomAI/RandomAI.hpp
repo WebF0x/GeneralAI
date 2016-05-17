@@ -12,10 +12,10 @@ class RandomAI : public GeneralAI
         virtual ~RandomAI() {}
 
     private:
-        std::vector< float > randomOutput();
+        std::vector< double > randomOutput();
 
-        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
-        virtual std::vector< float > coreOutput( const std::vector< float >& input );
+        virtual void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome );
+        virtual std::vector< double > coreOutput( const std::vector< double >& input );
 
         template < class Archive >
         void serialize( Archive & ar )

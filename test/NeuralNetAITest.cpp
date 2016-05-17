@@ -51,12 +51,12 @@ SUITE( NeuralNetAITest )
 
         NeuralNetAI ai( inputSize, outputSize, inputAmplitude, outputAmplitude );
 
-        const std::vector< float > input( { 0 } );
-        const std::vector< float > outputToLearn( { 1 } );
+        const std::vector< double > input( { 0 } );
+        const std::vector< double > outputToLearn( { 1 } );
 
         ai.learn( input, outputToLearn, 1 );
 
-        const std::vector< float > actualOutput = ai.output( input );
+        const std::vector< double > actualOutput = ai.output( input );
 
         CHECK_ARRAY_CLOSE( outputToLearn, actualOutput, outputSize, tolerance );
     }

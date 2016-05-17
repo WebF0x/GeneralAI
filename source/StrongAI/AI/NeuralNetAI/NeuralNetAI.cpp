@@ -3,14 +3,14 @@
 NeuralNetAI::NeuralNetAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput ),
     NUMBER_OF_NODES( 2 + INPUT_SIZE + OUTPUT_SIZE + INIT_NUMBER_OF_NEURONS ),
-    MAX_WEIGHT_VALUE( sqrt( std::numeric_limits< float >::max() / NUMBER_OF_NODES ) ),
+    MAX_WEIGHT_VALUE( sqrt( std::numeric_limits< double >::max() / NUMBER_OF_NODES ) ),
     MAX_NODE_VALUE( MAX_WEIGHT_VALUE )
 {
     m_nodes = std::vector< Node >( NUMBER_OF_NODES, Node() );
     resetNodesValues();
 }
 
-void NeuralNetAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, const float outcome )
+void NeuralNetAI::coreLearn( const std::vector< double >& input, const std::vector< double >& output, const double outcome )
 {
     if( outcome == 0.f ) return;    // Neither good nor bad
 
@@ -18,7 +18,7 @@ void NeuralNetAI::coreLearn( const std::vector< float >& input, const std::vecto
 
     while( true )
     {
-        const std::vector< float > out = this->output( input );
+        const std::vector< double > out = this->output( input );
         const bool isAlmostEqual = almostEqual( out, output, ACCEPTABLE_ERROR );
 
         // If close to something good or far from something bad, the lesson was learned
@@ -29,9 +29,9 @@ void NeuralNetAI::coreLearn( const std::vector< float >& input, const std::vecto
     }
 }
 
-bool NeuralNetAI::almostEqual( const std::vector< float >& left,
-                               const std::vector< float >& right,
-                               const float epsilon ) const
+bool NeuralNetAI::almostEqual( const std::vector< double >& left,
+                               const std::vector< double >& right,
+                               const double epsilon ) const
 {
     if( left.size() != right.size() ) return false;
 
@@ -46,16 +46,16 @@ bool NeuralNetAI::almostEqual( const std::vector< float >& left,
     return true;
 }
 
-bool NeuralNetAI::almostEqual( const float left,
-                               const float right,
-                               const float epsilon ) const
+bool NeuralNetAI::almostEqual( const double left,
+                               const double right,
+                               const double epsilon ) const
 {
-    const float absoluteDifference = fabs( left - right );
+    const double absoluteDifference = fabs( left - right );
     const bool almostEqual = ( absoluteDifference < epsilon );
     return almostEqual;
 }
 
-std::vector< float > NeuralNetAI::coreOutput( const std::vector< float >& input )
+std::vector< double > NeuralNetAI::coreOutput( const std::vector< double >& input )
 {
     resetNodesValues();
 
@@ -69,7 +69,7 @@ std::vector< float > NeuralNetAI::coreOutput( const std::vector< float >& input 
     }
 
     // Return output nodes
-    std::vector< float > output;
+    std::vector< double > output;
     auto start = m_nodes.begin()+2 + INPUT_SIZE;
     auto stop = start + OUTPUT_SIZE;
     for( auto it=start; it!=stop; it++ )
@@ -82,16 +82,16 @@ std::vector< float > NeuralNetAI::coreOutput( const std::vector< float >& input 
 
 void NeuralNetAI::computeCycle()
 {
-    std::vector< float > newValues;
+    std::vector< double > newValues;
 
     // Calculate new node values
     for( auto& node : m_nodes )
     {
-        float newValue = 0;
+        double newValue = 0;
         for( auto& synapse : node.incomingSynapses )
         {
             const int source = synapse.first;
-            const float weight = synapse.second;
+            const double weight = synapse.second;
             newValue += m_nodes.at( source ).value * weight;
         }
 
@@ -144,22 +144,22 @@ void NeuralNetAI::mutate()
             else
             {
                 // Find existing synapse or create it
-                std::map< int, float >& synapses = m_nodes.at( dest ).incomingSynapses;
-                std::map< int, float >::iterator synapse = synapses.insert( synapses.begin(), std::make_pair( source, INIT_WEIGHT_VALUE ) );
+                std::map< int, double >& synapses = m_nodes.at( dest ).incomingSynapses;
+                std::map< int, double >::iterator synapse = synapses.insert( synapses.begin(), std::make_pair( source, INIT_WEIGHT_VALUE ) );
 
                 // Small probability to mutate synapse
                 const int SYNAPSE_INDEX = synapse->first;
-                float mutatedWeight = synapse->second;
+                double mutatedWeight = synapse->second;
 
                 if( randomProbability() < CHANCE_TO_MUTATE_ADD )
                 {
-                    std::uniform_real_distribution< float > dist( -AMPLITUDE_ADD, AMPLITUDE_ADD );
+                    std::uniform_real_distribution< double > dist( -AMPLITUDE_ADD, AMPLITUDE_ADD );
                     mutatedWeight += dist( m_randomNumberGenerator );
                 }
 
                 if( randomProbability() < CHANCE_TO_MUTATE_MUL )
                 {
-                    std::uniform_real_distribution< float > dist( -AMPLITUDE_MUL, AMPLITUDE_MUL );
+                    std::uniform_real_distribution< double > dist( -AMPLITUDE_MUL, AMPLITUDE_MUL );
                     mutatedWeight *= dist( m_randomNumberGenerator );
                 }
 
@@ -169,7 +169,7 @@ void NeuralNetAI::mutate()
     }
 }
 
-void NeuralNetAI::setSynapseWeight( int nodeIndex, int synapseSourceIndex, float weight )
+void NeuralNetAI::setSynapseWeight( int nodeIndex, int synapseSourceIndex, double weight )
 {
     // Check if node is valid
     if( nodeIndex >= NUMBER_OF_NODES ) return;
@@ -187,7 +187,7 @@ void NeuralNetAI::setSynapseWeight( int nodeIndex, int synapseSourceIndex, float
     node.incomingSynapses.at( synapseSourceIndex ) = weight;
 }
 
-void NeuralNetAI::setNodeValue( int nodeIndex, float value )
+void NeuralNetAI::setNodeValue( int nodeIndex, double value )
 {
     if( nodeIndex == 1 ) return;   // Skip bias node
     if( 2 <= nodeIndex && nodeIndex < 2 + INPUT_SIZE ) return;   // Skip input nodes
@@ -206,7 +206,7 @@ void NeuralNetAI::setNodeValue( int nodeIndex, float value )
     m_nodes.at( nodeIndex ).value = value;
 }
 
-void NeuralNetAI::setInput( const std::vector< float >& input )
+void NeuralNetAI::setInput( const std::vector< double >& input )
 {
     const int INPUT_START_INDEX = 2;
     for( int i = 0; i < INPUT_SIZE; i++ )
@@ -215,10 +215,10 @@ void NeuralNetAI::setInput( const std::vector< float >& input )
     }
 }
 
-float NeuralNetAI::function( const float x )
+double NeuralNetAI::function( const double x )
 {
     /// Function
-    float y = coreFunction( x );
+    double y = coreFunction( x );
 
     /// Make sure y is valid
     if( y < -OUTPUT_AMPLITUDE )
@@ -234,7 +234,7 @@ float NeuralNetAI::function( const float x )
     return y;
 }
 
-float NeuralNetAI::coreFunction( const float x )
+double NeuralNetAI::coreFunction( const double x )
 {
     /// Function
     return x;

@@ -9,8 +9,8 @@ class ExampleAI : public GeneralAI
         ExampleAI( int inputSize, int outputSize, int maxInput, int maxOutput );
 
     private:
-        std::vector< float > coreOutput( const std::vector< float >& input );
-        void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
+        std::vector< double > coreOutput( const std::vector< double >& input );
+        void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome );
 
         friend cereal::access;
         template < class Archive >

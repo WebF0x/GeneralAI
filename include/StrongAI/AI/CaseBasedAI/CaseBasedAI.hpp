@@ -18,21 +18,21 @@ class CaseBasedAI : public GeneralAI
         CaseBasedAI( int inputSize, int outputSize, int maxInput, int maxOutput );
          virtual ~CaseBasedAI() {}
 
-         const std::map< std::vector< float >, std::map< std::vector< float >, float > >& getMemory();
+         const std::map< std::vector< double >, std::map< std::vector< double >, double > >& getMemory();
          unsigned int getMemorySize();
 
     private:
-        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
-        virtual std::vector< float > coreOutput( const std::vector< float >& input );
+        virtual void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome );
+        virtual std::vector< double > coreOutput( const std::vector< double >& input );
 
         //             Input                     Output       Outcome
-        std::map< std::vector< float >, std::map< std::vector< float >, float > > m_memory;
+        std::map< std::vector< double >, std::map< std::vector< double >, double > > m_memory;
 
-        float randomProbability();
-        std::vector< float > randomOutput();
-        std::vector< float > randomNewOutput( const std::map< std::vector< float >, float>& reactions );
+        double randomProbability();
+        std::vector< double > randomOutput();
+        std::vector< double > randomNewOutput( const std::map< std::vector< double >, double>& reactions );
 
-        std::vector< float > bestOutput( const std::map< std::vector< float >, float>& reactions );
+        std::vector< double > bestOutput( const std::map< std::vector< double >, double>& reactions );
 
         template < class Archive >
         void serialize( Archive & ar )

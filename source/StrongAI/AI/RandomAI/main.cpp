@@ -12,8 +12,8 @@ int main()
     // output
     try
     {
-        std::vector< float > v( inputSize );
-        std::vector< float > v2 = ai->output( v );
+        std::vector< double > v( inputSize );
+        std::vector< double > v2 = ai->output( v );
 
         for( unsigned int i = 0; i < outputSize; i++ )
         {
@@ -28,8 +28,8 @@ int main()
     // learn
     try
     {
-        std::vector< float > input( inputSize ), output( outputSize );
-        float outcome = -1;
+        std::vector< double > input( inputSize ), output( outputSize );
+        double outcome = -1;
         ai->learn( input, output, outcome );
     }
     catch( exception& e_ )

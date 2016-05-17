@@ -12,8 +12,8 @@
 
 struct Node
 {
-    float value;
-    std::map< int, float > incomingSynapses;  //incomingSynapses[ source ] = weight
+    double value;
+    std::map< int, double > incomingSynapses;  //incomingSynapses[ source ] = weight
 
     template < class Archive >
     void serialize( Archive & archive )
@@ -39,47 +39,47 @@ public:
 
 private:
     ///GeneralAI
-    virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
-    virtual std::vector< float > coreOutput( const std::vector< float >& input );
+    virtual void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome );
+    virtual std::vector< double > coreOutput( const std::vector< double >& input );
 
     ///Network
-    void setSynapseWeight( int nodeIndex, int synapseIndex, float weight );
-    void setNodeValue( int nodeIndex, float value );
+    void setSynapseWeight( int nodeIndex, int synapseIndex, double weight );
+    void setNodeValue( int nodeIndex, double value );
 
     std::vector< Node > m_nodes; // [ trigger, bias, inputs, outputs, neurons ]
 
     void computeCycle();
 
     void resetNodesValues();
-    void setInput( const std::vector< float >& input );
+    void setInput( const std::vector< double >& input );
 
     bool triggered();
 
-    float function( float x );
-    virtual float coreFunction( float x );
+    double function( double x );
+    virtual double coreFunction( double x );
 
-    bool almostEqual( const std::vector< float >& left, const std::vector< float >& right, float epsilon ) const;
-    bool almostEqual( float left, float right, float epsilon ) const;
+    bool almostEqual( const std::vector< double >& left, const std::vector< double >& right, double epsilon ) const;
+    bool almostEqual( double left, double right, double epsilon ) const;
 
     ///Constants
     const int INIT_NUMBER_OF_NEURONS = 0;
     const int NUMBER_OF_NODES;
-    const float INIT_NODE_VALUE = 0.f;
-    const float INIT_WEIGHT_VALUE = 0.f;
+    const double INIT_NODE_VALUE = 0.f;
+    const double INIT_WEIGHT_VALUE = 0.f;
 
     const int MAX_NUMBER_OF_CYCLES = 5;        //Prevent infinite loops in case the trigger node is never triggered
     const int MAX_NUMBER_OF_LEARN_CYCLES = 10;  //Either successfully learn something or quit after trying this many times
-    const float MAX_WEIGHT_VALUE;               //Prevent overflows and NaN bullshit
-    const float MAX_NODE_VALUE;                 //Prevent overflows and NaN bullshit
+    const double MAX_WEIGHT_VALUE;               //Prevent overflows and NaN bullshit
+    const double MAX_NODE_VALUE;                 //Prevent overflows and NaN bullshit
 
-    const float CHANCE_TO_MUTATE_ADD  = .5f;     //Probabilities related to a mutation
-    const float CHANCE_TO_MUTATE_MUL  = .5f;     //Probabilities related to a mutation
-    const float CHANCE_TO_MUTATE_KILL = .1f;   //Probabilities related to a mutation
+    const double CHANCE_TO_MUTATE_ADD  = .5f;     //Probabilities related to a mutation
+    const double CHANCE_TO_MUTATE_MUL  = .5f;     //Probabilities related to a mutation
+    const double CHANCE_TO_MUTATE_KILL = .1f;   //Probabilities related to a mutation
 
-    const float AMPLITUDE_ADD = 1.f; //Probabilities related to a mutation
-    const float AMPLITUDE_MUL = 2.f; //Probabilities related to a mutation
+    const double AMPLITUDE_ADD = 1.f; //Probabilities related to a mutation
+    const double AMPLITUDE_MUL = 2.f; //Probabilities related to a mutation
 
-    const float ACCEPTABLE_ERROR = .1f;  //Useless right now: the network doesn't learn()
+    const double ACCEPTABLE_ERROR = .1f;  //Useless right now: the network doesn't learn()
 
     //Serialization
     friend cereal::access;

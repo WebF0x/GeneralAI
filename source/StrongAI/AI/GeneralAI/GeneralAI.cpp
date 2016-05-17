@@ -12,7 +12,7 @@ GeneralAI::GeneralAI( const int inputSize, const int outputSize, const int input
     if( OUTPUT_AMPLITUDE    < 0 ) throw std::out_of_range( std::string ( "negative OUTPUT_AMPLITUDE" ) );
 }
 
-void GeneralAI::learn( const std::vector< float >& input, const std::vector< float >& output, const float outcome )
+void GeneralAI::learn( const std::vector< double >& input, const std::vector< double >& output, const double outcome )
 {
     /// Check parameters validity
     if( !validInput( input ) )
@@ -38,7 +38,7 @@ void GeneralAI::learn( const std::vector< float >& input, const std::vector< flo
     m_lastLessonEnabled = true;
 }
 
-void GeneralAI::learn( const std::tuple< std::vector< float >, std::vector< float >, float >& lesson )
+void GeneralAI::learn( const std::tuple< std::vector< double >, std::vector< double >, double >& lesson )
 {
     auto& input     = std::get< 0 >( lesson );
     auto& output    = std::get< 1 >( lesson );
@@ -47,7 +47,7 @@ void GeneralAI::learn( const std::tuple< std::vector< float >, std::vector< floa
     learn( input, output, outcome );
 }
 
-void GeneralAI::learn( const std::pair< std::vector< float >, std::vector< float > >& decision, float outcome )
+void GeneralAI::learn( const std::pair< std::vector< double >, std::vector< double > >& decision, double outcome )
 {
     auto& input     = decision.first;
     auto& output    = decision.second;
@@ -55,7 +55,7 @@ void GeneralAI::learn( const std::pair< std::vector< float >, std::vector< float
     learn( input, output, outcome );
 }
 
-void GeneralAI::learn( const float outcome )
+void GeneralAI::learn( const double outcome )
 {
     if( m_lastDecisionEnabled ) // m_lastDecision is not undefined
     {
@@ -63,13 +63,13 @@ void GeneralAI::learn( const float outcome )
     }
 }
 
-std::vector< float > GeneralAI::output()
+std::vector< double > GeneralAI::output()
 {
-    const std::vector< float > defaultInput( INPUT_SIZE, 0 );
+    const std::vector< double > defaultInput( INPUT_SIZE, 0 );
     return output( defaultInput );
 }
 
-std::vector< float > GeneralAI::output( const std::vector< float >& input )
+std::vector< double > GeneralAI::output( const std::vector< double >& input )
 {
     /// Check parameters validity
     if( !validInput( input ) )
@@ -77,7 +77,7 @@ std::vector< float > GeneralAI::output( const std::vector< float >& input )
         throw std::length_error( std::string( "invalid input" ) );
     }
 
-    const std::vector< float > output = coreOutput( input );
+    const std::vector< double > output = coreOutput( input );
 
     if( !validOutput( output ) )
     {
@@ -96,7 +96,7 @@ void GeneralAI::reset()
     m_lastDecisionEnabled = false;
 }
 
-std::pair< std::vector< float >, std::vector< float > > GeneralAI::lastDecision() const
+std::pair< std::vector< double >, std::vector< double > > GeneralAI::lastDecision() const
 {
     if( !m_lastDecisionEnabled )
     {
@@ -106,7 +106,7 @@ std::pair< std::vector< float >, std::vector< float > > GeneralAI::lastDecision(
     return m_lastDecision;
 }
 
-std::tuple< std::vector< float >, std::vector< float >, float > GeneralAI::lastLesson() const
+std::tuple< std::vector< double >, std::vector< double >, double > GeneralAI::lastLesson() const
 {
     if( !m_lastLessonEnabled )
     {
@@ -116,7 +116,7 @@ std::tuple< std::vector< float >, std::vector< float >, float > GeneralAI::lastL
     return m_lastLesson;
 }
 
-bool GeneralAI::validVector( const std::vector< float >& myvector, const unsigned int size, const int amplitude )
+bool GeneralAI::validVector( const std::vector< double >& myvector, const unsigned int size, const int amplitude )
 {
     if( myvector.size() != size )
     {
@@ -134,26 +134,26 @@ bool GeneralAI::validVector( const std::vector< float >& myvector, const unsigne
     return true;
 }
 
-bool GeneralAI::validInput( const std::vector< float >& input ) const
+bool GeneralAI::validInput( const std::vector< double >& input ) const
 {
     return validVector( input, ( unsigned int )INPUT_SIZE, INPUT_AMPLITUDE );
 }
 
-bool GeneralAI::validOutput( const std::vector< float >& output ) const
+bool GeneralAI::validOutput( const std::vector< double >& output ) const
 {
     return validVector( output, ( unsigned int )OUTPUT_SIZE, OUTPUT_AMPLITUDE );
 }
 
-bool GeneralAI::validOutcome( const float outcome )
+bool GeneralAI::validOutcome( const double outcome )
 {
     return ( -1.f <= outcome && outcome <= 1.f );
 }
 
 /**
-*   Returns a random float in [ 0, 1 ]
+*   Returns a random double in [ 0, 1 ]
 **/
-float GeneralAI::randomProbability()
+double GeneralAI::randomProbability()
 {
-    std::uniform_real_distribution< float > distribution( 0, 1 );
+    std::uniform_real_distribution< double > distribution( 0, 1 );
     return distribution( m_randomNumberGenerator );
 }

@@ -12,7 +12,7 @@ class MyDarwinAI : public DarwinAI
 
     private:
         //Select for highest output
-        float fitnessEval( NeuralNetAI& ai )
+        double fitnessEval( NeuralNetAI& ai )
         {
             auto output = ai.output();
             auto fitness = output.front();
@@ -62,8 +62,8 @@ SUITE( DarwinAITest )
     {
         MyDarwinAI ai;
 
-        const std::vector< float > input;
-        const std::vector< float > expectedOutput( { 1 } );
+        const std::vector< double > input;
+        const std::vector< double > expectedOutput( { 1 } );
         ai.learn( input, expectedOutput, 1 );
 
         const auto actualOutput = ai.output( input );
@@ -74,7 +74,7 @@ SUITE( DarwinAITest )
 
     TEST( evolvesToDesiredFitness )
     {
-        const float desiredFitness = 0.95;
+        const double desiredFitness = 0.95;
 
         MyDarwinAI ai;
         ai.evolveToFitness( desiredFitness );

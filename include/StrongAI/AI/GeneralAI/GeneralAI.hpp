@@ -26,8 +26,8 @@ class GeneralAI// : public SaveSystem
         virtual ~GeneralAI() {}
 
         /// Returns AI's output
-        std::vector< float > output();
-        std::vector< float > output( const std::vector< float >& input );
+        std::vector< double > output();
+        std::vector< double > output( const std::vector< double >& input );
 
         /**
         *   Learn the outcome of output( input )
@@ -35,20 +35,20 @@ class GeneralAI// : public SaveSystem
         *   Worst outcome: -1.f
         *   Best outcome :  1.f
         **/
-        void learn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
-        void learn( const std::tuple< std::vector< float >, std::vector< float >, float>& lesson );
-        void learn( const std::pair< std::vector< float >,std::vector< float > >& decision, float outcome );
-        void learn( float outcome );  /// Learn the outcome of the lastDecision
+        void learn( const std::vector< double >& input, const std::vector< double >& output, double outcome );
+        void learn( const std::tuple< std::vector< double >, std::vector< double >, double>& lesson );
+        void learn( const std::pair< std::vector< double >,std::vector< double > >& decision, double outcome );
+        void learn( double outcome );  /// Learn the outcome of the lastDecision
 
-        std::pair < std::vector< float >, std::vector< float > >       lastDecision() const;
-        std::tuple< std::vector< float >, std::vector< float >, float > lastLesson() const;
+        std::pair < std::vector< double >, std::vector< double > >       lastDecision() const;
+        std::tuple< std::vector< double >, std::vector< double >, double > lastLesson() const;
         void reset();
 
-        bool validInput( const std::vector< float >& input ) const;
-        bool validOutput( const std::vector< float >& output ) const;
-        static bool validOutcome( float outcome );
+        bool validInput( const std::vector< double >& input ) const;
+        bool validOutput( const std::vector< double >& output ) const;
+        static bool validOutcome( double outcome );
 
-        static float randomProbability();
+        static double randomProbability();
 
         ///Serialization ( save/load )
         template< class Object, class Archive = cereal::BinaryOutputArchive >
@@ -76,7 +76,7 @@ class GeneralAI// : public SaveSystem
         }
 
         static std::mt19937_64 m_randomNumberGenerator; //Shared random number generator
-        static bool validVector( const std::vector< float >& v, unsigned int size, int amplitude );
+        static bool validVector( const std::vector< double >& v, unsigned int size, int amplitude );
 
     private:
         //Serialization
@@ -97,16 +97,16 @@ class GeneralAI// : public SaveSystem
         }
 
         /// Subclasses must implement these methods
-        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome ) = 0;
-        virtual std::vector< float > coreOutput( const std::vector< float >& input ) = 0;
+        virtual void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome ) = 0;
+        virtual std::vector< double > coreOutput( const std::vector< double >& input ) = 0;
 
         /// Short-term memory
         /*
         *   Should this be covered in GeneralAI or the worlds should take care of it?
         *   This is useless overhead for some AI's
         */
-        std::pair< std::vector< float >,std::vector< float > > m_lastDecision;
-        std::tuple< std::vector< float >, std::vector< float >, float > m_lastLesson;
+        std::pair< std::vector< double >,std::vector< double > > m_lastDecision;
+        std::tuple< std::vector< double >, std::vector< double >, double > m_lastLesson;
         bool m_lastDecisionEnabled = false;
         bool m_lastLessonEnabled = false;
 };

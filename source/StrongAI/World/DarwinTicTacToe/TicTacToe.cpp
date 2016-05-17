@@ -39,7 +39,7 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
     for( int c = 0; c < 9; c++ )
     {
         // Create input to be sent to player
-        std::vector< float > input;
+        std::vector< double > input;
         for( int i = 0; i < 9; i++ )
         {
             switch( board.at( i ) )
@@ -122,12 +122,12 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
 *   Input of the kind: [ 0, 0, 0, 1, -1, 0, -1, -1, 1 ]
 *   Returns an index in range [ 0, 8 ]
 **/
-int TicTacToe::getPlayerMove( GeneralAI& player, const std::vector< float >& input )
+int TicTacToe::getPlayerMove( GeneralAI& player, const std::vector< double >& input )
 {
-    std::vector< float > output = player.output( input );
+    std::vector< double > output = player.output( input );
 
     // Player move is the output with the biggest value
-    float playerMove = 0;
+    double playerMove = 0;
     for( unsigned int i = 0; i < output.size(); i++ )
     {
         if( output.at( i ) > output.at( playerMove ) )

@@ -22,8 +22,8 @@ SUITE( CaseBasedAITest )
     {
         CaseBasedAI ai( 1, 1, 1, 2 );
 
-        const std::vector< float > input( { 0 } );
-        const std::vector< float > outputToLearn( { 2 } );
+        const std::vector< double > input( { 0 } );
+        const std::vector< double > outputToLearn( { 2 } );
 
         ai.learn( input, outputToLearn, 1 );
         auto actualOutput = ai.output( input );
@@ -34,8 +34,8 @@ SUITE( CaseBasedAITest )
     {
         CaseBasedAI ai( 1, 1, 1, 2 );
 
-        const std::vector< float > input( { 0 } );
-        const std::vector< float > outputToLearn( { 2 } );
+        const std::vector< double > input( { 0 } );
+        const std::vector< double > outputToLearn( { 2 } );
 
         ai.learn( input, outputToLearn, -1 );
         auto actualOutput = ai.output( input );
@@ -45,8 +45,8 @@ SUITE( CaseBasedAITest )
     TEST( saveAndLoad )
     {
         const std::string saveFileName = "caseBasedAI.save";
-        const std::vector< float > input( { 0 } );
-        const std::vector< float > outputToLearn( { 2 } );
+        const std::vector< double > input( { 0 } );
+        const std::vector< double > outputToLearn( { 2 } );
 
         CaseBasedAI teacherAI ( 1, 1, 2, 2 );
         teacherAI.learn( input, outputToLearn, 1 );
@@ -66,8 +66,8 @@ SUITE( CaseBasedAITest )
     {
         CaseBasedAI ai( 1, 1, 1, 2 );
 
-        const std::vector< float > input( { 0 } );
-        const std::vector< float > outputToLearn( { 2 } );
+        const std::vector< double > input( { 0 } );
+        const std::vector< double > outputToLearn( { 2 } );
 
         CHECK_EQUAL( 0, ai.getMemorySize() );
 
@@ -83,13 +83,13 @@ SUITE( CaseBasedAITest )
     {
         CaseBasedAI ai( 1, 1, 10, 2 );
 
-        const std::vector< float > outputToLearn( { 2 } );
+        const std::vector< double > outputToLearn( { 2 } );
 
         CHECK_EQUAL( 0, ai.getMemorySize() );
 
         for( int i = 0; i < 10; i++ )
         {
-            const std::vector< float > input( { ( float )i } );
+            const std::vector< double > input( { ( double )i } );
             ai.learn( input, outputToLearn, 1 );
         }
 

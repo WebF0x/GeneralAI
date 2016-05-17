@@ -16,11 +16,11 @@ class HumanAI : public GeneralAI
         virtual ~HumanAI() {}
 
     private:
-        virtual std::vector< float > coreOutput( const std::vector< float >& input ) ;
-        virtual void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
-        virtual void visualizeInput( const std::vector< float >& input );
+        virtual std::vector< double > coreOutput( const std::vector< double >& input ) ;
+        virtual void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome );
+        virtual void visualizeInput( const std::vector< double >& input );
 
-        void printVector( const std::vector< float >& vect ) const;
+        void printVector( const std::vector< double >& vect ) const;
 
         template < class Archive >
         void save( Archive & ar ) const

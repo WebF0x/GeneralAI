@@ -9,9 +9,9 @@ class DarwinAI : public GeneralAI
     public:
         DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize = 2 );
         void evolve( int generations );
-        void evolveToFitness( float desiredFitness );
+        void evolveToFitness( double desiredFitness );
 
-        float fitness();
+        double fitness();
 
         // Return the best individual of the population
         // Population cannot be empty
@@ -22,16 +22,16 @@ class DarwinAI : public GeneralAI
         NeuralNetAI& randomIndividual();
 
     private:
-        std::vector< float > coreOutput( const std::vector< float >& input );
-        void coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome );
+        std::vector< double > coreOutput( const std::vector< double >& input );
+        void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome );
 
         void initPopulation( int populationSize );
-        virtual float fitnessEval( NeuralNetAI& ai ) = 0;
-        std::vector< float > calculateFitnessScores( float& minFitness, float& maxFitness );
-        std::vector< float > calculateFitnessScores();
+        virtual double fitnessEval( NeuralNetAI& ai ) = 0;
+        std::vector< double > calculateFitnessScores( double& minFitness, double& maxFitness );
+        std::vector< double > calculateFitnessScores();
 
         // Update population with a next generation
-        void createNextGeneration( const std::vector< float >& fitnessScores, float minFitness, float maxFitness );
+        void createNextGeneration( const std::vector< double >& fitnessScores, double minFitness, double maxFitness );
 
         std::vector< NeuralNetAI > m_population;
         friend cereal::access;

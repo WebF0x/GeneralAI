@@ -10,12 +10,12 @@ void manualTesting( std::unique_ptr< NeuralNetAI >& individual )
 {
     while( true )
     {
-        float in1, in2;
+        double in1, in2;
         std::cin >> in1;
         std::cin >> in2;
-        std::vector< float > input( { in1, in2 } );
+        std::vector< double > input( { in1, in2 } );
 
-        float out = individual -> output( input ) [ 0 ];
+        double out = individual -> output( input ) [ 0 ];
         std::cout << in1 << " + " << in2 << " => " << out << std::endl;
     }
 }
@@ -30,20 +30,20 @@ class AdderDarwinAI : public DarwinAI
 
     private:
     // Task: Output the sum of the two inputs
-    virtual float fitnessEval( NeuralNetAI& ai )
+    virtual double fitnessEval( NeuralNetAI& ai )
     {
-        float fitness = 0;  // Perfect fitness is 0 ( in this case )
+        double fitness = 0;  // Perfect fitness is 0 ( in this case )
 
         for( int i = 0; i < 10; i++ )
         {
-            float a = GeneralAI::randomProbability() * 100;
-            float b = GeneralAI::randomProbability() * 100;
-            float sum = a + b;
+            double a = GeneralAI::randomProbability() * 100;
+            double b = GeneralAI::randomProbability() * 100;
+            double sum = a + b;
 
-            std::vector< float > input( { a, b } );
+            std::vector< double > input( { a, b } );
 
             auto output = ai.output( input );
-            float out = output[ 0 ];
+            double out = output[ 0 ];
 
             fitness -= abs( out - sum );
         }

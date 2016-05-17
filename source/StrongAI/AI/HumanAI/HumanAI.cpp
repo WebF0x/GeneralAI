@@ -6,7 +6,7 @@ HumanAI::HumanAI( int inputSize, int outputSize, int maxInput, int maxOutput )
 
 }
 
-std::vector< float > HumanAI::coreOutput( const std::vector< float >& input )
+std::vector< double > HumanAI::coreOutput( const std::vector< double >& input )
 {
     std::cout << "What is your Output?" << std::endl
          << "====================" << std::endl;
@@ -23,12 +23,12 @@ std::vector< float > HumanAI::coreOutput( const std::vector< float >& input )
          << "------" << std::endl
          << "( Between " << -OUTPUT_AMPLITUDE << " and " << OUTPUT_AMPLITUDE << " )" << std::endl;
 
-    std::vector< float > output;
+    std::vector< double > output;
     for( int i = 0; i < OUTPUT_SIZE; i++ )
     {
         std::cout << "Output " << i << "/" << OUTPUT_SIZE - 1 << ": " << std::endl;
 
-        float userInput;
+        double userInput;
 
         do
         {
@@ -43,7 +43,7 @@ std::vector< float > HumanAI::coreOutput( const std::vector< float >& input )
     return output;
 }
 
-void HumanAI::coreLearn( const std::vector< float >& input, const std::vector< float >& output, float outcome )
+void HumanAI::coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome )
 {
     std::cout << "Learn this" << std::endl
          << "==========" << std::endl;
@@ -62,7 +62,7 @@ void HumanAI::coreLearn( const std::vector< float >& input, const std::vector< f
          << std::endl;
 }
 
-void HumanAI::printVector( const std::vector< float >& vect ) const
+void HumanAI::printVector( const std::vector< double >& vect ) const
 {
     std::cout << '[';
 
@@ -78,7 +78,7 @@ void HumanAI::printVector( const std::vector< float >& vect ) const
     std::cout << ']' << std::endl;
 }
 
-void HumanAI::visualizeInput( const std::vector< float >& input )
+void HumanAI::visualizeInput( const std::vector< double >& input )
 {
     printVector( input );
 }

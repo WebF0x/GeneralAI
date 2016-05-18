@@ -67,4 +67,4 @@ Worlds
 
 Unlicense:
 --------
-[The Unlicense](http://unlicense.org/ "Unlicense Yourself: Set Your Code Free")
+[Unlicense Yourself: Set Your Code Free](http://unlicense.org/ "Unlicense Yourself: Set Your Code Free")

@@ -15,4 +15,4 @@ Cons
 ----
 - Extremely poor with new situations
 - Cannot generalize
-- Space-expensive - Learning Tic-Tac-Toe requires about 700 kilobytes
+- Memory expensive

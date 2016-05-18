@@ -35,7 +35,7 @@ What we have
 
 AI's
 ----
-- [GeneralAI](https://github.com/WebF0x/StrongAI/tree/master/AIs/GeneralAI "The starting point") - Common interface of all AI's
+- [GeneralAI](https://github.com/WebF0x/StrongAI/tree/master/include/StrongAI/AI/GeneralAI "The starting point") - Common interface of all AI's
 - [RandomAI](https://github.com/WebF0x/StrongAI/tree/master/include/StrongAI/AI/RandomAI "As dumb as it gets") - Takes random decisions
 - [HumanAI](https://github.com/WebF0x/StrongAI/tree/master/include/StrongAI/AI/HumanAI "Take the commands") - You manually control the AI
 - [CaseBasedAI](https://github.com/WebF0x/StrongAI/tree/master/include/StrongAI/AI/CaseBasedAI "May the brute force be with you") - A brute force approach

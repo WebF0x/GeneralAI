@@ -65,6 +65,11 @@ Worlds
 - Real-time games - Minecraft, Starcraft, Heroes of the Storm
 - Robots - Sensors and actuators
 
+Build instructions
+------------------
+- Linux: `make test`
+- Windows: Open StrongAI.cbp in Codeblocks
+
 Unlicense:
 --------
 [Unlicense Yourself: Set Your Code Free](http://unlicense.org/ "Unlicense Yourself: Set Your Code Free")

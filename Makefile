@@ -72,6 +72,7 @@ before_test:
 	test -d $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI || mkdir -p $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI
 
 after_test: 
+	./bin/Test/Test
 
 test: before_test out_test after_test
 

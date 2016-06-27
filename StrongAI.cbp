@@ -13,7 +13,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Linker>
-					<Add library="lib/UnitTest++/libUnitTest++.a" />
+					<Add library="lib/UnitTest++/Windows/libUnitTest++.a" />
 				</Linker>
 			</Target>
 			<Target title="DarwinTicTacToe">

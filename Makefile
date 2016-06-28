@@ -51,16 +51,45 @@ OBJDIR_TICTACTOE = obj
 DEP_TICTACTOE = 
 OUT_TICTACTOE = bin/TicTacToe/TicTacToe
 
-OBJ_TEST = $(OBJDIR_TEST)/test/CerealTest.o $(OBJDIR_TEST)/source/StrongAI/AI/RandomAI/RandomAI.o $(OBJDIR_TEST)/test/CaseBasedAITest.o $(OBJDIR_TEST)/test/DarwinAITest.o $(OBJDIR_TEST)/test/GeneralAITest.o $(OBJDIR_TEST)/test/HumanAITest.o $(OBJDIR_TEST)/test/NeuralNetAITest.o $(OBJDIR_TEST)/test/RandomAITest.o $(OBJDIR_TEST)/test/SanityTest.o $(OBJDIR_TEST)/test/main.o $(OBJDIR_TEST)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o $(OBJDIR_TEST)/source/StrongAI/AI/HumanAI/HumanAI.o $(OBJDIR_TEST)/source/StrongAI/AI/GeneralAI/GeneralAI.o $(OBJDIR_TEST)/source/StrongAI/AI/DarwinAI/DarwinAI.o $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
+# Path to object files
+OBJ_TEST = $(OBJDIR_TEST)/test/CerealTest.o \
+		   $(OBJDIR_TEST)/source/StrongAI/AI/RandomAI/RandomAI.o \
+		   $(OBJDIR_TEST)/test/CaseBasedAITest.o \
+		   $(OBJDIR_TEST)/test/DarwinAITest.o \
+		   $(OBJDIR_TEST)/test/GeneralAITest.o \
+		   $(OBJDIR_TEST)/test/HumanAITest.o \
+		   $(OBJDIR_TEST)/test/NeuralNetAITest.o \
+		   $(OBJDIR_TEST)/test/RandomAITest.o \
+		   $(OBJDIR_TEST)/test/SanityTest.o \
+		   $(OBJDIR_TEST)/test/UtilityTest.o \
+		   $(OBJDIR_TEST)/test/main.o \
+		   $(OBJDIR_TEST)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o \
+		   $(OBJDIR_TEST)/source/StrongAI/AI/HumanAI/HumanAI.o \
+		   $(OBJDIR_TEST)/source/StrongAI/AI/GeneralAI/GeneralAI.o \
+		   $(OBJDIR_TEST)/source/StrongAI/AI/DarwinAI/DarwinAI.o \
+		   $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o \
+		   $(OBJDIR_TEST)/source/StrongAI/Utility/Utility.o
 
-OBJ_DARWINTICTACTOE = $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/RandomAI/RandomAI.o $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/World/DarwinTicTacToe/TicTacToe.o $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.o $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/World/DarwinTicTacToe/main.o $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/HumanAI/HumanAI.o $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/GeneralAI/GeneralAI.o $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/DarwinAI/DarwinAI.o
+OBJ_DARWINTICTACTOE = $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/RandomAI/RandomAI.o \
+					  $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/World/DarwinTicTacToe/TicTacToe.o \
+					  $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.o \
+					  $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/World/DarwinTicTacToe/main.o \
+					  $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o \
+					  $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/HumanAI/HumanAI.o \
+					  $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/GeneralAI/GeneralAI.o \
+					  $(OBJDIR_DARWINTICTACTOE)/source/StrongAI/AI/DarwinAI/DarwinAI.o
 
-OBJ_TICTACTOE = $(OBJDIR_TICTACTOE)/source/StrongAI/World/TicTacToe/TicTacToeHuman.o $(OBJDIR_TICTACTOE)/source/StrongAI/World/TicTacToe/main.o $(OBJDIR_TICTACTOE)/source/StrongAI/AI/HumanAI/HumanAI.o $(OBJDIR_TICTACTOE)/source/StrongAI/AI/GeneralAI/GeneralAI.o $(OBJDIR_TICTACTOE)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
+OBJ_TICTACTOE = $(OBJDIR_TICTACTOE)/source/StrongAI/World/TicTacToe/TicTacToeHuman.o \
+				$(OBJDIR_TICTACTOE)/source/StrongAI/World/TicTacToe/main.o \
+				$(OBJDIR_TICTACTOE)/source/StrongAI/AI/HumanAI/HumanAI.o \
+				$(OBJDIR_TICTACTOE)/source/StrongAI/AI/GeneralAI/GeneralAI.o \
+				$(OBJDIR_TICTACTOE)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
 
 all: test darwintictactoe tictactoe
 
 clean: clean_test clean_darwintictactoe clean_tictactoe
 
+# If the object directory doesn't exist, create it
 before_test: 
 	test -d bin/Test || mkdir -p bin/Test
 	test -d $(OBJDIR_TEST)/test || mkdir -p $(OBJDIR_TEST)/test
@@ -70,6 +99,7 @@ before_test:
 	test -d $(OBJDIR_TEST)/source/StrongAI/AI/GeneralAI || mkdir -p $(OBJDIR_TEST)/source/StrongAI/AI/GeneralAI
 	test -d $(OBJDIR_TEST)/source/StrongAI/AI/DarwinAI || mkdir -p $(OBJDIR_TEST)/source/StrongAI/AI/DarwinAI
 	test -d $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI || mkdir -p $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI
+	test -d $(OBJDIR_TEST)/source/StrongAI/Utility || mkdir -p $(OBJDIR_TEST)/source/StrongAI/Utility/
 
 after_test: 
 	./bin/Test/Test
@@ -106,6 +136,9 @@ $(OBJDIR_TEST)/test/RandomAITest.o: test/RandomAITest.cpp
 $(OBJDIR_TEST)/test/SanityTest.o: test/SanityTest.cpp
 	$(CXX) $(CFLAGS_TEST) $(INC_TEST) -c test/SanityTest.cpp -o $(OBJDIR_TEST)/test/SanityTest.o
 
+$(OBJDIR_TEST)/test/UtilityTest.o: test/UtilityTest.cpp
+	$(CXX) $(CFLAGS_TEST) $(INC_TEST) -c test/UtilityTest.cpp -o $(OBJDIR_TEST)/test/UtilityTest.o
+
 $(OBJDIR_TEST)/test/main.o: test/main.cpp
 	$(CXX) $(CFLAGS_TEST) $(INC_TEST) -c test/main.cpp -o $(OBJDIR_TEST)/test/main.o
 
@@ -124,6 +157,9 @@ $(OBJDIR_TEST)/source/StrongAI/AI/DarwinAI/DarwinAI.o: source/StrongAI/AI/Darwin
 $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o: source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp
 	$(CXX) $(CFLAGS_TEST) $(INC_TEST) -c source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp -o $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
 
+$(OBJDIR_TEST)/source/StrongAI/Utility/Utility.o: source/StrongAI/Utility/Utility.cpp
+	$(CXX) $(CFLAGS_TEST) $(INC_TEST) -c source/StrongAI/Utility/Utility.cpp -o $(OBJDIR_TEST)/source/StrongAI/Utility/Utility.o
+
 clean_test: 
 	rm -f $(OBJ_TEST) $(OUT_TEST)
 	rm -rf bin/Test
@@ -134,6 +170,7 @@ clean_test:
 	rm -rf $(OBJDIR_TEST)/source/StrongAI/AI/GeneralAI
 	rm -rf $(OBJDIR_TEST)/source/StrongAI/AI/DarwinAI
 	rm -rf $(OBJDIR_TEST)/source/StrongAI/AI/CaseBasedAI
+	rm -rf $(OBJDIR_TEST)/source/StrongAI/Utility
 
 before_darwintictactoe: 
 	test -d bin/DarwinTicTacToe || mkdir -p bin/DarwinTicTacToe

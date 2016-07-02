@@ -31,4 +31,12 @@ SUITE( Utility )
         const double negativeAbsoluteTolerance = -0.001;
         CHECK( isAlmostEqual( value, value, negativeAbsoluteTolerance ) );
     }
+
+    TEST( isAlmostEqualAlsoWorksWithFloats )
+    {
+        const float value = 1.0;
+        const float absoluteTolerance = 0.001;
+        CHECK( isAlmostEqual( value, value, absoluteTolerance ) );
+
+    }
 }

@@ -4,7 +4,6 @@
 
 CXX = g++
 LD = g++
-WINDRES = windres
 
 INC = -Iinclude
 CFLAGS = -g -std=c++11

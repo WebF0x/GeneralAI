@@ -1,6 +1,6 @@
 #include "UnitTest++/UnitTest++.h"
 
-#include "StrongAI/AI/HumanAI/HumanAI.hpp"
+#include "AI/HumanAI/HumanAI.hpp"
 
 SUITE( HumanAITest )
 {

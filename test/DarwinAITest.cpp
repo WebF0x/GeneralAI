@@ -1,6 +1,6 @@
 #include "UnitTest++/UnitTest++.h"
 
-#include "StrongAI/AI/DarwinAI/DarwinAI.hpp"
+#include "AI/DarwinAI/DarwinAI.hpp"
 
 class MyDarwinAI : public DarwinAI
 {

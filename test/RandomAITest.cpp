@@ -1,6 +1,6 @@
 #include "UnitTest++/UnitTest++.h"
 
-#include "StrongAI/AI/RandomAI/RandomAI.hpp"
+#include "AI/RandomAI/RandomAI.hpp"
 
 SUITE( RandomAITest )
 {

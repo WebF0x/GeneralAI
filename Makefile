@@ -10,6 +10,9 @@ CFLAGS = -g -std=c++14
 OBJ = obj
 BIN = bin
 
+AI_SRC = source/AI
+WORLD_SRC = source/World
+
 LIB_TEST = lib/UnitTest++/Linux/libUnitTest++.a
 OUT_TEST = bin/Test/Test
 
@@ -19,7 +22,7 @@ OUT_TICTACTOE = bin/TicTacToe/TicTacToe
 
 # Path to object files
 OBJ_TEST = $(OBJ)/test/CerealTest.o \
-		   $(OBJ)/source/StrongAI/AI/RandomAI/RandomAI.o \
+		   $(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o \
 		   $(OBJ)/test/CaseBasedAITest.o \
 		   $(OBJ)/test/DarwinAITest.o \
 		   $(OBJ)/test/GeneralAITest.o \
@@ -29,27 +32,27 @@ OBJ_TEST = $(OBJ)/test/CerealTest.o \
 		   $(OBJ)/test/SanityTest.o \
 		   $(OBJ)/test/UtilityTest.o \
 		   $(OBJ)/test/main.o \
-		   $(OBJ)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o \
-		   $(OBJ)/source/StrongAI/AI/HumanAI/HumanAI.o \
-		   $(OBJ)/source/StrongAI/AI/GeneralAI/GeneralAI.o \
-		   $(OBJ)/source/StrongAI/AI/DarwinAI/DarwinAI.o \
-		   $(OBJ)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o \
+		   $(OBJ)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o \
+		   $(OBJ)/$(AI_SRC)/HumanAI/HumanAI.o \
+		   $(OBJ)/$(AI_SRC)/GeneralAI/GeneralAI.o \
+		   $(OBJ)/$(AI_SRC)/DarwinAI/DarwinAI.o \
+		   $(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o \
 		   $(OBJ)/source/Utility/Utility.o
 
-OBJ_DARWINTICTACTOE = $(OBJ)/source/StrongAI/AI/RandomAI/RandomAI.o \
-					  $(OBJ)/source/StrongAI/World/DarwinTicTacToe/TicTacToe.o \
-					  $(OBJ)/source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.o \
-					  $(OBJ)/source/StrongAI/World/DarwinTicTacToe/main.o \
-					  $(OBJ)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o \
-					  $(OBJ)/source/StrongAI/AI/HumanAI/HumanAI.o \
-					  $(OBJ)/source/StrongAI/AI/GeneralAI/GeneralAI.o \
-					  $(OBJ)/source/StrongAI/AI/DarwinAI/DarwinAI.o
+OBJ_DARWINTICTACTOE = $(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o \
+					  $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe/TicTacToe.o \
+					  $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe/TicTacToeHuman.o \
+					  $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe/main.o \
+					  $(OBJ)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o \
+					  $(OBJ)/$(AI_SRC)/HumanAI/HumanAI.o \
+					  $(OBJ)/$(AI_SRC)/GeneralAI/GeneralAI.o \
+					  $(OBJ)/$(AI_SRC)/DarwinAI/DarwinAI.o
 
-OBJ_TICTACTOE = $(OBJ)/source/StrongAI/World/TicTacToe/TicTacToeHuman.o \
-				$(OBJ)/source/StrongAI/World/TicTacToe/main.o \
-				$(OBJ)/source/StrongAI/AI/HumanAI/HumanAI.o \
-				$(OBJ)/source/StrongAI/AI/GeneralAI/GeneralAI.o \
-				$(OBJ)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
+OBJ_TICTACTOE = $(OBJ)/$(WORLD_SRC)/TicTacToe/TicTacToeHuman.o \
+				$(OBJ)/$(WORLD_SRC)/TicTacToe/main.o \
+				$(OBJ)/$(AI_SRC)/HumanAI/HumanAI.o \
+				$(OBJ)/$(AI_SRC)/GeneralAI/GeneralAI.o \
+				$(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o
 
 all: test darwintictactoe tictactoe
 
@@ -60,12 +63,12 @@ clean:
 before_test: 
 	test -d bin/Test || mkdir -p bin/Test
 	test -d $(OBJ)/test || mkdir -p $(OBJ)/test
-	test -d $(OBJ)/source/StrongAI/AI/RandomAI || mkdir -p $(OBJ)/source/StrongAI/AI/RandomAI
-	test -d $(OBJ)/source/StrongAI/AI/NeuralNetAI || mkdir -p $(OBJ)/source/StrongAI/AI/NeuralNetAI
-	test -d $(OBJ)/source/StrongAI/AI/HumanAI || mkdir -p $(OBJ)/source/StrongAI/AI/HumanAI
-	test -d $(OBJ)/source/StrongAI/AI/GeneralAI || mkdir -p $(OBJ)/source/StrongAI/AI/GeneralAI
-	test -d $(OBJ)/source/StrongAI/AI/DarwinAI || mkdir -p $(OBJ)/source/StrongAI/AI/DarwinAI
-	test -d $(OBJ)/source/StrongAI/AI/CaseBasedAI || mkdir -p $(OBJ)/source/StrongAI/AI/CaseBasedAI
+	test -d $(OBJ)/$(AI_SRC)/RandomAI || mkdir -p $(OBJ)/$(AI_SRC)/RandomAI
+	test -d $(OBJ)/$(AI_SRC)/NeuralNetAI || mkdir -p $(OBJ)/$(AI_SRC)/NeuralNetAI
+	test -d $(OBJ)/$(AI_SRC)/HumanAI || mkdir -p $(OBJ)/$(AI_SRC)/HumanAI
+	test -d $(OBJ)/$(AI_SRC)/GeneralAI || mkdir -p $(OBJ)/$(AI_SRC)/GeneralAI
+	test -d $(OBJ)/$(AI_SRC)/DarwinAI || mkdir -p $(OBJ)/$(AI_SRC)/DarwinAI
+	test -d $(OBJ)/$(AI_SRC)/CaseBasedAI || mkdir -p $(OBJ)/$(AI_SRC)/CaseBasedAI
 	test -d $(OBJ)/source/Utility || mkdir -p $(OBJ)/source/Utility/
 
 after_test: 
@@ -79,8 +82,8 @@ out_test: before_test $(OBJ_TEST)
 $(OBJ)/test/CerealTest.o: test/CerealTest.cpp
 	$(CXX) $(CFLAGS) $(INC) -c test/CerealTest.cpp -o $(OBJ)/test/CerealTest.o
 
-$(OBJ)/source/StrongAI/AI/RandomAI/RandomAI.o: source/StrongAI/AI/RandomAI/RandomAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/RandomAI/RandomAI.cpp -o $(OBJ)/source/StrongAI/AI/RandomAI/RandomAI.o
+$(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o: $(AI_SRC)/RandomAI/RandomAI.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/RandomAI/RandomAI.cpp -o $(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o
 
 $(OBJ)/test/CaseBasedAITest.o: test/CaseBasedAITest.cpp
 	$(CXX) $(CFLAGS) $(INC) -c test/CaseBasedAITest.cpp -o $(OBJ)/test/CaseBasedAITest.o
@@ -109,32 +112,32 @@ $(OBJ)/test/UtilityTest.o: test/UtilityTest.cpp
 $(OBJ)/test/main.o: test/main.cpp
 	$(CXX) $(CFLAGS) $(INC) -c test/main.cpp -o $(OBJ)/test/main.o
 
-$(OBJ)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o: source/StrongAI/AI/NeuralNetAI/NeuralNetAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/NeuralNetAI/NeuralNetAI.cpp -o $(OBJ)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o
+$(OBJ)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o: $(AI_SRC)/NeuralNetAI/NeuralNetAI.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/NeuralNetAI/NeuralNetAI.cpp -o $(OBJ)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o
 
-$(OBJ)/source/StrongAI/AI/HumanAI/HumanAI.o: source/StrongAI/AI/HumanAI/HumanAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/HumanAI/HumanAI.cpp -o $(OBJ)/source/StrongAI/AI/HumanAI/HumanAI.o
+$(OBJ)/$(AI_SRC)/HumanAI/HumanAI.o: $(AI_SRC)/HumanAI/HumanAI.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/HumanAI/HumanAI.cpp -o $(OBJ)/$(AI_SRC)/HumanAI/HumanAI.o
 
-$(OBJ)/source/StrongAI/AI/GeneralAI/GeneralAI.o: source/StrongAI/AI/GeneralAI/GeneralAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/GeneralAI/GeneralAI.cpp -o $(OBJ)/source/StrongAI/AI/GeneralAI/GeneralAI.o
+$(OBJ)/$(AI_SRC)/GeneralAI/GeneralAI.o: $(AI_SRC)/GeneralAI/GeneralAI.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/GeneralAI/GeneralAI.cpp -o $(OBJ)/$(AI_SRC)/GeneralAI/GeneralAI.o
 
-$(OBJ)/source/StrongAI/AI/DarwinAI/DarwinAI.o: source/StrongAI/AI/DarwinAI/DarwinAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/DarwinAI/DarwinAI.cpp -o $(OBJ)/source/StrongAI/AI/DarwinAI/DarwinAI.o
+$(OBJ)/$(AI_SRC)/DarwinAI/DarwinAI.o: $(AI_SRC)/DarwinAI/DarwinAI.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/DarwinAI/DarwinAI.cpp -o $(OBJ)/$(AI_SRC)/DarwinAI/DarwinAI.o
 
-$(OBJ)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o: source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp -o $(OBJ)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
+$(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o: $(AI_SRC)/CaseBasedAI/CaseBasedAI.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/CaseBasedAI/CaseBasedAI.cpp -o $(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o
 
 $(OBJ)/source/Utility/Utility.o: source/Utility/Utility.cpp
 	$(CXX) $(CFLAGS) $(INC) -c source/Utility/Utility.cpp -o $(OBJ)/source/Utility/Utility.o
 
 before_darwintictactoe: 
 	test -d bin/DarwinTicTacToe || mkdir -p bin/DarwinTicTacToe
-	test -d $(OBJ)/source/StrongAI/AI/RandomAI || mkdir -p $(OBJ)/source/StrongAI/AI/RandomAI
-	test -d $(OBJ)/source/StrongAI/World/DarwinTicTacToe || mkdir -p $(OBJ)/source/StrongAI/World/DarwinTicTacToe
-	test -d $(OBJ)/source/StrongAI/AI/NeuralNetAI || mkdir -p $(OBJ)/source/StrongAI/AI/NeuralNetAI
-	test -d $(OBJ)/source/StrongAI/AI/HumanAI || mkdir -p $(OBJ)/source/StrongAI/AI/HumanAI
-	test -d $(OBJ)/source/StrongAI/AI/GeneralAI || mkdir -p $(OBJ)/source/StrongAI/AI/GeneralAI
-	test -d $(OBJ)/source/StrongAI/AI/DarwinAI || mkdir -p $(OBJ)/source/StrongAI/AI/DarwinAI
+	test -d $(OBJ)/$(AI_SRC)/RandomAI || mkdir -p $(OBJ)/$(AI_SRC)/RandomAI
+	test -d $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe || mkdir -p $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe
+	test -d $(OBJ)/$(AI_SRC)/NeuralNetAI || mkdir -p $(OBJ)/$(AI_SRC)/NeuralNetAI
+	test -d $(OBJ)/$(AI_SRC)/HumanAI || mkdir -p $(OBJ)/$(AI_SRC)/HumanAI
+	test -d $(OBJ)/$(AI_SRC)/GeneralAI || mkdir -p $(OBJ)/$(AI_SRC)/GeneralAI
+	test -d $(OBJ)/$(AI_SRC)/DarwinAI || mkdir -p $(OBJ)/$(AI_SRC)/DarwinAI
 
 after_darwintictactoe: 
 
@@ -145,10 +148,10 @@ out_darwintictactoe: before_darwintictactoe $(OBJ_DARWINTICTACTOE)
 
 before_tictactoe: 
 	test -d bin/TicTacToe || mkdir -p bin/TicTacToe
-	test -d $(OBJ)/source/StrongAI/World/TicTacToe || mkdir -p $(OBJ)/source/StrongAI/World/TicTacToe
-	test -d $(OBJ)/source/StrongAI/AI/HumanAI || mkdir -p $(OBJ)/source/StrongAI/AI/HumanAI
-	test -d $(OBJ)/source/StrongAI/AI/GeneralAI || mkdir -p $(OBJ)/source/StrongAI/AI/GeneralAI
-	test -d $(OBJ)/source/StrongAI/AI/CaseBasedAI || mkdir -p $(OBJ)/source/StrongAI/AI/CaseBasedAI
+	test -d $(OBJ)/$(WORLD_SRC)/TicTacToe || mkdir -p $(OBJ)/$(WORLD_SRC)/TicTacToe
+	test -d $(OBJ)/$(AI_SRC)/HumanAI || mkdir -p $(OBJ)/$(AI_SRC)/HumanAI
+	test -d $(OBJ)/$(AI_SRC)/GeneralAI || mkdir -p $(OBJ)/$(AI_SRC)/GeneralAI
+	test -d $(OBJ)/$(AI_SRC)/CaseBasedAI || mkdir -p $(OBJ)/$(AI_SRC)/CaseBasedAI
 
 after_tictactoe: 
 
@@ -157,10 +160,10 @@ tictactoe: before_tictactoe out_tictactoe after_tictactoe
 out_tictactoe: before_tictactoe $(OBJ_TICTACTOE)
 	$(LD) -o $(OUT_TICTACTOE) $(OBJ_TICTACTOE)
 
-$(OBJ)/source/StrongAI/World/TicTacToe/TicTacToeHuman.o: source/StrongAI/World/TicTacToe/TicTacToeHuman.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/World/TicTacToe/TicTacToeHuman.cpp -o $(OBJ)/source/StrongAI/World/TicTacToe/TicTacToeHuman.o
+$(OBJ)/$(WORLD_SRC)/TicTacToe/TicTacToeHuman.o: $(WORLD_SRC)/TicTacToe/TicTacToeHuman.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(WORLD_SRC)/TicTacToe/TicTacToeHuman.cpp -o $(OBJ)/$(WORLD_SRC)/TicTacToe/TicTacToeHuman.o
 
-$(OBJ)/source/StrongAI/World/TicTacToe/main.o: source/StrongAI/World/TicTacToe/main.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/World/TicTacToe/main.cpp -o $(OBJ)/source/StrongAI/World/TicTacToe/main.o
+$(OBJ)/$(WORLD_SRC)/TicTacToe/main.o: $(WORLD_SRC)/TicTacToe/main.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(WORLD_SRC)/TicTacToe/main.cpp -o $(OBJ)/$(WORLD_SRC)/TicTacToe/main.o
 
 .PHONY: before_test after_test before_darwintictactoe after_darwintictactoe before_tictactoe after_tictactoe

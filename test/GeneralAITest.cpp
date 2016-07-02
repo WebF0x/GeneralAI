@@ -1,6 +1,6 @@
 #include "UnitTest++/UnitTest++.h"
 
-#include "StrongAI/AI/GeneralAI/GeneralAI.hpp"
+#include "AI/GeneralAI/GeneralAI.hpp"
 #include <cstdio>
 
 class MockAI : public GeneralAI

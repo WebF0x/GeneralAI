@@ -1,6 +1,6 @@
 #include "UnitTest++/UnitTest++.h"
 
-#include "StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp"
+#include "AI/CaseBasedAI/CaseBasedAI.hpp"
 
 #include <string>
 #include <vector>

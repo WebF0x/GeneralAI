@@ -1,6 +1,6 @@
 #include "UnitTest++/UnitTest++.h"
 
-#include "StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp"
+#include "AI/NeuralNetAI/NeuralNetAI.hpp"
 
 SUITE( NeuralNetAITest )
 {

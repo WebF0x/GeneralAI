@@ -6,7 +6,7 @@ CXX = g++
 LD = g++
 
 INC = -Iinclude
-CFLAGS = -g -std=c++11
+CFLAGS = -g -std=c++14
 OBJ = obj
 BIN = bin
 

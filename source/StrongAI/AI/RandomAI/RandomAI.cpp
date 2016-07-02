@@ -1,4 +1,5 @@
 #include "StrongAI/AI/RandomAI/RandomAI.hpp"
+#include "StrongAI/Utility/Utility.hpp"
 
 RandomAI::RandomAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
@@ -22,7 +23,7 @@ std::vector< double > RandomAI::randomOutput()
 
     for( int i = 0; i < OUTPUT_SIZE; i++ )
     {
-        output[ i ] = distribution( m_randomNumberGenerator );
+        output[ i ] = distribution( Random::getRandomNumberGenerator() );
     }
 
     return output;

@@ -3,7 +3,6 @@
 
 #include <stdexcept>
 #include <tuple>
-#include <random> //mt19937_64
 #include <ctime>
 
 //Serialization
@@ -48,8 +47,6 @@ class GeneralAI// : public SaveSystem
         bool validOutput( const std::vector< double >& output ) const;
         static bool validOutcome( double outcome );
 
-        static double randomProbability();
-
         ///Serialization ( save/load )
         template< class Object, class Archive = cereal::BinaryOutputArchive >
         static bool save( const Object& obj, const std::string& fileName )
@@ -75,7 +72,6 @@ class GeneralAI// : public SaveSystem
             return true;
         }
 
-        static std::mt19937_64 m_randomNumberGenerator; //Shared random number generator
         static bool validVector( const std::vector< double >& v, unsigned int size, int amplitude );
 
     private:

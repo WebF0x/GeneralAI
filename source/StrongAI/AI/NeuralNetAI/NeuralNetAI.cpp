@@ -1,4 +1,5 @@
 #include "StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp"
+#include "StrongAI/Utility/Utility.hpp"
 
 NeuralNetAI::NeuralNetAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput ),
@@ -132,7 +133,7 @@ void NeuralNetAI::mutate()
 
             // Now we're targetting a valid synapse ( source to dest ).
             // There's a small probability the synapse gets killed
-            if( randomProbability() < CHANCE_TO_MUTATE_KILL )
+            if( Random::randomProbability() < CHANCE_TO_MUTATE_KILL )
             {
                 // Kill synapse ( if it exists )
                 auto& synapses = m_nodes.at( dest ).incomingSynapses;
@@ -151,16 +152,16 @@ void NeuralNetAI::mutate()
                 const int SYNAPSE_INDEX = synapse->first;
                 double mutatedWeight = synapse->second;
 
-                if( randomProbability() < CHANCE_TO_MUTATE_ADD )
+                if( Random::randomProbability() < CHANCE_TO_MUTATE_ADD )
                 {
                     std::uniform_real_distribution< double > dist( -AMPLITUDE_ADD, AMPLITUDE_ADD );
-                    mutatedWeight += dist( m_randomNumberGenerator );
+                    mutatedWeight += dist( Random::getRandomNumberGenerator() );
                 }
 
-                if( randomProbability() < CHANCE_TO_MUTATE_MUL )
+                if( Random::randomProbability() < CHANCE_TO_MUTATE_MUL )
                 {
                     std::uniform_real_distribution< double > dist( -AMPLITUDE_MUL, AMPLITUDE_MUL );
-                    mutatedWeight *= dist( m_randomNumberGenerator );
+                    mutatedWeight *= dist( Random::getRandomNumberGenerator() );
                 }
 
                 setSynapseWeight( dest, SYNAPSE_INDEX, mutatedWeight );

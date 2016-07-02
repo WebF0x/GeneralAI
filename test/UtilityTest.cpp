@@ -59,4 +59,13 @@ SUITE( Utility )
 
         CHECK( isAlmostEqual( containerA, containerB, absoluteTolerance ) );
     }
+
+    TEST( randomProbabilityReturnsProbabilityBetweenZeroAndOne)
+    {
+         for( int i = 0; i < 100; i++ )
+         {
+            const double probability = Random::randomProbability();
+            CHECK( 0 <= probability && probability <= 1 );
+         }
+    }
 }

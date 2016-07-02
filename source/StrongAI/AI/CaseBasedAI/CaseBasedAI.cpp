@@ -1,4 +1,5 @@
 #include "StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp"
+#include "StrongAI/Utility/Utility.hpp"
 
 CaseBasedAI::CaseBasedAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
@@ -38,7 +39,7 @@ std::vector< double > CaseBasedAI::coreOutput( const std::vector< double >& inpu
     **/
 
     /// Either Repeat previous successful reaction
-    if( GeneralAI::randomProbability() < bestKnownOutcome )
+    if( Random::randomProbability() < bestKnownOutcome )
     {
         return bestKnownOutput;
     }
@@ -104,7 +105,7 @@ std::vector< double > CaseBasedAI::randomOutput()
 
     for( int i = 0; i < OUTPUT_SIZE; i++ )
     {
-        output[ i ] = distribution( m_randomNumberGenerator );
+        output[ i ] = distribution( Random::getRandomNumberGenerator() );
     }
 
     return output;
@@ -152,6 +153,6 @@ std::vector< double > CaseBasedAI::bestOutput( const std::map< std::vector< doub
 
     /// Return one of the bestKnownOutputs at random
     std::uniform_int_distribution< int > distribution( 0, bestKnownOutputs.size() - 1 );
-    return bestKnownOutputs[ distribution( m_randomNumberGenerator ) ];
+    return bestKnownOutputs[ distribution( Random::getRandomNumberGenerator() ) ];
 }
 

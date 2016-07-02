@@ -19,7 +19,6 @@ SUITE( RandomAITest )
         RandomAI randomAI( 0, 10, 0, 1 );
 
         auto output1 = randomAI.output();
-        auto output2 = randomAI.output();
 
         CHECK_EQUAL( output1.size(), 10 );
     }

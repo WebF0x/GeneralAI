@@ -28,7 +28,6 @@ class CaseBasedAI : public GeneralAI
         //             Input                     Output       Outcome
         std::map< std::vector< double >, std::map< std::vector< double >, double > > m_memory;
 
-        double randomProbability();
         std::vector< double > randomOutput();
         std::vector< double > randomNewOutput( const std::map< std::vector< double >, double>& reactions );
 

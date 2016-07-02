@@ -1,4 +1,5 @@
 #include "StrongAI/World/DarwinTicTacToe/TicTacToe.hpp"
+#include "StrongAI/Utility/Utility.hpp"
 
 TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
 {
@@ -30,7 +31,7 @@ TicTacToe::Token TicTacToe::match( GeneralAI& playerX, GeneralAI& playerO )
     GeneralAI *currentPlayer = &playerX;
     GeneralAI *waitingPlayer = &playerO;
 
-    if( GeneralAI::randomProbability() < .5f )
+    if( Random::randomProbability() < .5f )
     {
         std::swap( currentPlayer, waitingPlayer );
     }

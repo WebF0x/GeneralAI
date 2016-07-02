@@ -22,3 +22,19 @@ bool isAlmostEqual( const Container& containerA, const Container& containerB, do
 
     return true;
 }
+
+//////////////////
+// Class Random //
+//////////////////
+
+#include <random> //mt19937_64
+
+class Random
+{
+    public:
+        static double randomProbability();
+        static std::mt19937_64& getRandomNumberGenerator();
+
+    private:
+        static std::mt19937_64 m_randomNumberGenerator;
+};

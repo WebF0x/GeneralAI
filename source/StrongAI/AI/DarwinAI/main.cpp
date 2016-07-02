@@ -3,6 +3,7 @@
 #include <ctime>
 #include "StrongAI/AI/DarwinAI/DarwinAI.hpp"
 #include <cereal/types/memory.hpp>
+#include "StrongAI/Utility/Utility.hpp"
 
 const int AMPLITUDE = 100;
 
@@ -36,8 +37,8 @@ class AdderDarwinAI : public DarwinAI
 
         for( int i = 0; i < 10; i++ )
         {
-            double a = GeneralAI::randomProbability() * 100;
-            double b = GeneralAI::randomProbability() * 100;
+            double a = Random::randomProbability() * 100;
+            double b = Random::randomProbability() * 100;
             double sum = a + b;
 
             std::vector< double > input( { a, b } );

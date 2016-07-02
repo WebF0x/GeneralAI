@@ -1,4 +1,5 @@
 #include "StrongAI/AI/DarwinAI/DarwinAI.hpp"
+#include "StrongAI/Utility/Utility.hpp"
 
 DarwinAI::DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
@@ -97,7 +98,7 @@ void DarwinAI::createNextGeneration( const std::vector< double >& fitnessScores,
     std::vector< NeuralNetAI > newPopulation;
     while( newPopulation.size() < m_population.size())
     {
-        double randomChance  = randomProbability();
+        double randomChance  = Random::randomProbability();
         for( int i = 0; i < reproductionProbabilities.size(); i++ )
         {
             double reproductionProbability = reproductionProbabilities.at( i );
@@ -141,7 +142,7 @@ NeuralNetAI& DarwinAI::randomIndividual()
     assert( !m_population.empty() );
 
     std::uniform_int_distribution< int > distribution( 0, m_population.size() );
-    const int randomIndex = distribution( GeneralAI::m_randomNumberGenerator );
+    const int randomIndex = distribution( Random::getRandomNumberGenerator() );
 
     return m_population.at( randomIndex );
 }

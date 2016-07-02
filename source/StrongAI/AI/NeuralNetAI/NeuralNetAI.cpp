@@ -1,5 +1,5 @@
 #include "StrongAI/AI/NeuralNetAI/NeuralNetAI.hpp"
-#include "StrongAI/Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 NeuralNetAI::NeuralNetAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput ),

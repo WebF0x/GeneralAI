@@ -1,5 +1,5 @@
 #include "StrongAI/AI/CaseBasedAI/CaseBasedAI.hpp"
-#include "StrongAI/Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 CaseBasedAI::CaseBasedAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )

@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "StrongAI/Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 bool isAlmostEqual( double a, double b, double absoluteTolerance )
 {

@@ -1,5 +1,5 @@
 #include "StrongAI/AI/DarwinAI/DarwinAI.hpp"
-#include "StrongAI/Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 DarwinAI::DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )

@@ -34,7 +34,7 @@ OBJ_TEST = $(OBJ)/test/CerealTest.o \
 		   $(OBJ)/source/StrongAI/AI/GeneralAI/GeneralAI.o \
 		   $(OBJ)/source/StrongAI/AI/DarwinAI/DarwinAI.o \
 		   $(OBJ)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o \
-		   $(OBJ)/source/StrongAI/Utility/Utility.o
+		   $(OBJ)/source/Utility/Utility.o
 
 OBJ_DARWINTICTACTOE = $(OBJ)/source/StrongAI/AI/RandomAI/RandomAI.o \
 					  $(OBJ)/source/StrongAI/World/DarwinTicTacToe/TicTacToe.o \
@@ -66,7 +66,7 @@ before_test:
 	test -d $(OBJ)/source/StrongAI/AI/GeneralAI || mkdir -p $(OBJ)/source/StrongAI/AI/GeneralAI
 	test -d $(OBJ)/source/StrongAI/AI/DarwinAI || mkdir -p $(OBJ)/source/StrongAI/AI/DarwinAI
 	test -d $(OBJ)/source/StrongAI/AI/CaseBasedAI || mkdir -p $(OBJ)/source/StrongAI/AI/CaseBasedAI
-	test -d $(OBJ)/source/StrongAI/Utility || mkdir -p $(OBJ)/source/StrongAI/Utility/
+	test -d $(OBJ)/source/Utility || mkdir -p $(OBJ)/source/Utility/
 
 after_test: 
 	./bin/Test/Test
@@ -124,8 +124,8 @@ $(OBJ)/source/StrongAI/AI/DarwinAI/DarwinAI.o: source/StrongAI/AI/DarwinAI/Darwi
 $(OBJ)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o: source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp
 	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp -o $(OBJ)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
 
-$(OBJ)/source/StrongAI/Utility/Utility.o: source/StrongAI/Utility/Utility.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/Utility/Utility.cpp -o $(OBJ)/source/StrongAI/Utility/Utility.o
+$(OBJ)/source/Utility/Utility.o: source/Utility/Utility.cpp
+	$(CXX) $(CFLAGS) $(INC) -c source/Utility/Utility.cpp -o $(OBJ)/source/Utility/Utility.o
 
 before_darwintictactoe: 
 	test -d bin/DarwinTicTacToe || mkdir -p bin/DarwinTicTacToe

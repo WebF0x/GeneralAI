@@ -1,5 +1,5 @@
 #include "StrongAI/AI/RandomAI/RandomAI.hpp"
-#include "StrongAI/Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 RandomAI::RandomAI( int inputSize, int outputSize, int maxInput, int maxOutput )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )

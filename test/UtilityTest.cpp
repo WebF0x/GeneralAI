@@ -1,5 +1,5 @@
 #include "UnitTest++/UnitTest++.h"
-#include "StrongAI/Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 #include <vector>
 #include <set>

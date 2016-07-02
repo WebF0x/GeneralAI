@@ -9,6 +9,7 @@ WINDRES = windres
 INC = -Iinclude
 CFLAGS = -g -std=c++11
 OBJDIR = obj
+BINDIR = bin
 
 LIB_TEST = lib/UnitTest++/Linux/libUnitTest++.a
 OUT_TEST = bin/Test/Test
@@ -53,7 +54,8 @@ OBJ_TICTACTOE = $(OBJDIR)/source/StrongAI/World/TicTacToe/TicTacToeHuman.o \
 
 all: test darwintictactoe tictactoe
 
-clean: clean_test clean_darwintictactoe clean_tictactoe
+clean:
+	rm -rf $(OBJDIR) $(BINDIR)
 
 # If the object directory doesn't exist, create it
 before_test: 
@@ -126,18 +128,6 @@ $(OBJDIR)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o: source/StrongAI/AI/CaseB
 $(OBJDIR)/source/StrongAI/Utility/Utility.o: source/StrongAI/Utility/Utility.cpp
 	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/Utility/Utility.cpp -o $(OBJDIR)/source/StrongAI/Utility/Utility.o
 
-clean_test: 
-	rm -f $(OBJ_TEST) $(OUT_TEST)
-	rm -rf bin/Test
-	rm -rf $(OBJDIR)/test
-	rm -rf $(OBJDIR)/source/StrongAI/AI/RandomAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/NeuralNetAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/HumanAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/GeneralAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/DarwinAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/CaseBasedAI
-	rm -rf $(OBJDIR)/source/StrongAI/Utility
-
 before_darwintictactoe: 
 	test -d bin/DarwinTicTacToe || mkdir -p bin/DarwinTicTacToe
 	test -d $(OBJDIR)/source/StrongAI/AI/RandomAI || mkdir -p $(OBJDIR)/source/StrongAI/AI/RandomAI
@@ -153,40 +143,6 @@ darwintictactoe: before_darwintictactoe out_darwintictactoe after_darwintictacto
 
 out_darwintictactoe: before_darwintictactoe $(OBJ_DARWINTICTACTOE)
 	$(LD) -o $(OUT_DARWINTICTACTOE) $(OBJ_DARWINTICTACTOE)
-
-$(OBJDIR)/source/StrongAI/AI/RandomAI/RandomAI.o: source/StrongAI/AI/RandomAI/RandomAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/RandomAI/RandomAI.cpp -o $(OBJDIR)/source/StrongAI/AI/RandomAI/RandomAI.o
-
-$(OBJDIR)/source/StrongAI/World/DarwinTicTacToe/TicTacToe.o: source/StrongAI/World/DarwinTicTacToe/TicTacToe.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/World/DarwinTicTacToe/TicTacToe.cpp -o $(OBJDIR)/source/StrongAI/World/DarwinTicTacToe/TicTacToe.o
-
-$(OBJDIR)/source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.o: source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.cpp -o $(OBJDIR)/source/StrongAI/World/DarwinTicTacToe/TicTacToeHuman.o
-
-$(OBJDIR)/source/StrongAI/World/DarwinTicTacToe/main.o: source/StrongAI/World/DarwinTicTacToe/main.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/World/DarwinTicTacToe/main.cpp -o $(OBJDIR)/source/StrongAI/World/DarwinTicTacToe/main.o
-
-$(OBJDIR)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o: source/StrongAI/AI/NeuralNetAI/NeuralNetAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/NeuralNetAI/NeuralNetAI.cpp -o $(OBJDIR)/source/StrongAI/AI/NeuralNetAI/NeuralNetAI.o
-
-$(OBJDIR)/source/StrongAI/AI/HumanAI/HumanAI.o: source/StrongAI/AI/HumanAI/HumanAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/HumanAI/HumanAI.cpp -o $(OBJDIR)/source/StrongAI/AI/HumanAI/HumanAI.o
-
-$(OBJDIR)/source/StrongAI/AI/GeneralAI/GeneralAI.o: source/StrongAI/AI/GeneralAI/GeneralAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/GeneralAI/GeneralAI.cpp -o $(OBJDIR)/source/StrongAI/AI/GeneralAI/GeneralAI.o
-
-$(OBJDIR)/source/StrongAI/AI/DarwinAI/DarwinAI.o: source/StrongAI/AI/DarwinAI/DarwinAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/DarwinAI/DarwinAI.cpp -o $(OBJDIR)/source/StrongAI/AI/DarwinAI/DarwinAI.o
-
-clean_darwintictactoe: 
-	rm -f $(OBJ_DARWINTICTACTOE) $(OUT_DARWINTICTACTOE)
-	rm -rf bin/DarwinTicTacToe
-	rm -rf $(OBJDIR)/source/StrongAI/AI/RandomAI
-	rm -rf $(OBJDIR)/source/StrongAI/World/DarwinTicTacToe
-	rm -rf $(OBJDIR)/source/StrongAI/AI/NeuralNetAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/HumanAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/GeneralAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/DarwinAI
 
 before_tictactoe: 
 	test -d bin/TicTacToe || mkdir -p bin/TicTacToe
@@ -208,22 +164,4 @@ $(OBJDIR)/source/StrongAI/World/TicTacToe/TicTacToeHuman.o: source/StrongAI/Worl
 $(OBJDIR)/source/StrongAI/World/TicTacToe/main.o: source/StrongAI/World/TicTacToe/main.cpp
 	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/World/TicTacToe/main.cpp -o $(OBJDIR)/source/StrongAI/World/TicTacToe/main.o
 
-$(OBJDIR)/source/StrongAI/AI/HumanAI/HumanAI.o: source/StrongAI/AI/HumanAI/HumanAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/HumanAI/HumanAI.cpp -o $(OBJDIR)/source/StrongAI/AI/HumanAI/HumanAI.o
-
-$(OBJDIR)/source/StrongAI/AI/GeneralAI/GeneralAI.o: source/StrongAI/AI/GeneralAI/GeneralAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/GeneralAI/GeneralAI.cpp -o $(OBJDIR)/source/StrongAI/AI/GeneralAI/GeneralAI.o
-
-$(OBJDIR)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o: source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c source/StrongAI/AI/CaseBasedAI/CaseBasedAI.cpp -o $(OBJDIR)/source/StrongAI/AI/CaseBasedAI/CaseBasedAI.o
-
-clean_tictactoe: 
-	rm -f $(OBJ_TICTACTOE) $(OUT_TICTACTOE)
-	rm -rf bin/TicTacToe
-	rm -rf $(OBJDIR)/source/StrongAI/World/TicTacToe
-	rm -rf $(OBJDIR)/source/StrongAI/AI/HumanAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/GeneralAI
-	rm -rf $(OBJDIR)/source/StrongAI/AI/CaseBasedAI
-
-.PHONY: before_test after_test clean_test before_darwintictactoe after_darwintictactoe clean_darwintictactoe before_tictactoe after_tictactoe clean_tictactoe
-
+.PHONY: before_test after_test before_darwintictactoe after_darwintictactoe before_tictactoe after_tictactoe

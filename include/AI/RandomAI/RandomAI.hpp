@@ -2,8 +2,6 @@
 #define RANDOM_AI_HPP
 
 #include "AI/GeneralAI/GeneralAI.hpp"
-#include <chrono>   //To generate seed for randomGenerator
-#include <random>   //To generate random values
 
 class RandomAI : public GeneralAI
 {

@@ -1,6 +1,8 @@
 #include "AI/DarwinAI/DarwinAI.hpp"
 #include "Utility/Utility.hpp"
 
+#include <algorithm>
+
 DarwinAI::DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize )
     : GeneralAI( inputSize, outputSize, maxInput, maxOutput )
 {

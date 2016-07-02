@@ -2,11 +2,6 @@
 #define NEURAL_NET_AI_HPP
 
 #include "AI/GeneralAI/GeneralAI.hpp"
-#include <map>
-#include <vector>
-#include <chrono>
-#include <random>   //Distributions
-#include <limits>
 #include <cereal/types/map.hpp>
 #include <cereal/types/vector.hpp>
 

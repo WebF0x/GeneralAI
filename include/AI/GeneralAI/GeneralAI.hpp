@@ -1,10 +1,6 @@
 #ifndef GENERAL_AI_HPP
 #define GENERAL_AI_HPP
 
-#include <stdexcept>
-#include <tuple>
-#include <ctime>
-
 //Serialization
 #include <fstream>
 #include <cereal/archives/json.hpp>

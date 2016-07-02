@@ -2,7 +2,6 @@
 #define DARWIN_AI_HPP
 
 #include "AI/NeuralNetAI/NeuralNetAI.hpp"
-#include <algorithm>
 
 class DarwinAI : public GeneralAI
 {

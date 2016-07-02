@@ -3,9 +3,6 @@
 
 #include "AI/GeneralAI/GeneralAI.hpp"
 #include <iostream>
-#include <string>
-
-#include <cereal/types/string.hpp>
 
 class HumanAI : public GeneralAI
 {

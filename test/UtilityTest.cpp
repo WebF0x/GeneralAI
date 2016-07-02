@@ -2,6 +2,7 @@
 #include "StrongAI/Utility/Utility.hpp"
 
 #include <vector>
+#include <set>
 
 SUITE( Utility )
 {
@@ -48,5 +49,14 @@ SUITE( Utility )
         const double absoluteTolerance = 0.001;
 
         CHECK( isAlmostEqual( vectorA, vectorB, absoluteTolerance ) );
+    }
+
+    TEST( isAlmostEqualWorksWithAnySTLContainer )
+    {
+        const std::set<double> containerA( {1, 2, 3, 4} );
+        const std::set<double> containerB( {1, 2, 3, 4} );
+        const double absoluteTolerance = 0.001;
+
+        CHECK( isAlmostEqual( containerA, containerB, absoluteTolerance ) );
     }
 }

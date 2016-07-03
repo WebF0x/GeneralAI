@@ -68,7 +68,6 @@ Worlds
 Build instructions
 ------------------
 - Linux: `make test`
-- Windows: Open StrongAI.cbp in Codeblocks
 
 Unlicense:
 --------

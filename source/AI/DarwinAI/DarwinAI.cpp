@@ -70,7 +70,15 @@ void DarwinAI::createNextGeneration()
     std::vector< double > reproductionProbabilities;
     for( auto fitness : fitnessScores )
     {
-        double reproductionProbability = ( totalFitnessGreaterThanMinimum != 0 ) ? ( ( fitness - minFitness) / totalFitnessGreaterThanMinimum ) : 1;
+        if( totalFitnessGreaterThanMinimum == 0 )
+        {
+            reproductionProbabilities.push_back( 1 );
+        }
+        else
+        {
+            reproductionProbabilities.push_back( ( fitness - minFitness ) / totalFitnessGreaterThanMinimum );
+        }
+
         reproductionProbabilities.push_back( reproductionProbability );
     }
 

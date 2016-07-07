@@ -58,10 +58,7 @@ std::vector< double > DarwinAI::calculateFitnessScores()
 void DarwinAI::createNextGeneration()
 {
     const std::vector< double > fitnessScores = calculateFitnessScores();
-
-    const auto minMaxFitnessIt = std::minmax_element( fitnessScores.begin(), fitnessScores.end() );
-    const double minFitness = *(minMaxFitnessIt.first);
-    const double maxFitness = *(minMaxFitnessIt.second);
+    const double minFitness = *std::min_element( fitnessScores.begin(), fitnessScores.end() );
 
     double totalFitnessGreaterThanMinimum = 0;
     for( auto fitness : fitnessScores )

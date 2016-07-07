@@ -26,11 +26,10 @@ class DarwinAI : public GeneralAI
 
         void initPopulation( int populationSize );
         virtual double fitnessEval( NeuralNetAI& ai ) = 0;
-        std::vector< double > calculateFitnessScores( double& minFitness, double& maxFitness );
         std::vector< double > calculateFitnessScores();
 
         // Update population with a next generation
-        void createNextGeneration( const std::vector< double >& fitnessScores, double minFitness, double maxFitness );
+        void createNextGeneration();
 
         std::vector< NeuralNetAI > m_population;
         friend cereal::access;

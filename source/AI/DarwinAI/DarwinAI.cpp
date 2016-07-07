@@ -26,9 +26,7 @@ void DarwinAI::evolve( int generations )
 {
     for( int i = 0; i < generations; i++ )
     {
-        double minFitness, maxFitness;
-        const std::vector< double > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
-        createNextGeneration( fitnessScores, minFitness, maxFitness );
+        createNextGeneration();
     }
 }
 
@@ -46,41 +44,25 @@ double DarwinAI::fitness()
     return fitnessEval( bestIndividual() );
 }
 
-std::vector< double > DarwinAI::calculateFitnessScores( double& minFitness, double& maxFitness )
-{
-    std::vector< double > fitnessScores;
-    for( unsigned int i = 0; i < m_population.size(); i++ )
-    {
-        double fitness = fitnessEval( m_population[ i ] );
-        fitnessScores.push_back( fitness );
-
-        if( i == 0 )
-        {
-            minFitness = fitness;
-            maxFitness = fitness;
-        }
-        else
-        {
-            minFitness = std::min( fitness, minFitness );
-            maxFitness = std::max( fitness, maxFitness );
-        }
-    }
-    return fitnessScores;
-}
-
 std::vector< double > DarwinAI::calculateFitnessScores()
 {
     std::vector< double > fitnessScores;
     for( auto& individual : m_population )
     {
-        double fitness = fitnessEval( individual );
+        const double fitness = fitnessEval( individual );
         fitnessScores.push_back( fitness );
     }
     return fitnessScores;
 }
 
-void DarwinAI::createNextGeneration( const std::vector< double >& fitnessScores, double minFitness, double maxFitness )
+void DarwinAI::createNextGeneration()
 {
+    const std::vector< double > fitnessScores = calculateFitnessScores();
+
+    const auto minMaxFitnessIt = std::minmax_element( fitnessScores.begin(), fitnessScores.end() );
+    const double minFitness = *(minMaxFitnessIt.first);
+    const double maxFitness = *(minMaxFitnessIt.second);
+
     double totalFitnessGreaterThanMinimum = 0;
     for( auto fitness : fitnessScores )
     {

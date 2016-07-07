@@ -37,9 +37,7 @@ void DarwinAI::evolveToFitness( double desiredFitness )
 {
     while( fitness() < desiredFitness )
     {
-        double minFitness, maxFitness;
-        const std::vector< double > fitnessScores = calculateFitnessScores( minFitness, maxFitness );
-        createNextGeneration( fitnessScores, minFitness, maxFitness );
+	evolve();
     }
 }
 

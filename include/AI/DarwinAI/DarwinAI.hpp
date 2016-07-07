@@ -7,7 +7,7 @@ class DarwinAI : public GeneralAI
 {
     public:
         DarwinAI( int inputSize, int outputSize, int maxInput, int maxOutput, int populationSize = 2 );
-        void evolve( int generations );
+        void evolve( int generations = 1 );
         void evolveToFitness( double desiredFitness );
 
         double fitness();

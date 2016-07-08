@@ -5,8 +5,8 @@
 class MyDarwinAI : public DarwinAI
 {
     public:
-        MyDarwinAI() :
-            DarwinAI( 0, 1, 0, 1 )
+        MyDarwinAI( const unsigned int populationSize = 2 ) :
+            DarwinAI( 0, 1, 0, 1, populationSize )
         {
         }
 
@@ -80,5 +80,21 @@ SUITE( DarwinAITest )
         ai.evolveToFitness( desiredFitness );
 
         CHECK( ai.fitness() >= desiredFitness );
+    }
+
+    TEST( populationOfNextGenerationKeepsSameSizeWhenEven )
+    {
+        const unsigned int initialPopulationSize = 2;
+        MyDarwinAI ai( initialPopulationSize );
+        ai.evolve();
+        CHECK( ai.getPopulationSize() == initialPopulationSize );
+    }
+
+    TEST( populationOfNextGenerationKeepsSameSizeWhenOdd )
+    {
+        const unsigned int initialPopulationSize = 3;
+        MyDarwinAI ai( initialPopulationSize );
+        ai.evolve();
+        CHECK( ai.getPopulationSize() == initialPopulationSize );
     }
 }

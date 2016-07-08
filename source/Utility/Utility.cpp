@@ -11,6 +11,22 @@ bool isAlmostEqual( float a, float b, float absoluteTolerance )
     return isAlmostEqual( double(a), double(b), double(absoluteTolerance) );
 }
 
+unsigned int rouletteSelect( const std::vector< double >& selectionProbabilities )
+{
+    double randomChance = Random::randomProbability();
+    for( unsigned int i = 0; i < selectionProbabilities.size(); i++ )
+    {
+        const double selectionProbability = selectionProbabilities.at( i );
+
+        if( randomChance <= selectionProbability)
+        {
+            return i;
+        }
+
+        randomChance += selectionProbability;
+    }
+}
+
 //////////////////
 // Class Random //
 //////////////////

@@ -57,35 +57,24 @@ std::vector< double > DarwinAI::calculateFitnessScores()
 
 void DarwinAI::createNextGeneration()
 {
-    const std::vector< double > reproductionProbabilities = getReproductionProbabilities();
+    const std::vector< double >& reproductionProbabilities = getReproductionProbabilities();
 
     std::vector< NeuralNetAI > newPopulation;
-    while( newPopulation.size() < m_population.size())
+    while( newPopulation.size() < m_population.size() )
     {
-        double randomChance  = Random::randomProbability();
-        for( int i = 0; i < reproductionProbabilities.size(); i++ )
-        {
-            double reproductionProbability = reproductionProbabilities.at( i );
+        const unsigned int parentIndex = rouletteSelect( reproductionProbabilities );
+        const NeuralNetAI& parent = m_population[ parentIndex ];
+        // Add cloned parent
+        newPopulation.push_back( parent );
+        // Add mutated child
+        newPopulation.push_back( parent );
+        newPopulation.back().mutate();
+    }
 
-            if( randomChance <= reproductionProbability)
-            {
-                NeuralNetAI clonedIndividual( m_population.at( i ) );
-
-                // Keep the original individual
-                newPopulation.push_back( clonedIndividual );
-
-                // Keep a mutation of the individual ( if there is enough room )
-                if( newPopulation.size() < m_population.size() )
-                {
-                    clonedIndividual.mutate();
-                    newPopulation.push_back( clonedIndividual );
-                }
-            }
-            else
-            {
-                randomChance += reproductionProbability;
-            }
-        }
+    // If population size is odd, remove the extra mutated child
+    if( m_population.size() % 2 != 0 )
+    {
+        newPopulation.pop_back();
     }
 
     m_population = std::vector< NeuralNetAI >( newPopulation );
@@ -137,6 +126,11 @@ NeuralNetAI& DarwinAI::randomIndividual()
     const int randomIndex = distribution( Random::getRandomNumberGenerator() );
 
     return m_population.at( randomIndex );
+}
+
+unsigned int DarwinAI::getPopulationSize() const
+{
+    return m_population.size();
 }
 
 void DarwinAI::coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome )

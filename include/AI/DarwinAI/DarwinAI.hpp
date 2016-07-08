@@ -20,6 +20,8 @@ class DarwinAI : public GeneralAI
         // Population cannot be empty
         NeuralNetAI& randomIndividual();
 
+        unsigned int getPopulationSize() const;
+
     private:
         std::vector< double > coreOutput( const std::vector< double >& input );
         void coreLearn( const std::vector< double >& input, const std::vector< double >& output, double outcome );

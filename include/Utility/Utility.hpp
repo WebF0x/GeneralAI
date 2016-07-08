@@ -1,3 +1,5 @@
+#include <vector>
+
 bool isAlmostEqual( double a, double b, double absoluteTolerance );
 bool isAlmostEqual( float a, float b, float absoluteTolerance );
 
@@ -22,6 +24,8 @@ bool isAlmostEqual( const Container& containerA, const Container& containerB, do
 
     return true;
 }
+
+unsigned int rouletteSelect( const std::vector< double >& selectionProbabilities );
 
 //////////////////
 // Class Random //

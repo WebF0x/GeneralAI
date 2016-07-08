@@ -60,26 +60,24 @@ void DarwinAI::createNextGeneration()
     const std::vector< double > fitnessScores = calculateFitnessScores();
     const double minFitness = *std::min_element( fitnessScores.begin(), fitnessScores.end() );
 
-    double totalFitnessGreaterThanMinimum = 0;
+    std::vector< double > fitnessesFromMin;
     for( auto fitness : fitnessScores )
     {
-        double fitnessGreaterThanMinimum = fitness - minFitness;
-        totalFitnessGreaterThanMinimum += fitnessGreaterThanMinimum;
+        fitnessesFromMin.push_back( fitness - minFitness );
     }
+    const double totalFitnessFromMin = std::accumulate( fitnessesFromMin.begin(), fitnessesFromMin.end(), 0.0 );
 
     std::vector< double > reproductionProbabilities;
-    for( auto fitness : fitnessScores )
+    for( auto fitnessFromMin : fitnessesFromMin )
     {
-        if( totalFitnessGreaterThanMinimum == 0 )
+        if( totalFitnessFromMin == 0 )
         {
             reproductionProbabilities.push_back( 1 );
         }
         else
         {
-            reproductionProbabilities.push_back( ( fitness - minFitness ) / totalFitnessGreaterThanMinimum );
+            reproductionProbabilities.push_back( fitnessFromMin / totalFitnessFromMin );
         }
-
-        reproductionProbabilities.push_back( reproductionProbability );
     }
 
     std::vector< NeuralNetAI > newPopulation;

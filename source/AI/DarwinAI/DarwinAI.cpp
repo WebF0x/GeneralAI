@@ -57,28 +57,7 @@ std::vector< double > DarwinAI::calculateFitnessScores()
 
 void DarwinAI::createNextGeneration()
 {
-    const std::vector< double > fitnessScores = calculateFitnessScores();
-    const double minFitness = *std::min_element( fitnessScores.begin(), fitnessScores.end() );
-
-    std::vector< double > fitnessesFromMin;
-    for( auto fitness : fitnessScores )
-    {
-        fitnessesFromMin.push_back( fitness - minFitness );
-    }
-    const double totalFitnessFromMin = std::accumulate( fitnessesFromMin.begin(), fitnessesFromMin.end(), 0.0 );
-
-    std::vector< double > reproductionProbabilities;
-    for( auto fitnessFromMin : fitnessesFromMin )
-    {
-        if( totalFitnessFromMin == 0 )
-        {
-            reproductionProbabilities.push_back( 1 );
-        }
-        else
-        {
-            reproductionProbabilities.push_back( fitnessFromMin / totalFitnessFromMin );
-        }
-    }
+    const std::vector< double > reproductionProbabilities = getReproductionProbabilities();
 
     std::vector< NeuralNetAI > newPopulation;
     while( newPopulation.size() < m_population.size())
@@ -110,6 +89,34 @@ void DarwinAI::createNextGeneration()
     }
 
     m_population = std::vector< NeuralNetAI >( newPopulation );
+}
+
+std::vector< double > DarwinAI::getReproductionProbabilities()
+{
+    const std::vector< double > fitnessScores = calculateFitnessScores();
+    const double minFitness = *std::min_element( fitnessScores.begin(), fitnessScores.end() );
+
+    std::vector< double > fitnessesFromMin;
+    for( double fitness : fitnessScores )
+    {
+        fitnessesFromMin.push_back( fitness - minFitness );
+    }
+    const double totalFitnessFromMin = std::accumulate( fitnessesFromMin.begin(), fitnessesFromMin.end(), 0.0 );
+
+    std::vector< double > reproductionProbabilities;
+    for( double fitnessFromMin : fitnessesFromMin )
+    {
+        if( totalFitnessFromMin == 0 )
+        {
+            reproductionProbabilities.push_back( 1 );
+        }
+        else
+        {
+            reproductionProbabilities.push_back( fitnessFromMin / totalFitnessFromMin );
+        }
+    }
+
+    return reproductionProbabilities;
 }
 
 NeuralNetAI& DarwinAI::bestIndividual()

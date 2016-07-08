@@ -30,6 +30,7 @@ class DarwinAI : public GeneralAI
 
         // Update population with a next generation
         void createNextGeneration();
+        std::vector< double > getReproductionProbabilities();
 
         std::vector< NeuralNetAI > m_population;
         friend cereal::access;

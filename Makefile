@@ -79,11 +79,9 @@ test: before_test out_test after_test
 out_test: before_test $(OBJ_TEST)
 	$(LD) -o $(OUT_TEST) $(OBJ_TEST) $(LIB_TEST)
 
+# Tests
 $(OBJ)/test/CerealTest.o: test/CerealTest.cpp
 	$(CXX) $(CFLAGS) $(INC) -c test/CerealTest.cpp -o $(OBJ)/test/CerealTest.o
-
-$(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o: $(AI_SRC)/RandomAI/RandomAI.cpp
-	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/RandomAI/RandomAI.cpp -o $(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o
 
 $(OBJ)/test/CaseBasedAITest.o: test/CaseBasedAITest.cpp
 	$(CXX) $(CFLAGS) $(INC) -c test/CaseBasedAITest.cpp -o $(OBJ)/test/CaseBasedAITest.o
@@ -112,6 +110,10 @@ $(OBJ)/test/UtilityTest.o: test/UtilityTest.cpp
 $(OBJ)/test/main.o: test/main.cpp
 	$(CXX) $(CFLAGS) $(INC) -c test/main.cpp -o $(OBJ)/test/main.o
 
+# AI's
+$(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o: $(AI_SRC)/RandomAI/RandomAI.cpp
+	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/RandomAI/RandomAI.cpp -o $(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o
+
 $(OBJ)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o: $(AI_SRC)/NeuralNetAI/NeuralNetAI.cpp
 	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/NeuralNetAI/NeuralNetAI.cpp -o $(OBJ)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o
 
@@ -127,6 +129,7 @@ $(OBJ)/$(AI_SRC)/DarwinAI/DarwinAI.o: $(AI_SRC)/DarwinAI/DarwinAI.cpp
 $(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o: $(AI_SRC)/CaseBasedAI/CaseBasedAI.cpp
 	$(CXX) $(CFLAGS) $(INC) -c $(AI_SRC)/CaseBasedAI/CaseBasedAI.cpp -o $(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o
 
+# Utility
 $(OBJ)/source/Utility/Utility.o: source/Utility/Utility.cpp
 	$(CXX) $(CFLAGS) $(INC) -c source/Utility/Utility.cpp -o $(OBJ)/source/Utility/Utility.o
 

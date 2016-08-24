@@ -12,10 +12,6 @@ WORLD_SRC = source/World
 LIB_TEST = lib/UnitTest++/Linux/libUnitTest++.a
 OUT_TEST = bin/Test/Test
 
-OUT_DARWINTICTACTOE = bin/DarwinTicTacToe/DarwinTicTacToe
-
-OUT_TICTACTOE = bin/TicTacToe/TicTacToe
-
 # Path to object files
 OBJ_TEST = $(OBJ)/test/CerealTest.o \
 		   $(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o \
@@ -35,37 +31,22 @@ OBJ_TEST = $(OBJ)/test/CerealTest.o \
 		   $(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o \
 		   $(OBJ)/source/Utility/Utility.o
 
-OBJ_DARWINTICTACTOE = $(OBJ)/$(AI_SRC)/RandomAI/RandomAI.o \
-					  $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe/TicTacToe.o \
-					  $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe/TicTacToeHuman.o \
-					  $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe/main.o \
-					  $(OBJ)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o \
-					  $(OBJ)/$(AI_SRC)/HumanAI/HumanAI.o \
-					  $(OBJ)/$(AI_SRC)/GeneralAI/GeneralAI.o \
-					  $(OBJ)/$(AI_SRC)/DarwinAI/DarwinAI.o
-
-OBJ_TICTACTOE = $(OBJ)/$(WORLD_SRC)/TicTacToe/TicTacToeHuman.o \
-				$(OBJ)/$(WORLD_SRC)/TicTacToe/main.o \
-				$(OBJ)/$(AI_SRC)/HumanAI/HumanAI.o \
-				$(OBJ)/$(AI_SRC)/GeneralAI/GeneralAI.o \
-				$(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o
-
-all: test darwintictactoe tictactoe
+all: test
 
 clean:
 	rm -rf $(OBJ) $(BIN)
 
 # If the object directory doesn't exist, create it
 before_test: 
-	test -d bin/Test || mkdir -p bin/Test
-	test -d $(OBJ)/test || mkdir -p $(OBJ)/test
-	test -d $(OBJ)/$(AI_SRC)/RandomAI || mkdir -p $(OBJ)/$(AI_SRC)/RandomAI
-	test -d $(OBJ)/$(AI_SRC)/NeuralNetAI || mkdir -p $(OBJ)/$(AI_SRC)/NeuralNetAI
-	test -d $(OBJ)/$(AI_SRC)/HumanAI || mkdir -p $(OBJ)/$(AI_SRC)/HumanAI
-	test -d $(OBJ)/$(AI_SRC)/GeneralAI || mkdir -p $(OBJ)/$(AI_SRC)/GeneralAI
-	test -d $(OBJ)/$(AI_SRC)/DarwinAI || mkdir -p $(OBJ)/$(AI_SRC)/DarwinAI
-	test -d $(OBJ)/$(AI_SRC)/CaseBasedAI || mkdir -p $(OBJ)/$(AI_SRC)/CaseBasedAI
-	test -d $(OBJ)/source/Utility || mkdir -p $(OBJ)/source/Utility/
+	@mkdir -p bin/Test
+	@mkdir -p $(OBJ)/test
+	@mkdir -p $(OBJ)/$(AI_SRC)/RandomAI
+	@mkdir -p $(OBJ)/$(AI_SRC)/NeuralNetAI
+	@mkdir -p $(OBJ)/$(AI_SRC)/HumanAI
+	@mkdir -p $(OBJ)/$(AI_SRC)/GeneralAI
+	@mkdir -p $(OBJ)/$(AI_SRC)/DarwinAI
+	@mkdir -p $(OBJ)/$(AI_SRC)/CaseBasedAI
+	@mkdir -p $(OBJ)/source/Utility/
 
 after_test: 
 	./bin/Test/Test
@@ -129,40 +110,4 @@ $(OBJ)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o: $(AI_SRC)/CaseBasedAI/CaseBasedAI.cp
 $(OBJ)/source/Utility/Utility.o: source/Utility/Utility.cpp
 	$(CXX) $(CFLAGS) $(INC) -c source/Utility/Utility.cpp -o $(OBJ)/source/Utility/Utility.o
 
-before_darwintictactoe: 
-	test -d bin/DarwinTicTacToe || mkdir -p bin/DarwinTicTacToe
-	test -d $(OBJ)/$(AI_SRC)/RandomAI || mkdir -p $(OBJ)/$(AI_SRC)/RandomAI
-	test -d $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe || mkdir -p $(OBJ)/$(WORLD_SRC)/DarwinTicTacToe
-	test -d $(OBJ)/$(AI_SRC)/NeuralNetAI || mkdir -p $(OBJ)/$(AI_SRC)/NeuralNetAI
-	test -d $(OBJ)/$(AI_SRC)/HumanAI || mkdir -p $(OBJ)/$(AI_SRC)/HumanAI
-	test -d $(OBJ)/$(AI_SRC)/GeneralAI || mkdir -p $(OBJ)/$(AI_SRC)/GeneralAI
-	test -d $(OBJ)/$(AI_SRC)/DarwinAI || mkdir -p $(OBJ)/$(AI_SRC)/DarwinAI
-
-after_darwintictactoe: 
-
-darwintictactoe: before_darwintictactoe out_darwintictactoe after_darwintictactoe
-
-out_darwintictactoe: before_darwintictactoe $(OBJ_DARWINTICTACTOE)
-	$(LD) -o $(OUT_DARWINTICTACTOE) $(OBJ_DARWINTICTACTOE)
-
-before_tictactoe: 
-	test -d bin/TicTacToe || mkdir -p bin/TicTacToe
-	test -d $(OBJ)/$(WORLD_SRC)/TicTacToe || mkdir -p $(OBJ)/$(WORLD_SRC)/TicTacToe
-	test -d $(OBJ)/$(AI_SRC)/HumanAI || mkdir -p $(OBJ)/$(AI_SRC)/HumanAI
-	test -d $(OBJ)/$(AI_SRC)/GeneralAI || mkdir -p $(OBJ)/$(AI_SRC)/GeneralAI
-	test -d $(OBJ)/$(AI_SRC)/CaseBasedAI || mkdir -p $(OBJ)/$(AI_SRC)/CaseBasedAI
-
-after_tictactoe: 
-
-tictactoe: before_tictactoe out_tictactoe after_tictactoe
-
-out_tictactoe: before_tictactoe $(OBJ_TICTACTOE)
-	$(LD) -o $(OUT_TICTACTOE) $(OBJ_TICTACTOE)
-
-$(OBJ)/$(WORLD_SRC)/TicTacToe/TicTacToeHuman.o: $(WORLD_SRC)/TicTacToe/TicTacToeHuman.cpp
-	$(CXX) $(CFLAGS) $(INC) -c $(WORLD_SRC)/TicTacToe/TicTacToeHuman.cpp -o $(OBJ)/$(WORLD_SRC)/TicTacToe/TicTacToeHuman.o
-
-$(OBJ)/$(WORLD_SRC)/TicTacToe/main.o: $(WORLD_SRC)/TicTacToe/main.cpp
-	$(CXX) $(CFLAGS) $(INC) -c $(WORLD_SRC)/TicTacToe/main.cpp -o $(OBJ)/$(WORLD_SRC)/TicTacToe/main.o
-
-.PHONY: before_test after_test before_darwintictactoe after_darwintictactoe before_tictactoe after_tictactoe
+.PHONY: before_test after_test

@@ -11,6 +11,3 @@ make
 echo -e "\n========== Should recompile objects that depend on RandomAI.hpp, link and run tests"
 touch include/AI/RandomAI/RandomAI.hpp
 make
-
-echo -e "\n========== Teardown"
-make clean

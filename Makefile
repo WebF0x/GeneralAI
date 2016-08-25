@@ -58,33 +58,14 @@ out_test: before_test $(OBJECTS)
 	@echo Linking
 	@$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
 
-$(OBJ_DIR)/test/%.o: test/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
-
-$(OBJ_DIR)/source/AI/RandomAI/%.o: source/AI/RandomAI/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
-
-$(OBJ_DIR)/source/AI/NeuralNetAI/%.o: source/AI/NeuralNetAI/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
-
-$(OBJ_DIR)/source/AI/HumanAI/%.o: source/AI/HumanAI/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
-
-$(OBJ_DIR)/source/AI/GeneralAI/%.o: source/AI/GeneralAI/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
-
-$(OBJ_DIR)/source/AI/DarwinAI/%.o: source/AI/DarwinAI/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
-
-$(OBJ_DIR)/source/AI/CaseBasedAI/%.o: source/AI/CaseBasedAI/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
-
-$(OBJ_DIR)/source/Utility/%.o: source/Utility/%.cpp
-	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
+$(OBJ_DIR)/%.o: %.cpp
+	@echo Compiling: $@
+	@ $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
 
 -include $(DEPENDENCIES)
 
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	@echo Cleaning
+	@rm -rf $(OBJ_DIR) $(BIN_DIR)
 
 .PHONY: before_test after_test

@@ -2,12 +2,15 @@
 
 clear
 
-echo ========== Setup
+echo ========== Test setup: Should clean
 make clean
 
-echo -e "\n========== Should compile everything, link and run tests"
+echo -e "\n========== Complete build: Should compile everything, link and run tests"
 make
 
-echo -e "\n========== Should only recompile objects that depend on RandomAI.hpp, link and run tests"
+echo -e "\n========== Partial build: Should only recompile objects that depend on RandomAI.hpp, link and run tests"
 touch include/AI/RandomAI/RandomAI.hpp
+make
+
+echo -e "\n========== Unnecessary build: Should only run tests"
 make

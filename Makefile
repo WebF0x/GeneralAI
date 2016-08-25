@@ -10,7 +10,7 @@ AI_SRC = source/AI
 WORLD_SRC = source/World
 
 LIBRARIES = lib/UnitTest++/Linux/libUnitTest++.a
-EXECUTABLE = $(BIN_DIR)/Test/Test
+EXECUTABLE = $(BIN_DIR)/test/test
 
 OBJECTS = $(OBJ_DIR)/test/CerealTest.o \
 	$(OBJ_DIR)/test/CaseBasedAITest.o \
@@ -30,19 +30,15 @@ OBJECTS = $(OBJ_DIR)/test/CerealTest.o \
 	$(OBJ_DIR)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o \
 	$(OBJ_DIR)/source/Utility/Utility.o
 
-DEPENDENCIES := $(OBJECTS:.o=.d)
+all: runtests
 
-all: test
-
-after_test: 
+runtests: $(EXECUTABLE)
 	@echo Running tests
 	@./$(EXECUTABLE)
 
-test: out_test after_test
-
-out_test: $(OBJECTS)
+$(EXECUTABLE): $(OBJECTS)
 	@echo Linking
-	@mkdir -p $(BIN_DIR)/Test
+	@mkdir -p $(@D)
 	@$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
 
 $(OBJ_DIR)/%.o: %.cpp
@@ -50,10 +46,11 @@ $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
 	@ $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
 
+DEPENDENCIES := $(OBJECTS:.o=.d)
 -include $(DEPENDENCIES)
 
 clean:
 	@echo Cleaning
 	@rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-.PHONY: after_test
+.PHONY: clean runtests all

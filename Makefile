@@ -6,11 +6,10 @@ CFLAGS = -g -std=c++14
 OBJ_DIR = obj
 BIN_DIR = bin
 
-AI_SRC = source/AI
-WORLD_SRC = source/World
-
 LIBRARIES = lib/UnitTest++/Linux/libUnitTest++.a
+LIBRARIES_ADDER =
 EXECUTABLE = $(BIN_DIR)/test/test
+EXECUTABLE_ADDER = $(BIN_DIR)/adder/adder
 
 SOURCES = test/CerealTest.cpp \
 	test/CaseBasedAITest.cpp \
@@ -30,9 +29,16 @@ SOURCES = test/CerealTest.cpp \
 	source/AI/CaseBasedAI/CaseBasedAI.cpp \
 	source/Utility/Utility.cpp
 
-OBJECTS := $(SOURCES:%.cpp=$(OBJ_DIR)/%.o)
+SOURCES_ADDER = source/AI/NeuralNetAI/NeuralNetAI.cpp \
+	source/AI/GeneralAI/GeneralAI.cpp \
+	source/AI/DarwinAI/DarwinAI.cpp \
+	source/Utility/Utility.cpp \
+	source/World/Adder/main.cpp
 
-all: runtests
+OBJECTS := $(SOURCES:%.cpp=$(OBJ_DIR)/%.o)
+OBJECTS_ADDER := $(SOURCES_ADDER:%.cpp=$(OBJ_DIR)/%.o)
+
+all: runtests adder
 
 runtests: $(EXECUTABLE)
 	@echo Running tests
@@ -42,6 +48,15 @@ $(EXECUTABLE): $(OBJECTS)
 	@echo Linking
 	@mkdir -p $(@D)
 	@$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
+
+adder: $(EXECUTABLE_ADDER)
+	@echo Running Adder
+	@./$(EXECUTABLE_ADDER)
+
+$(EXECUTABLE_ADDER): $(OBJECTS_ADDER)
+	@echo Linking
+	@mkdir -p $(@D)
+	@$(LD) -o $(EXECUTABLE_ADDER) $(OBJECTS_ADDER) $(LIBRARIES_ADDER)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Compiling: $@

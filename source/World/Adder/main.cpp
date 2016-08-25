@@ -3,11 +3,11 @@
 #include <ctime>
 #include "AI/DarwinAI/DarwinAI.hpp"
 #include <cereal/types/memory.hpp>
-#include "StrongAI/Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 const int AMPLITUDE = 100;
 
-void manualTesting( std::unique_ptr< NeuralNetAI >& individual )
+void manualTest( NeuralNetAI& individual )
 {
     while( true )
     {
@@ -16,7 +16,7 @@ void manualTesting( std::unique_ptr< NeuralNetAI >& individual )
         std::cin >> in2;
         std::vector< double > input( { in1, in2 } );
 
-        double out = individual -> output( input ) [ 0 ];
+        double out = individual.output( input ) [ 0 ];
         std::cout << in1 << " + " << in2 << " => " << out << std::endl;
     }
 }
@@ -61,7 +61,7 @@ int main()
     std::cout << "Population is evolving" << std::endl;
     for( int i = 0; i < 100; i++ )
     {
-        std::cout << "\t" << i << " %" << std::endl;
+        std::cout << "\t" << i+1 << " %" << std::endl;
         population.evolve( 100 );
     }
 
@@ -69,10 +69,10 @@ int main()
     // GeneralAI::save< AdderDarwinAI, cereal::JSONOutputArchive > ( AdderDarwinAI, "save.txt" );
 
     std::cout << "Selecting best individual" << std::endl;
-    std::unique_ptr< NeuralNetAI >& champion = population.bestIndividual();
+    NeuralNetAI& champion = population.bestIndividual();
 
     std::cout << "Manual Testing" << std::endl;
-    manualTesting( champion );
+    manualTest( champion );
 
     return 0;
 }

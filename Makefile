@@ -37,6 +37,7 @@ all: test
 
 # If the object directory doesn't exist, create it
 before_test: 
+	@echo Creating directories
 	@mkdir -p $(BIN_DIR)/Test
 	@mkdir -p $(OBJ_DIR)/test
 	@mkdir -p $(OBJ_DIR)/$(AI_SRC)/RandomAI
@@ -48,12 +49,14 @@ before_test:
 	@mkdir -p $(OBJ_DIR)/source/Utility/
 
 after_test: 
-	./$(EXECUTABLE)
+	@echo Running tests
+	@./$(EXECUTABLE)
 
 test: before_test out_test after_test
 
 out_test: before_test $(OBJECTS)
-	$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
+	@echo Linking
+	@$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
 
 $(OBJ_DIR)/test/%.o: test/%.cpp
 	 $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<

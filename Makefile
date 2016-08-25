@@ -12,23 +12,25 @@ WORLD_SRC = source/World
 LIBRARIES = lib/UnitTest++/Linux/libUnitTest++.a
 EXECUTABLE = $(BIN_DIR)/test/test
 
-OBJECTS = $(OBJ_DIR)/test/CerealTest.o \
-	$(OBJ_DIR)/test/CaseBasedAITest.o \
-	$(OBJ_DIR)/test/DarwinAITest.o \
-	$(OBJ_DIR)/test/GeneralAITest.o \
-	$(OBJ_DIR)/test/HumanAITest.o \
-	$(OBJ_DIR)/test/NeuralNetAITest.o \
-	$(OBJ_DIR)/test/RandomAITest.o \
-	$(OBJ_DIR)/test/SanityTest.o \
-	$(OBJ_DIR)/test/UtilityTest.o \
-	$(OBJ_DIR)/test/main.o \
-	$(OBJ_DIR)/$(AI_SRC)/RandomAI/RandomAI.o \
-	$(OBJ_DIR)/$(AI_SRC)/NeuralNetAI/NeuralNetAI.o \
-	$(OBJ_DIR)/$(AI_SRC)/HumanAI/HumanAI.o \
-	$(OBJ_DIR)/$(AI_SRC)/GeneralAI/GeneralAI.o \
-	$(OBJ_DIR)/$(AI_SRC)/DarwinAI/DarwinAI.o \
-	$(OBJ_DIR)/$(AI_SRC)/CaseBasedAI/CaseBasedAI.o \
-	$(OBJ_DIR)/source/Utility/Utility.o
+SOURCES = test/CerealTest.cpp \
+	test/CaseBasedAITest.cpp \
+	test/DarwinAITest.cpp \
+	test/GeneralAITest.cpp \
+	test/HumanAITest.cpp \
+	test/NeuralNetAITest.cpp \
+	test/RandomAITest.cpp \
+	test/SanityTest.cpp \
+	test/UtilityTest.cpp \
+	test/main.cpp \
+	source/AI/RandomAI/RandomAI.cpp \
+	source/AI/NeuralNetAI/NeuralNetAI.cpp \
+	source/AI/HumanAI/HumanAI.cpp \
+	source/AI/GeneralAI/GeneralAI.cpp \
+	source/AI/DarwinAI/DarwinAI.cpp \
+	source/AI/CaseBasedAI/CaseBasedAI.cpp \
+	source/Utility/Utility.cpp
+
+OBJECTS := $(SOURCES:%.cpp=$(OBJ_DIR)/%.o)
 
 all: runtests
 

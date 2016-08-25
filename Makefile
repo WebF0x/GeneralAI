@@ -12,7 +12,6 @@ WORLD_SRC = source/World
 LIBRARIES = lib/UnitTest++/Linux/libUnitTest++.a
 EXECUTABLE = $(BIN_DIR)/Test/Test
 
-# Path to object files
 OBJECTS = $(OBJ_DIR)/test/CerealTest.o \
 	$(OBJ_DIR)/test/CaseBasedAITest.o \
 	$(OBJ_DIR)/test/DarwinAITest.o \
@@ -35,31 +34,20 @@ DEPENDENCIES := $(OBJECTS:.o=.d)
 
 all: test
 
-# If the object directory doesn't exist, create it
-before_test: 
-	@echo Creating directories
-	@mkdir -p $(BIN_DIR)/Test
-	@mkdir -p $(OBJ_DIR)/test
-	@mkdir -p $(OBJ_DIR)/$(AI_SRC)/RandomAI
-	@mkdir -p $(OBJ_DIR)/$(AI_SRC)/NeuralNetAI
-	@mkdir -p $(OBJ_DIR)/$(AI_SRC)/HumanAI
-	@mkdir -p $(OBJ_DIR)/$(AI_SRC)/GeneralAI
-	@mkdir -p $(OBJ_DIR)/$(AI_SRC)/DarwinAI
-	@mkdir -p $(OBJ_DIR)/$(AI_SRC)/CaseBasedAI
-	@mkdir -p $(OBJ_DIR)/source/Utility/
-
 after_test: 
 	@echo Running tests
 	@./$(EXECUTABLE)
 
-test: before_test out_test after_test
+test: out_test after_test
 
-out_test: before_test $(OBJECTS)
+out_test: $(OBJECTS)
 	@echo Linking
+	@mkdir -p $(BIN_DIR)/Test
 	@$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Compiling: $@
+	@mkdir -p $(@D)
 	@ $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
 
 -include $(DEPENDENCIES)
@@ -68,4 +56,4 @@ clean:
 	@echo Cleaning
 	@rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-.PHONY: before_test after_test
+.PHONY: after_test

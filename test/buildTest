@@ -13,4 +13,4 @@ touch include/AI/RandomAI/RandomAI.hpp
 make tests
 
 echo -e "\n========== Unnecessary build: Should do nothing"
-make
+make tests

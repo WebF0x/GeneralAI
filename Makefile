@@ -6,12 +6,12 @@ CFLAGS = -g -std=c++14
 OBJ_DIR = obj
 BIN_DIR = bin
 
-LIBRARIES = lib/UnitTest++/Linux/libUnitTest++.a
+LIBRARIES_TESTS = lib/UnitTest++/Linux/libUnitTest++.a
 LIBRARIES_ADDER =
-EXECUTABLE = $(BIN_DIR)/test/test
+EXECUTABLE_TESTS = $(BIN_DIR)/test/test
 EXECUTABLE_ADDER = $(BIN_DIR)/adder/adder
 
-SOURCES = test/CerealTest.cpp \
+SOURCES_TESTS = test/CerealTest.cpp \
 	test/CaseBasedAITest.cpp \
 	test/DarwinAITest.cpp \
 	test/GeneralAITest.cpp \
@@ -35,32 +35,35 @@ SOURCES_ADDER = source/AI/NeuralNetAI/NeuralNetAI.cpp \
 	source/Utility/Utility.cpp \
 	source/World/Adder/main.cpp
 
-OBJECTS := $(SOURCES:%.cpp=$(OBJ_DIR)/%.o)
+OBJECTS_TESTS := $(SOURCES_TESTS:%.cpp=$(OBJ_DIR)/%.o)
 OBJECTS_ADDER := $(SOURCES_ADDER:%.cpp=$(OBJ_DIR)/%.o)
 
 all: tests adder
 
-tests: $(EXECUTABLE)
+tests: $(EXECUTABLE_TESTS)
 
-$(EXECUTABLE): $(OBJECTS)
+$(EXECUTABLE_TESTS): $(OBJECTS_TESTS)
 	@echo Linking: $@
 	@mkdir -p $(@D)
-	@$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
+	@$(LD) -o $@ $(OBJECTS_TESTS) $(LIBRARIES_TESTS)
 
 adder: $(EXECUTABLE_ADDER)
 
 $(EXECUTABLE_ADDER): $(OBJECTS_ADDER)
 	@echo Linking: $@
 	@mkdir -p $(@D)
-	@$(LD) -o $(EXECUTABLE_ADDER) $(OBJECTS_ADDER) $(LIBRARIES_ADDER)
+	@$(LD) -o $@ $(OBJECTS_ADDER) $(LIBRARIES_ADDER)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Compiling: $@
 	@mkdir -p $(@D)
 	@ $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
 
-DEPENDENCIES := $(OBJECTS:.o=.d)
--include $(DEPENDENCIES)
+DEPENDENCIES_TESTS := $(OBJECTS_TESTS:.o=.d)
+-include $(DEPENDENCIES_TESTS)
+
+DEPENDENCIES_ADDER := $(OBJECTS_ADDER:.o=.d)
+-include $(DEPENDENCIES_ADDER)
 
 clean:
 	@echo Cleaning

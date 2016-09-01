@@ -38,23 +38,19 @@ SOURCES_ADDER = source/AI/NeuralNetAI/NeuralNetAI.cpp \
 OBJECTS := $(SOURCES:%.cpp=$(OBJ_DIR)/%.o)
 OBJECTS_ADDER := $(SOURCES_ADDER:%.cpp=$(OBJ_DIR)/%.o)
 
-all: runtests adder
+all: tests adder
 
-runtests: $(EXECUTABLE)
-	@echo Running tests
-	@./$(EXECUTABLE)
+tests: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	@echo Linking
+	@echo Linking: $@
 	@mkdir -p $(@D)
 	@$(LD) -o $(EXECUTABLE) $(OBJECTS) $(LIBRARIES)
 
 adder: $(EXECUTABLE_ADDER)
-	@echo Running Adder
-	@./$(EXECUTABLE_ADDER)
 
 $(EXECUTABLE_ADDER): $(OBJECTS_ADDER)
-	@echo Linking
+	@echo Linking: $@
 	@mkdir -p $(@D)
 	@$(LD) -o $(EXECUTABLE_ADDER) $(OBJECTS_ADDER) $(LIBRARIES_ADDER)
 
@@ -70,4 +66,4 @@ clean:
 	@echo Cleaning
 	@rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-.PHONY: clean runtests all
+.PHONY: clean tests all

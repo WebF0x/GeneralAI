@@ -25,13 +25,15 @@ SOURCES_TESTS = test/CerealTest.cpp \
 	test/SanityTest.cpp \
 	test/UtilityTest.cpp \
 	test/main.cpp \
+	test/TicTacToeTest.cpp \
 	source/AI/RandomAI/RandomAI.cpp \
 	source/AI/NeuralNetAI/NeuralNetAI.cpp \
 	source/AI/HumanAI/HumanAI.cpp \
 	source/AI/GeneralAI/GeneralAI.cpp \
 	source/AI/DarwinAI/DarwinAI.cpp \
 	source/AI/CaseBasedAI/CaseBasedAI.cpp \
-	source/Utility/Utility.cpp
+	source/Utility/Utility.cpp \
+	source/World/TicTacToe/TicTacToe.cpp
 SOURCES_ADDER = source/AI/NeuralNetAI/NeuralNetAI.cpp \
 	source/AI/GeneralAI/GeneralAI.cpp \
 	source/AI/DarwinAI/DarwinAI.cpp \

@@ -51,12 +51,12 @@ adder: $(EXECUTABLE_ADDER)
 $(EXECUTABLE_TESTS): $(OBJECTS_TESTS)
 	@echo Linking: $@
 	@mkdir -p $(@D)
-	@$(LD) -o $@ $(OBJECTS_TESTS) $(LIBRARIES_TESTS)
+	@$(LD) -o $@ $^ $(LIBRARIES_TESTS)
 
 $(EXECUTABLE_ADDER): $(OBJECTS_ADDER)
 	@echo Linking: $@
 	@mkdir -p $(@D)
-	@$(LD) -o $@ $(OBJECTS_ADDER) $(LIBRARIES_ADDER)
+	@$(LD) -o $@ $^ $(LIBRARIES_ADDER)
 
 # Compile only if a dependency was modified
 DEPENDENCIES_TESTS := $(OBJECTS_TESTS:.o=.d)
@@ -68,7 +68,7 @@ DEPENDENCIES_ADDER := $(OBJECTS_ADDER:.o=.d)
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Compiling: $@
 	@mkdir -p $(@D)
-	@ $(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
+	@$(CXX) $(CFLAGS) $(INCLUDE) -c -MMD -o $@ $<
 
 # Erase generated files
 clean:

@@ -8,9 +8,9 @@ int tokenCount( const TicTacToe::Board board )
 {
     int count = 0;
 
-    for( const auto& row : board )
+    for( const auto& column : board )
     {
-        for( const auto& token : row )
+        for( const auto& token : column )
         {
             if( token != TicTacToe::Token::None )
             {

@@ -4,8 +4,8 @@
 
 TicTacToe::TicTacToe()
 {
-    const auto line = Board::value_type( 3, Token::None );
-    m_board = Board( 3, line );
+    const auto column = Board::value_type( 3, Token::None );
+    m_board = Board( 3, column );
 }
 
 TicTacToe::Board TicTacToe::getBoard()
@@ -65,9 +65,9 @@ TicTacToe::State TicTacToe::getState()
 
 bool TicTacToe::isBoardFull()
 {
-    for( const auto& row : m_board )
+    for( const auto& column : m_board )
     {
-        for( const auto& token : row )
+        for( const auto& token : column )
         {
             if( token == Token::None )
             {

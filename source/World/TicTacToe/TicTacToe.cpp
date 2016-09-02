@@ -15,7 +15,7 @@ TicTacToe::Board TicTacToe::getBoard()
 
 void TicTacToe::setToken( Token token, int x, int y )
 {
-    if( x<0 || y<0 || x>2 || y>2 )
+    if( !isInsideBoard(x,y) )
     {
         throw std::out_of_range( "x and y must be between 0 and 2" );
     }
@@ -25,10 +25,20 @@ void TicTacToe::setToken( Token token, int x, int y )
 
 bool TicTacToe::isLegalMove( int x, int y )
 {
+    if( !isInsideBoard(x,y) )
+    {
+        return false;
+    }
+
     if( m_board[x][y] != Token::None )
     {
         return false;
     }
 
     return true;
+}
+
+bool TicTacToe::isInsideBoard( int x, int y )
+{
+    return ( x>=0 && y>=0 && x<=2 && y<=2 );
 }

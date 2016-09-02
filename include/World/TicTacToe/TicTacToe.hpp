@@ -15,4 +15,6 @@ class TicTacToe
 
     private:
         Board m_board;
+
+        static bool isInsideBoard( int x, int y);
 };

@@ -74,4 +74,14 @@ SUITE( TicTacToeTest )
         game.setToken( TicTacToe::Token::X, 0,0 );
         CHECK( !game.isLegalMove(0,0) );
     }
+
+    TEST( recognizeIllegalMoveIfOutsideBoard )
+    {
+        TicTacToe game;
+        game.setToken( TicTacToe::Token::X, 0,0 );
+        CHECK( !game.isLegalMove(-1,  0) );
+        CHECK( !game.isLegalMove( 3,  0) );
+        CHECK( !game.isLegalMove( 0, -1) );
+        CHECK( !game.isLegalMove( 0,  3) );
+    }
 }

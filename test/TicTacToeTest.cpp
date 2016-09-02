@@ -36,7 +36,7 @@ SUITE( TicTacToeTest )
         CHECK( isEmptyBoard( board ) );
     }
 
-    TEST( setTokenAtCorrectPosition )
+    TEST( placingTokenAtLegalPositionShouldWork )
     {
         TicTacToe game;
         const auto token = TicTacToe::Token::X;
@@ -50,7 +50,7 @@ SUITE( TicTacToeTest )
         CHECK( board[x][y] == token );
     }
 
-    TEST( setTokenThrowsExceptionIfPositionIsInvalid )
+    TEST( placingTokenOutsideBoardThrowsOutOfRangeException )
     {
         TicTacToe game;
         const auto token = TicTacToe::Token::X;

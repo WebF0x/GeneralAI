@@ -3,20 +3,27 @@
 
 #include <vector>
 
-bool isEmptyBoard( const TicTacToe::Board board )
+int tokenCount( const TicTacToe::Board board )
 {
+    int count = 0;
+
     for( const auto& row : board )
     {
         for( const auto& token : row )
         {
             if( token != TicTacToe::Token::None )
             {
-                return false;
+                count++;
             }
         }
     }
 
-    return true;
+    return count;
+}
+
+bool isEmptyBoard( const TicTacToe::Board board )
+{
+    return tokenCount( board ) == 0;
 }
 
 SUITE( TicTacToeTest )
@@ -26,5 +33,19 @@ SUITE( TicTacToeTest )
         TicTacToe game;
         const TicTacToe::Board board = game.getBoard();
         CHECK( isEmptyBoard( board ) );
+    }
+
+    TEST( setTokenAtCorrectPosition )
+    {
+        TicTacToe game;
+        const auto token = TicTacToe::Token::X;
+        const int x = 1;
+        const int y = 2;
+
+        game.setToken( token, x, y );
+        const TicTacToe::Board board = game.getBoard();
+
+        CHECK_EQUAL( 1, tokenCount( board ) );
+        CHECK( board[x][y] == token );
     }
 }

@@ -10,3 +10,8 @@ TicTacToe::Board TicTacToe::getBoard()
 {
     return m_board;
 }
+
+void TicTacToe::setToken( Token token, int x, int y )
+{
+    m_board[x][y] = token;
+}

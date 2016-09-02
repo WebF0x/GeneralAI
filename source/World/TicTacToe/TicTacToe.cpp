@@ -45,22 +45,10 @@ bool TicTacToe::isInsideBoard( int x, int y )
 
 TicTacToe::State TicTacToe::getState()
 {
-    if( isWinner( Token::X ) )
-    {
-        return State::VictoryX;
-    }
-
-    if( isWinner( Token::O ) )
-    {
-        return State::VictoryO;
-    }
-
-    if( isBoardFull() )
-    {
-        return State::TieGame;
-    }
-
-    return State::InProgress;
+    if( isWinner( Token::X ) ) return State::VictoryX;
+    if( isWinner( Token::O ) ) return State::VictoryO;
+    if( isBoardFull() )        return State::TieGame;
+    else                       return State::InProgress;
 }
 
 bool TicTacToe::isBoardFull()
@@ -69,10 +57,7 @@ bool TicTacToe::isBoardFull()
     {
         for( const auto& token : column )
         {
-            if( token == Token::None )
-            {
-                return false;
-            }
+            if(token==Token::None) return false;
         }
     }
 
@@ -84,26 +69,23 @@ bool TicTacToe::isWinner( Token token )
     if( winColumnExists( token ) )   return true;
     if( winRowExists( token ) )      return true;
     if( winDiagonalExists( token ) ) return true;
-    return false;
+    else                             return false;
 }
 
 bool TicTacToe::winColumnExists( Token token )
 {
     for( int column=0; column<3; column++ )
     {
-        bool isWinningRow = true;
+        bool isWinning = true;
         for( int row=0; row<3; row++ )
         {
             if( m_board[column][row] != token )
             {
-                isWinningRow = false;
+                isWinning = false;
             }
         }
 
-        if( isWinningRow )
-        {
-            return true;
-        }
+        if( isWinning ) return true;
     }
 
     return false;
@@ -113,16 +95,16 @@ bool TicTacToe::winRowExists( Token token )
 {
     for( int row=0; row<3; row++ )
     {
-        bool isWinningRow = true;
+        bool isWinning = true;
         for( int column=0; column<3; column++ )
         {
             if( m_board[column][row] != token )
             {
-                isWinningRow = false;
+                isWinning = false;
             }
         }
 
-        if( isWinningRow )
+        if( isWinning )
         {
             return true;
         }

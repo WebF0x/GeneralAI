@@ -67,4 +67,11 @@ SUITE( TicTacToeTest )
         game.setToken( TicTacToe::Token::X, 0,0 );
         CHECK( game.isLegalMove(2,2) );
     }
+
+    TEST( recognizeIllegalMoveOnOccupiedSpace )
+    {
+        TicTacToe game;
+        game.setToken( TicTacToe::Token::X, 0,0 );
+        CHECK( !game.isLegalMove(0,0) );
+    }
 }

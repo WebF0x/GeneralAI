@@ -25,5 +25,10 @@ void TicTacToe::setToken( Token token, int x, int y )
 
 bool TicTacToe::isLegalMove( int x, int y )
 {
+    if( m_board[x][y] != Token::None )
+    {
+        return false;
+    }
+
     return true;
 }

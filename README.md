@@ -8,7 +8,7 @@ These core principles guide the project's development:
 - Quality - StrongAI must take intelligent decisions
 - Versatility - StrongAI must be adaptable to any type of problems
 - Simplicity - StrongAI must be easy to use and understand
-- Freedom - StrongAI must respect the users' [freedom](https://www.gnu.org/philosophy/free-sw.html)
+- Freedom - StrongAI must respect the user's [freedom](https://www.gnu.org/philosophy/free-sw.html)
 
 Current plan
 ------------
@@ -67,7 +67,7 @@ Worlds
 
 Build instructions
 ------------------
-- Linux: `make test`
+- Linux: `make tests`
 
 Unlicense:
 --------

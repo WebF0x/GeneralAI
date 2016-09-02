@@ -1,5 +1,4 @@
-#ifndef GENERAL_AI_HPP
-#define GENERAL_AI_HPP
+#pragma once
 
 //Serialization
 #include <fstream>
@@ -102,5 +101,3 @@ class GeneralAI// : public SaveSystem
         bool m_lastDecisionEnabled = false;
         bool m_lastLessonEnabled = false;
 };
-
-#endif // GENERAL_AI_HPP

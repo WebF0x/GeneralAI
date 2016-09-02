@@ -1,5 +1,4 @@
-#ifndef RANDOM_AI_HPP
-#define RANDOM_AI_HPP
+#pragma once
 
 #include "AI/GeneralAI/GeneralAI.hpp"
 
@@ -21,5 +20,3 @@ class RandomAI : public GeneralAI
             ar( cereal::virtual_base_class< GeneralAI >( this ) );
         }
 };
-
-#endif // RANDOM_AI_HPP

@@ -1,5 +1,4 @@
-#ifndef NEURAL_NET_AI_HPP
-#define NEURAL_NET_AI_HPP
+#pragma once
 
 #include "AI/GeneralAI/GeneralAI.hpp"
 #include <cereal/types/map.hpp>
@@ -85,5 +84,3 @@ private:
         ar( cereal::make_nvp( "Nodes",    m_nodes ) );
     }
 };
-
-#endif // NEURAL_NET_AI_HPP

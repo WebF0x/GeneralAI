@@ -1,5 +1,4 @@
-#ifndef HUMAN_AI_HPP
-#define HUMAN_AI_HPP
+#pragma once
 
 #include "AI/GeneralAI/GeneralAI.hpp"
 #include <iostream>
@@ -49,5 +48,3 @@ namespace cereal
   template < class Archive >
   struct specialize< Archive, HumanAI, cereal::specialization::member_load_save > {};
 }
-
-#endif // HUMAN_AI_HPP

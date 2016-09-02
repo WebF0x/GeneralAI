@@ -1,5 +1,4 @@
-#ifndef DARWIN_AI_HPP
-#define DARWIN_AI_HPP
+#pragma once
 
 #include "AI/NeuralNetAI/NeuralNetAI.hpp"
 
@@ -43,6 +42,3 @@ class DarwinAI : public GeneralAI
             ar( m_population );
         }
 };
-
-
-#endif // DARWIN_AI_HPP

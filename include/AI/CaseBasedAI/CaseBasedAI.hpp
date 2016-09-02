@@ -1,5 +1,4 @@
-#ifndef CASE_BASED_AI_HPP
-#define CASE_BASED_AI_HPP
+#pragma once
 
 #include "AI/GeneralAI/GeneralAI.hpp"
 
@@ -36,5 +35,3 @@ class CaseBasedAI : public GeneralAI
             ar( cereal::virtual_base_class< GeneralAI >( this ), m_memory );
         }
 };
-
-#endif // CASE_BASED_AI_HPP

@@ -11,6 +11,7 @@ class TicTacToe
         TicTacToe();
         Board getBoard();
         void setToken( Token token, int x, int y );
+        bool isLegalMove( int x, int y );
 
     private:
         Board m_board;

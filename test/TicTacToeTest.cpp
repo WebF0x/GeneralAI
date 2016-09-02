@@ -60,4 +60,11 @@ SUITE( TicTacToeTest )
         CHECK_THROW( game.setToken( token,  0, -1 ), std::out_of_range );
         CHECK_THROW( game.setToken( token,  0,  3 ), std::out_of_range );
     }
+
+    TEST( recognizeLegalMoveOnEmptySpace )
+    {
+        TicTacToe game;
+        game.setToken( TicTacToe::Token::X, 0,0 );
+        CHECK( game.isLegalMove(2,2) );
+    }
 }
